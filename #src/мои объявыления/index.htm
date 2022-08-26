@@ -1,0 +1,642 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Объявления</title>
+
+    <link rel="stylesheet" href="css/daterangepicker.min.css">
+    <link rel="stylesheet" href="css/style.css?ver-8">
+    <link rel="stylesheet" href="fonts/stylesheet.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="header-top">
+                <a href="#" class="header-top__link">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="18px">
+                        <path fill-rule="evenodd" fill="rgb(184, 53, 57)" d="M15.433,15.530 C15.367,15.646 15.242,15.719 15.108,15.719 L0.910,15.719 C0.776,15.719 0.653,15.646 0.586,15.529 C0.520,15.412 0.521,15.269 0.591,15.153 L1.874,13.16 C2.465,12.30 2.779,10.901 2.779,9.751 L2.779,7.879 C2.779,5.516 4.357,3.517 6.515,2.872 L6.515,1.532 C6.515,0.709 7.185,0.39 8.9,0.39 C8.833,0.39 9.504,0.709 9.504,1.532 L9.504,2.872 C11.662,3.517 13.240,5.516 13.240,7.879 L13.240,9.751 C13.240,10.901 13.553,12.31 14.146,13.17 L15.429,15.154 C15.497,15.269 15.500,15.414 15.433,15.530 ZM8.9,17.959 C6.970,17.959 6.78,17.345 5.656,16.465 L10.362,16.465 C9.941,17.345 9.49,17.959 8.9,17.959 Z"></path>
+                    </svg>
+                    Уведомления
+                    <span class="header-badge">1</span>
+                </a>
+                <a href="#" class="header-top__link">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="12px">
+                        <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M11.600,6.94 L17.399,1.49 L17.399,11.22 L11.600,6.94 ZM0.981,0.327 C1.197,0.124 1.488,0.0 1.808,0.0 L16.191,0.0 C16.514,0.0 16.804,0.123 17.20,0.324 L8.999,7.199 L0.981,0.327 ZM0.599,11.22 L0.599,1.52 L6.399,6.94 L0.599,11.22 ZM8.999,8.399 L11.78,6.580 L17.17,11.673 C16.802,11.875 16.511,11.999 16.191,11.999 L1.808,11.999 C1.486,11.999 1.195,11.875 0.979,11.673 L6.921,6.580 L8.999,8.399 Z"></path>
+                    </svg>
+                    Сообщения
+                </a>
+                <a href="#" class="header-top__link">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="15px">
+                        <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M8.347,0.394 L10.215,4.819 L14.997,5.230 C15.328,5.258 15.463,5.673 15.212,5.891 L11.584,9.36 L12.671,13.714 C12.747,14.39 12.395,14.295 12.110,14.122 L8.0,11.642 L3.890,14.122 C3.604,14.294 3.253,14.38 3.328,13.714 L4.415,9.36 L0.787,5.890 C0.535,5.672 0.670,5.257 1.2,5.229 L5.784,4.818 L7.652,0.394 C7.782,0.87 8.217,0.87 8.347,0.394 Z"></path>
+                    </svg>
+                    Избранное
+                </a>
+                <div class="right">
+                    <a href="#" class="header-top__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="13px">
+                            <path fill-rule="evenodd" fill="rgb(44, 44, 44)" d="M12.586,8.908 C11.255,8.908 10.172,7.803 10.172,6.444 C10.172,6.352 10.245,6.278 10.335,6.278 L14.836,6.278 C14.926,6.278 14.999,6.353 14.999,6.444 C14.999,7.803 13.917,8.908 12.586,8.908 ZM14.126,5.800 L12.586,3.305 L11.46,5.800 C10.987,5.894 10.888,5.945 10.786,5.945 C10.731,5.945 10.674,5.930 10.624,5.898 C10.481,5.806 10.438,5.613 10.528,5.467 L12.304,2.590 L8.111,2.590 L8.111,11.898 L9.106,11.898 C9.701,11.898 10.184,12.391 10.184,12.999 L4.815,12.999 C4.815,12.391 5.297,11.898 5.893,11.898 L6.888,11.898 L6.888,2.590 L2.695,2.590 L4.471,5.467 C4.561,5.613 4.518,5.806 4.375,5.898 C4.232,5.989 4.43,5.946 3.953,5.800 L2.413,3.305 L0.873,5.800 C0.815,5.894 0.715,5.945 0.614,5.945 C0.558,5.945 0.502,5.930 0.451,5.898 C0.308,5.806 0.265,5.613 0.355,5.467 L2.131,2.590 L2.109,2.590 C1.847,2.590 1.635,2.373 1.635,2.106 C1.635,1.839 1.847,1.622 2.109,1.622 L5.596,1.622 C5.793,1.329 6.84,1.108 6.424,1.3 C6.473,0.440 6.936,0.0 7.499,0.0 C8.63,0.0 8.526,0.440 8.574,1.3 C8.915,1.108 9.205,1.329 9.402,1.622 L12.890,1.622 C13.152,1.622 13.364,1.839 13.364,2.106 C13.364,2.373 13.152,2.590 12.890,2.590 L12.868,2.590 L14.644,5.467 C14.734,5.613 14.691,5.806 14.548,5.898 C14.405,5.989 14.216,5.946 14.126,5.800 ZM4.827,6.444 C4.827,7.803 3.744,8.908 2.413,8.908 C1.82,8.908 0.0,7.803 0.0,6.444 C0.0,6.352 0.72,6.278 0.162,6.278 L4.664,6.278 C4.754,6.278 4.827,6.353 4.827,6.444 Z"></path>
+                        </svg>
+                        Сравнить
+                    </a>
+                    <a href="#" class="header-top__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="13px">
+                            <path fill-rule="evenodd" fill="rgb(44, 44, 44)" d="M7.499,0.2 C3.359,0.2 0.3,3.502 0.3,7.820 C0.3,9.702 0.640,11.427 1.702,12.776 C1.866,11.408 3.176,10.251 5.13,9.704 C5.684,10.355 6.551,10.751 7.499,10.751 C8.425,10.751 9.275,10.375 9.939,9.751 C11.792,10.347 13.74,11.571 13.116,12.995 C14.286,11.616 14.996,9.805 14.996,7.820 C14.996,3.502 11.640,0.2 7.499,0.2 ZM7.499,9.826 C7.21,9.826 6.570,9.689 6.169,9.451 C5.204,8.878 4.540,7.707 4.540,6.354 C4.540,4.440 5.868,2.882 7.499,2.882 C9.131,2.882 10.459,4.440 10.459,6.354 C10.459,7.728 9.774,8.914 8.785,9.476 C8.395,9.698 7.960,9.826 7.499,9.826 Z"></path>
+                        </svg>
+                        Войти
+                    </a>
+                    <a href="#" class="header-top__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="13px">
+                            <path fill-rule="evenodd" fill="rgb(44, 44, 44)" d="M7.499,0.2 C3.359,0.2 0.3,3.502 0.3,7.820 C0.3,9.702 0.640,11.427 1.702,12.776 C1.866,11.408 3.176,10.251 5.13,9.704 C5.685,10.355 6.552,10.751 7.499,10.751 C8.425,10.751 9.275,10.375 9.939,9.751 C11.792,10.347 13.74,11.571 13.116,12.995 C14.286,11.616 14.996,9.805 14.996,7.820 C14.996,3.502 11.640,0.2 7.499,0.2 ZM7.499,9.826 C7.21,9.826 6.570,9.689 6.169,9.451 C5.204,8.878 4.540,7.707 4.540,6.354 C4.540,4.440 5.868,2.882 7.499,2.882 C9.131,2.882 10.459,4.440 10.459,6.354 C10.459,7.728 9.774,8.914 8.785,9.476 C8.395,9.698 7.960,9.826 7.499,9.826 Z"></path>
+                        </svg>
+                        Регистрация
+                    </a>
+                </div>
+            </nav>
+
+            <div class="header-bottom">
+                <a href="#" class="header-logo"><img src="img/logo.png" alt="logo"></a>
+                <a href="#" class="header-bottom__link">Архив газеты</a>
+                <a href="#" class="header-bottom__link">Подать объявление</a>
+                <a href="#" class="header-bottom__link">Мои обьявления</a>
+                <a href="#" class="header-bottom__link">Статьи</a>
+            </div>
+
+            <div class="header-mob__top wrapper">
+                <a href="#" class="header-logo"><img src="img/logo.png" alt="logo"></a>
+                <div class="left wrapper">
+                    <a href="#" class="header-top__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="18px">
+                            <path fill-rule="evenodd" fill="rgb(184, 53, 57)" d="M15.433,15.530 C15.367,15.646 15.242,15.719 15.108,15.719 L0.910,15.719 C0.776,15.719 0.653,15.646 0.586,15.529 C0.520,15.412 0.521,15.269 0.591,15.153 L1.874,13.16 C2.465,12.30 2.779,10.901 2.779,9.751 L2.779,7.879 C2.779,5.516 4.357,3.517 6.515,2.872 L6.515,1.532 C6.515,0.709 7.185,0.39 8.9,0.39 C8.833,0.39 9.504,0.709 9.504,1.532 L9.504,2.872 C11.662,3.517 13.240,5.516 13.240,7.879 L13.240,9.751 C13.240,10.901 13.553,12.31 14.146,13.17 L15.429,15.154 C15.497,15.269 15.500,15.414 15.433,15.530 ZM8.9,17.959 C6.970,17.959 6.78,17.345 5.656,16.465 L10.362,16.465 C9.941,17.345 9.49,17.959 8.9,17.959 Z"></path>
+                        </svg>
+                        <span class="header-top__link-text">Уведомления</span>
+                        <span class="header-badge">2</span>
+                    </a>
+                    <a href="#" class="header-top__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="12px">
+                            <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M11.600,6.94 L17.399,1.49 L17.399,11.22 L11.600,6.94 ZM0.981,0.327 C1.197,0.124 1.488,0.0 1.808,0.0 L16.191,0.0 C16.514,0.0 16.804,0.123 17.20,0.324 L8.999,7.199 L0.981,0.327 ZM0.599,11.22 L0.599,1.52 L6.399,6.94 L0.599,11.22 ZM8.999,8.399 L11.78,6.580 L17.17,11.673 C16.802,11.875 16.511,11.999 16.191,11.999 L1.808,11.999 C1.486,11.999 1.195,11.875 0.979,11.673 L6.921,6.580 L8.999,8.399 Z"></path>
+                        </svg>
+                        <span class="header-top__link-text">Сообщения</span>
+                    </a>
+                    <div class="btn-menu"><span></span></div>
+                </div>
+            </div>
+
+            <div class="header-mob">
+                <a href="#" class="header-top__link">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="15px">
+                        <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M8.347,0.394 L10.215,4.819 L14.997,5.230 C15.328,5.258 15.463,5.673 15.212,5.891 L11.584,9.36 L12.671,13.714 C12.747,14.39 12.395,14.295 12.110,14.122 L8.0,11.642 L3.890,14.122 C3.604,14.294 3.253,14.38 3.328,13.714 L4.415,9.36 L0.787,5.890 C0.535,5.672 0.670,5.257 1.2,5.229 L5.784,4.818 L7.652,0.394 C7.782,0.87 8.217,0.87 8.347,0.394 Z"></path>
+                    </svg>
+                    Избранное
+                </a>
+                <a href="#" class="header-top__link">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="13px">
+                        <path fill-rule="evenodd" fill="rgb(44, 44, 44)" d="M12.586,8.908 C11.255,8.908 10.172,7.803 10.172,6.444 C10.172,6.352 10.245,6.278 10.335,6.278 L14.836,6.278 C14.926,6.278 14.999,6.353 14.999,6.444 C14.999,7.803 13.917,8.908 12.586,8.908 ZM14.126,5.800 L12.586,3.305 L11.46,5.800 C10.987,5.894 10.888,5.945 10.786,5.945 C10.731,5.945 10.674,5.930 10.624,5.898 C10.481,5.806 10.438,5.613 10.528,5.467 L12.304,2.590 L8.111,2.590 L8.111,11.898 L9.106,11.898 C9.701,11.898 10.184,12.391 10.184,12.999 L4.815,12.999 C4.815,12.391 5.297,11.898 5.893,11.898 L6.888,11.898 L6.888,2.590 L2.695,2.590 L4.471,5.467 C4.561,5.613 4.518,5.806 4.375,5.898 C4.232,5.989 4.43,5.946 3.953,5.800 L2.413,3.305 L0.873,5.800 C0.815,5.894 0.715,5.945 0.614,5.945 C0.558,5.945 0.502,5.930 0.451,5.898 C0.308,5.806 0.265,5.613 0.355,5.467 L2.131,2.590 L2.109,2.590 C1.847,2.590 1.635,2.373 1.635,2.106 C1.635,1.839 1.847,1.622 2.109,1.622 L5.596,1.622 C5.793,1.329 6.84,1.108 6.424,1.3 C6.473,0.440 6.936,0.0 7.499,0.0 C8.63,0.0 8.526,0.440 8.574,1.3 C8.915,1.108 9.205,1.329 9.402,1.622 L12.890,1.622 C13.152,1.622 13.364,1.839 13.364,2.106 C13.364,2.373 13.152,2.590 12.890,2.590 L12.868,2.590 L14.644,5.467 C14.734,5.613 14.691,5.806 14.548,5.898 C14.405,5.989 14.216,5.946 14.126,5.800 ZM4.827,6.444 C4.827,7.803 3.744,8.908 2.413,8.908 C1.82,8.908 0.0,7.803 0.0,6.444 C0.0,6.352 0.72,6.278 0.162,6.278 L4.664,6.278 C4.754,6.278 4.827,6.353 4.827,6.444 Z"></path>
+                    </svg>
+                    Сравнить
+                </a>
+                <a href="#" class="header-top__link">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="13px">
+                        <path fill-rule="evenodd" fill="rgb(44, 44, 44)" d="M7.499,0.2 C3.359,0.2 0.3,3.502 0.3,7.820 C0.3,9.702 0.640,11.427 1.702,12.776 C1.866,11.408 3.176,10.251 5.13,9.704 C5.684,10.355 6.551,10.751 7.499,10.751 C8.425,10.751 9.275,10.375 9.939,9.751 C11.792,10.347 13.74,11.571 13.116,12.995 C14.286,11.616 14.996,9.805 14.996,7.820 C14.996,3.502 11.640,0.2 7.499,0.2 ZM7.499,9.826 C7.21,9.826 6.570,9.689 6.169,9.451 C5.204,8.878 4.540,7.707 4.540,6.354 C4.540,4.440 5.868,2.882 7.499,2.882 C9.131,2.882 10.459,4.440 10.459,6.354 C10.459,7.728 9.774,8.914 8.785,9.476 C8.395,9.698 7.960,9.826 7.499,9.826 Z"></path>
+                    </svg>
+                    Войти
+                </a>
+                <a href="#" class="header-top__link">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="13px">
+                        <path fill-rule="evenodd" fill="rgb(44, 44, 44)" d="M7.499,0.2 C3.359,0.2 0.3,3.502 0.3,7.820 C0.3,9.702 0.640,11.427 1.702,12.776 C1.866,11.408 3.176,10.251 5.13,9.704 C5.685,10.355 6.552,10.751 7.499,10.751 C8.425,10.751 9.275,10.375 9.939,9.751 C11.792,10.347 13.74,11.571 13.116,12.995 C14.286,11.616 14.996,9.805 14.996,7.820 C14.996,3.502 11.640,0.2 7.499,0.2 ZM7.499,9.826 C7.21,9.826 6.570,9.689 6.169,9.451 C5.204,8.878 4.540,7.707 4.540,6.354 C4.540,4.440 5.868,2.882 7.499,2.882 C9.131,2.882 10.459,4.440 10.459,6.354 C10.459,7.728 9.774,8.914 8.785,9.476 C8.395,9.698 7.960,9.826 7.499,9.826 Z"></path>
+                    </svg>
+                    Регистрация
+                </a>
+                <hr>
+                <a href="#" class="header-bottom__link">Архив газеты</a>
+                <a href="#" class="header-bottom__link">Подать объявление</a>
+                <a href="#" class="header-bottom__link">Мои обьявления</a>
+                <a href="#" class="header-bottom__link">Статьи</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="listing">
+        <div class="container">
+            <div class="path">
+                <h2 class="headline">Мои объявления</h2>
+                <p>
+                    <a href="#" class="path__item">Главная</a>
+                    <a href="#" class="path__item">Мои объявления</a>
+                </p>
+            </div>
+            <div class="wrapper listing-activs">
+                <div class="tabs">
+                    <button class="tabs__btn active" data-tab="active">Активные</button>
+                    <button class="tabs__btn" data-tab="сompleted">Завершенные 10</button>
+                    <button class="tabs__btn" data-tab="blocked">Блокированные 1</button>
+                    <button class="tabs__btn" data-tab="rejected">Откланенные 0</button>
+                    <button class="tabs__btn" data-tab="whait">Ждут активации 0</button>
+                    <button class="tabs__btn" data-tab="drafts">Черновики 0 </button>
+                    <button class="tabs__btn" data-tab="deleted">Удаленные 0 </button>
+                </div>
+                <div class="sort">
+                    <button class="sort__btn active" data-items="all">Все</button>
+                    <button class="sort__btn" data-items="cv">Резюме</button>
+                    <button class="sort__btn" data-items="jobs">Вакансии</button>
+                </div>
+            </div>
+            <div class="wrapper listing-sort">
+                <div class="inp-wrap date" id="dateRangePicker">
+                    <input type="text" autocomplete="off" placeholder="От" class="datepicker" name="date" id="inpDate">
+                    <input type="text" autocomplete="off" placeholder="До" class="datepicker" name="date2" id="inpDate2">
+                </div>
+                <div class="inp-wrap curency">
+                    <input type="tel" pattern="0-9" class="toSplit" placeholder="Цена от" name="date" id="inpP">
+                    <input type="tel" pattern="0-9" class="toSplit" placeholder="до" name="date" id="inpP2">
+                </div>
+                <select>
+                    <option hidden="">Регион/Населенный пункт</option>
+                    <option value="Москва">Москва</option>
+                    <option value="Санкт-Петербур">Санкт-Петербур</option>
+                    <option value="Москвоская область">Москвоская область</option>
+                    <option value="Свердловская область">Свердловская область</option>
+                    <option value="Ростовская область">Ростовская область</option>
+                    <option value="Санкт-Петербур">Санкт-Петербур</option>
+                    <option value="Москвоская область">Москвоская область</option>
+                    <option value="Свердловская область">Свердловская область</option>
+                    <option value="Ростовская область">Ростовская область</option>
+                    <option value="Москва">Москва</option>
+                    <option value="Санкт-Петербур">Санкт-Петербур</option>
+                    <option value="Москвоская область">Москвоская область</option>
+                    <option value="Свердловская область">Свердловская область</option>
+                    <option value="Ростовская область">Ростовская область</option>
+                    <option value="Санкт-Петербур">Санкт-Петербур</option>
+                    <option value="Москвоская область">Москвоская область</option>
+                    <option value="Свердловская область">Свердловская область</option>
+                    <option value="Ростовская область">Ростовская область</option>
+                </select>
+                <div class="inp-search">
+                    <input type="text" placeholder="Введите название вакансии">
+                    <button type="submit"></button>
+                </div>
+            </div>
+            <div class="tabs">
+                <button class="tabs__btn active">За все время</button>
+                <button class="tabs__btn">Сегодня</button>
+                <button class="tabs__btn">Неделя</button>
+                <button class="tabs__btn">Месяц</button>
+                <button class="tabs__btn">Полгода</button>
+                <button class="tabs__btn">Год</button>
+            </div>
+            <div class="listing-action wrapper">
+                <div class="inp-checkbox main">
+                    <input type="checkbox" name="markAll" id="markAll">
+                    <label for="markAll"></label>
+                </div>
+                <button class="btn sm sort-action action-clean" style="display: none;" disabled="">Очистить
+                    корзину</button>
+                <button class="btn sm sort-action action-remove" disabled="">Снять с публикации</button>
+                <button class="btn sm sort-action action-active" style="display: none;" disabled="">Активировать</button>
+                <button class="btn sm sort-action action-delete" disabled="">Удалить</button>
+                <button class="btn sm red">Подать объявление</button>
+                <select>
+                    <option disabled="">По дате</option>
+                    <option value="По дате в поиске">По дате в поиске ↓</option>
+                    <option value="По дате в поиске">По дате в поиске ↑</option>
+                    <option value="По дате завершения">По дате завершения ↓</option>
+                    <option value="По дате завершения">По дате завершения ↑</option>
+                    <option value="По дате подачи">По дате подачи ↓</option>
+                    <option disabled="">По цене</option>
+                    <option value="По цене">По цене ↓</option>
+                    <option value="По цене">По цене ↑</option>
+                    <option disabled="">По расположению</option>
+                    <option value="По городу">По городу ↓</option>
+                    <option value="По городу">По городу ↑</option>
+                </select>
+            </div>
+            <div class="listing-descr wrapper">
+                <p class="child-first">Название объявления/Зарплата</p>
+                <div class="item-middle wrapper">
+                    <p>Регион/ <br>Населенный пункт</p>
+                    <p>Просмотр</p>
+                    <p>В избранном</p>
+                    <p>Диалоги</p>
+                    <p>Отклики</p>
+                    <p>Подходящие <br>вакансии</p>
+                    <p>Размещалось <br>дней</p>
+                </div>
+                <p class="child-last">Период(ы) объявлений <br>и платных услуг</p>
+            </div>
+
+            <div class="item item-cv">
+                <div class="item-check">
+                    <div class="inp-checkbox">
+                        <input type="checkbox" name="markAll" id="item-1">
+                        <label for="item-1"></label>
+                    </div>
+                </div>
+                <div class="item-id">
+                    <div class="item-img">
+                        <img src="img/PaulRudd.jpg" alt="PaulRudd">
+                    </div>
+                    <div class="item-title">
+                        <h3 class="item__headline" title="Менеджер по продажам чего то там и замем то">Менеджер по
+                            продажам чего то там и замем то</h3>
+                        <p class="item__price">500 руб</p>
+                        <a href="#" target="_blank" class="btn-link red onhover">Редактировать</a>
+                        <a href="#" target="_blank" class="btn-link red onhover">Изменить дизайн</a>
+                    </div>
+                </div>
+                <div class="item-statistic">
+                    <div class="item-city">
+                        <div class="item-col__label">Регион/ <br> Населенный пункт </div>
+                        <p class="city-item">
+                            <span class="city__delete" title="Удалить данный регион"></span>
+                            <span class="city__name" title="Нижний Новгород">Нижний Новгород</span>
+                        </p>
+                        <p class="city-item">
+                            <span class="city__delete" title="Удалить данный регион"></span>
+                            <span class="city__name" title="Москва">Москва</span>
+                        </p>
+                        <p class="city-item">
+                            <span class="city__delete" title="Удалить данный регион"></span>
+                            <span class="city__name" title="Шатки">Шатки</span>
+                        </p>
+                        <button class="btn-link green" title="Добавить еще Регион или Населенные пункты для размещения этого объявления">Добавить</button>
+                    </div>
+                    <div class="item-left">
+                        <div class="wrapper item-row">
+                            <div class="item-col whatches">
+                                <div class="item-col__label">Просмотр</div>
+                                <div class="item-col__icon whatches"></div>
+                                1640
+                            </div>
+                            <div class="item-col fav">
+                                <div class="item-col__label">В избранном</div>
+                                <div class="item-col__icon fav"></div>
+                                23
+                            </div>
+                            <div class="item-col chat">
+                                <div class="item-col__label">Диалоги</div>
+                                <div class="item-col__icon chat"></div>
+                                10
+                                <span class="header-badge">12</span>
+                            </div>
+                            <div class="item-col">
+                                <span class="item-col__label">Отклики</span>
+                                <mark>18</mark><span class="plus">+1</span>
+                            </div>
+                            <div class="item-col">
+                                <span class="item-col__label">Подходящие <br> вакансии</span>
+                                <mark>2430</mark>
+                            </div>
+                            <div class="item-col">
+                                <span class="item-col__label">Размещалось <br> дней</span>
+                                28
+                            </div>
+                        </div>
+                        <div class="item-row on-pc">
+                            <button class="btn-link green onhover">Получить больше откликов</button>
+                        </div>
+                        <div class="item-row on-pc">
+                            <div class="cv-block">
+                                <div class="cv-wrap">
+                                    <a href="https://kwork.ru/examplelink1221" target="_blank" class="cv-link">https://kwork.ru/examplelink1221234242342</a>
+                                    <button class="cv-copy">Скопировать ссылку</button>
+                                </div>
+                                <button class="btn-link red i onhover">Ссылка на Ваше резюме без контактов</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-row on-mob">
+                        <div class="cv-block ">
+                            <div class="cv-wrap">
+                                <a href="https://kwork.ru/examplelink1221" target="_blank" class="cv-link">https://kwork.ru/examplelink1221234242342</a>
+                                <button class="cv-copy">Скопировать ссылку</button>
+                            </div>
+                            <button class="btn-link red i onhover">Ссылка на Ваше резюме без контактов</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-prime">
+                    <p class="item-col__label">Период(ы) объявлений и платных услуг </p>
+                    <div class="prime-item">
+                        <img src="img/megaphone.svg" alt="megaphone" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Срок завершения: 15.05.2019</p>
+                            <p class="prime__descr old">Период: 15.05.2019-15.05.2019</p>
+                            <p class="prime__descr">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/star-shape.svg" alt="star" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Выделить объявления цветом</p>
+                            <p class="prime__descr attention">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/quality.svg" alt="quality" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Премиум размещение</p>
+                            <p class="prime__descr">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/XXL.png" alt="XXL" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Платное размещение</p>
+                            <p class="prime__descr">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/pencil.svg" alt="pencil" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Срок завершения: 15.05.2019 </p>
+                            <button class="btn-link">Обновить</button>
+
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/rocket.svg" alt="pencil" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline red">Срок продвижения истек</p>
+                            <button class="btn-link">Обновить</button>
+                        </div>
+                    </div>
+                    <div class="item-row on-mob">
+                        <button class="btn-link green onhover">Получить больше откликов</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item item-job">
+                <div class="item-check">
+                    <div class="inp-checkbox">
+                        <input type="checkbox" name="markAll" id="item-1">
+                        <label for="item-1"></label>
+                    </div>
+                </div>
+                <div class="item-id">
+                    <div class="item-img">
+                        <img src="img/PaulRudd.jpg" alt="PaulRudd">
+                    </div>
+                    <div class="item-title">
+                        <h3 class="item__headline" title="Менеджер по продажам чего то там и замем то">Менеджер по
+                            продажам чего то там и замем то</h3>
+                        <p class="item__price">500 руб</p>
+                        <a href="#" target="_blank" class="btn-link red onhover">Редактировать</a>
+                        <a href="#" target="_blank" class="btn-link red onhover">Изменить дизайн</a>
+                    </div>
+                </div>
+                <div class="item-statistic">
+                    <div class="item-city">
+                        <div class="item-col__label">Регион/ <br> Населенный пункт </div>
+                        <p class="city-item">
+                            <span class="city__delete" title="Удалить данный регион"></span>
+                            <span class="city__name" title="Нижний Новгород">Нижний Новгород</span>
+                        </p>
+                        <p class="city-item">
+                            <span class="city__delete" title="Удалить данный регион"></span>
+                            <span class="city__name" title="Москва">Москва</span>
+                        </p>
+                        <p class="city-item">
+                            <span class="city__delete" title="Удалить данный регион"></span>
+                            <span class="city__name" title="Шатки">Шатки</span>
+                        </p>
+                        <button class="btn-link green" title="Добавить еще Регион или Населенные пункты для размещения этого объявления">Добавить</button>
+                    </div>
+                    <div class="item-left">
+                        <div class="wrapper item-row">
+                            <div class="item-col whatches">
+                                <div class="item-col__label">Просмотр</div>
+                                <div class="item-col__icon whatches"></div>
+                                1640
+                            </div>
+                            <div class="item-col fav">
+                                <div class="item-col__label">В избранном</div>
+                                <div class="item-col__icon fav"></div>
+                                23
+                            </div>
+                            <div class="item-col chat">
+                                <div class="item-col__label">Диалоги</div>
+                                <div class="item-col__icon chat"></div>
+                                10
+                                <span class="header-badge">12</span>
+                            </div>
+                            <div class="item-col">
+                                <span class="item-col__label">Отклики</span>
+                                <mark>18</mark><span class="plus">+1</span>
+                            </div>
+                            <div class="item-col">
+                                <span class="item-col__label">Подходящие <br> вакансии</span>
+                                <mark>2430</mark>
+                            </div>
+                            <div class="item-col">
+                                <span class="item-col__label">Размещалось <br> дней</span>
+                                28
+                            </div>
+                        </div>
+                        <div class="item-row on-pc">
+                            <button class="btn-link green onhover">Получить больше откликов</button>
+                            <div class="cv-block">
+                                <div class="cv-wrap">
+                                    <a href="https://kwork.ru/examplelink1221" target="_blank" class="cv-link">https://kwork.ru/examplelink1221234242342</a>
+                                    <button class="cv-copy">Скопировать ссылку</button>
+                                </div>
+                                <button class="btn-link red i onhover">Ссылка на Ваше резюме без контактов</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-row on-mob">
+                        <div class="cv-block ">
+                            <div class="cv-wrap">
+                                <a href="https://kwork.ru/examplelink1221" target="_blank" class="cv-link">https://kwork.ru/examplelink1221234242342</a>
+                                <button class="cv-copy">Скопировать ссылку</button>
+                            </div>
+                            <button class="btn-link red i onhover">Ссылка на Ваше резюме без контактов</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-prime">
+                    <p class="item-col__label">Период(ы) объявлений и платных услуг </p>
+                    <div class="prime-item">
+                        <img src="img/megaphone.svg" alt="megaphone" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Срок завершения: 15.05.2019</p>
+                            <p class="prime__descr old">Период: 15.05.2019-15.05.2019</p>
+                            <p class="prime__descr">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/star-shape.svg" alt="star" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Выделить объявления цветом</p>
+                            <p class="prime__descr attention">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/quality.svg" alt="quality" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Премиум размещение</p>
+                            <p class="prime__descr">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/XXL.png" alt="XXL" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Платное размещение</p>
+                            <p class="prime__descr">Период: 15.05.2019-15.05.2019</p>
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/pencil.svg" alt="pencil" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline">Срок завершения: 15.05.2019 </p>
+                            <button class="btn-link">Обновить</button>
+
+                        </div>
+                    </div>
+                    <div class="prime-item">
+                        <img src="img/rocket.svg" alt="pencil" class="prime__img">
+                        <div class="prime-title">
+                            <p class="prime__headline red">Срок продвижения истек</p>
+                            <button class="btn-link">Обновить</button>
+                        </div>
+                    </div>
+                    <div class="item-row on-mob">
+                        <button class="btn-link green onhover">Получить больше откликов</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="btn pagination-prev fill">
+                    <?xml version='1.0' encoding='utf-8'?>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
+                        <g>
+                            <path d="m40.4,121.3c-0.8,0.8-1.8,1.2-2.9,1.2s-2.1-0.4-2.9-1.2c-1.6-1.6-1.6-4.2 0-5.8l51-51-51-51c-1.6-1.6-1.6-4.2 0-5.8 1.6-1.6 4.2-1.6 5.8,0l53.9,53.9c1.6,1.6 1.6,4.2 0,5.8l-53.9,53.9z"></path>
+                        </g>
+                    </svg>
+                </button>
+                <button class="btn pagination-next fill">
+                    <?xml version='1.0' encoding='utf-8'?>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
+                        <g>
+                            <path d="m40.4,121.3c-0.8,0.8-1.8,1.2-2.9,1.2s-2.1-0.4-2.9-1.2c-1.6-1.6-1.6-4.2 0-5.8l51-51-51-51c-1.6-1.6-1.6-4.2 0-5.8 1.6-1.6 4.2-1.6 5.8,0l53.9,53.9c1.6,1.6 1.6,4.2 0,5.8l-53.9,53.9z"></path>
+                        </g>
+                    </svg>
+
+                </button>
+                <div class="pagination-status">1 ИЗ 94</div>
+                <button class="btn fill whide">
+                    <?xml version='1.0' encoding='utf-8'?>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
+                        <g>
+                            <path d="m40.4,121.3c-0.8,0.8-1.8,1.2-2.9,1.2s-2.1-0.4-2.9-1.2c-1.6-1.6-1.6-4.2 0-5.8l51-51-51-51c-1.6-1.6-1.6-4.2 0-5.8 1.6-1.6 4.2-1.6 5.8,0l53.9,53.9c1.6,1.6 1.6,4.2 0,5.8l-53.9,53.9z"></path>
+                        </g>
+                    </svg>
+
+                </button>
+                <div class="pagination-go">
+                    <p class="pagination-label">
+                        Перейти на <br>
+                        страницу
+                    </p>
+                    <input type="tel" placeholder=" ">
+                    <button class="btn fill">ОК</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container wrapper">
+            <div class="footer-nav">
+                <p class="footer-heading">Инструменты для вас </p>
+                <a href="#" class="footer-nav__link">Найти работу</a>
+                <a href="#" class="footer-nav__link">Найти соискателя</a>
+                <a href="#" class="footer-nav__link">Подать объявление</a>
+                <a href="#" class="footer-nav__link">Оформить подписку</a>
+                <a href="#" class="footer-nav__link">Мои объявления</a>
+                <a href="#" class="footer-nav__link">Наши услуги продвижения</a>
+                <a href="#" class="footer-nav__link">Производственный календарь</a>
+            </div>
+            <div class="footer-nav">
+                <p class="footer-heading">Информация</p>
+                <a href="#" class="footer-nav__link">Статистика зарплат</a>
+                <a href="#" class="footer-nav__link">Каталог компаний</a>
+                <a href="#" class="footer-nav__link">Работа по профессиям </a>
+                <a href="#" class="footer-nav__link">Работа рядом с метро </a>
+                <a href="#" class="footer-nav__link">Работа в других города </a>
+                <a href="#" class="footer-nav__link">Работа по отраслям </a>
+                <a href="#" class="footer-nav__link">Работа по регионам </a>
+            </div>
+            <div class="footer-nav">
+                <p class="footer-heading">О vsevn.ru</p>
+                <a href="#" class="footer-nav__link">Правила сайта</a>
+                <a href="#" class="footer-nav__link">Служба поддержки</a>
+                <a href="#" class="footer-nav__link">Помощь</a>
+                <a href="#" class="footer-nav__link">Карта сайта</a>
+            </div>
+            <div class="footer-nav">
+                <p class="footer-heading">Vsevn также доступен на</p>
+                <div class="footer-store wrapper">
+                    <a href="#" class="footer-store__item">
+                        <img src="img/appStore.png" alt="appStore">
+                    </a>
+                    <a href="#" class="footer-store__item">
+                        <img src="img/googlePlay.png" alt="appStore">
+                    </a>
+                </div>
+                <div class="wrapper">
+                    <a href="#" class="footer__media"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12px" height="15px">
+                            <path fill-rule="evenodd" fill="rgb(255, 255, 255)" d="M0.399,0.697 L0.399,14.297 L11.599,7.97 L0.399,0.697 Z"></path>
+                        </svg></a>
+                    <a href="#" class="footer__media"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="16px">
+                            <path fill-rule="evenodd" fill="rgb(255, 255, 255)" d="M1.15,7.484 L4.967,8.958 L6.497,13.873 C6.595,14.189 6.980,14.304 7.236,14.96 L9.439,12.301 C9.670,12.114 9.998,12.104 10.240,12.279 L14.213,15.161 C14.487,15.359 14.874,15.210 14.943,14.880 L17.853,0.890 C17.928,0.529 17.573,0.228 17.230,0.361 L1.11,6.613 C0.610,6.768 0.614,7.333 1.15,7.484 ZM6.250,8.173 L13.974,3.420 C14.113,3.335 14.256,3.522 14.136,3.633 L7.762,9.553 C7.538,9.762 7.394,10.41 7.353,10.343 L7.136,11.951 C7.107,12.166 6.805,12.187 6.746,11.980 L5.911,9.48 C5.815,8.713 5.954,8.356 6.250,8.173 Z"></path>
+                        </svg></a>
+                    <a href="#" class="footer__media"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="18px">
+                            <path fill-rule="evenodd" fill="rgb(255, 255, 255)" d="M9.86,0.840 L6.966,0.837 C4.584,0.837 3.45,2.413 3.45,4.853 L3.45,6.705 L0.913,6.705 C0.729,6.705 0.579,6.854 0.579,7.38 L0.579,9.721 C0.579,9.905 0.729,10.53 0.913,10.53 L3.44,10.53 L3.44,16.824 C3.44,17.8 3.194,17.158 3.378,17.158 L6.159,17.158 C6.343,17.158 6.493,17.8 6.493,16.824 L6.493,10.53 L8.985,10.53 C9.169,10.53 9.319,9.905 9.319,9.721 L9.320,7.38 C9.320,6.949 9.284,6.865 9.222,6.802 C9.159,6.740 9.74,6.705 8.986,6.705 L6.493,6.705 L6.493,5.135 C6.493,4.380 6.673,3.997 7.657,3.997 L9.86,3.997 C9.270,3.997 9.419,3.849 9.419,3.665 L9.419,1.173 C9.419,0.989 9.270,0.840 9.86,0.840 Z"></path>
+                        </svg></a>
+                    <a href="#" class="footer__media"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="15px">
+                            <path fill-rule="evenodd" fill="rgb(255, 255, 255)" d="M17.163,0.736 C16.477,1.142 15.718,1.438 14.910,1.597 C14.264,0.906 13.343,0.477 12.323,0.477 C10.365,0.477 8.778,2.64 8.778,4.22 C8.778,4.299 8.809,4.570 8.870,4.829 C5.924,4.681 3.311,3.270 1.563,1.124 C1.258,1.648 1.84,2.256 1.84,2.907 C1.84,4.138 1.710,5.222 2.660,5.857 C2.79,5.838 1.533,5.678 1.55,5.413 L1.55,5.456 C1.55,7.174 2.277,8.607 3.898,8.933 C3.601,9.13 3.288,9.58 2.964,9.58 C2.735,9.58 2.514,9.34 2.296,8.993 C2.748,10.402 4.57,11.426 5.607,11.455 C4.394,12.406 2.865,12.973 1.205,12.973 C0.919,12.973 0.637,12.956 0.359,12.924 C1.928,13.929 3.791,14.517 5.793,14.517 C12.314,14.517 15.879,9.114 15.879,4.429 L15.868,3.971 C16.563,3.472 17.165,2.849 17.639,2.138 C17.3,2.419 16.321,2.611 15.604,2.697 C16.336,2.257 16.897,1.563 17.163,0.736 Z"></path>
+                        </svg></a>
+                    <a href="#" class="footer__media"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="11px">
+                            <path fill-rule="evenodd" fill="rgb(255, 255, 255)" d="M15.40,6.817 C15.616,7.380 16.224,7.909 16.740,8.528 C16.968,8.802 17.184,9.87 17.350,9.406 C17.584,9.860 17.372,10.359 16.965,10.386 L14.436,10.385 C13.783,10.439 13.263,10.176 12.825,9.731 C12.475,9.374 12.151,8.994 11.814,8.625 C11.676,8.474 11.531,8.334 11.359,8.221 C11.14,7.997 10.714,8.65 10.517,8.425 C10.316,8.792 10.270,9.197 10.250,9.605 C10.223,10.201 10.43,10.358 9.445,10.385 C8.166,10.445 6.953,10.252 5.825,9.607 C4.832,9.39 4.61,8.235 3.390,7.327 C2.84,5.557 1.84,3.613 0.185,1.614 C0.16,1.164 0.131,0.922 0.628,0.914 C1.453,0.897 2.278,0.898 3.104,0.912 C3.439,0.917 3.661,1.110 3.791,1.427 C4.237,2.524 4.783,3.568 5.469,4.536 C5.652,4.793 5.838,5.51 6.103,5.234 C6.396,5.434 6.620,5.367 6.758,5.41 C6.845,4.834 6.884,4.610 6.903,4.389 C6.969,3.625 6.977,2.863 6.863,2.102 C6.792,1.628 6.525,1.320 6.51,1.231 C5.809,1.185 5.845,1.94 5.962,0.956 C6.166,0.719 6.357,0.571 6.738,0.571 L9.597,0.571 C10.47,0.660 10.147,0.861 10.208,1.314 L10.211,4.490 C10.206,4.665 10.298,5.185 10.614,5.301 C10.867,5.383 11.33,5.181 11.185,5.21 C11.869,4.295 12.358,3.436 12.794,2.547 C12.988,2.156 13.154,1.751 13.316,1.344 C13.435,1.44 13.623,0.896 13.962,0.902 L16.713,0.905 C16.795,0.905 16.877,0.906 16.956,0.919 C17.420,0.999 17.547,1.198 17.404,1.650 C17.178,2.362 16.739,2.953 16.310,3.548 C15.851,4.183 15.360,4.795 14.905,5.434 C14.488,6.17 14.521,6.312 15.40,6.817 L15.40,6.817 Z"></path>
+                        </svg></a>
+                    <a href="#" class="footer__media"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="17px">
+                            <path fill-rule="evenodd" fill="rgb(255, 255, 255)" d="M4.702,3.31 C5.641,3.31 6.405,3.797 6.405,4.738 C6.405,5.677 5.641,6.443 4.702,6.443 C3.763,6.443 2.998,5.677 2.998,4.738 C2.998,3.797 3.763,3.31 4.702,3.31 L4.702,3.31 ZM4.702,8.857 C6.971,8.857 8.816,7.9 8.816,4.738 C8.816,2.465 6.971,0.616 4.702,0.616 C2.433,0.616 0.587,2.465 0.587,4.738 C0.587,7.9 2.433,8.857 4.702,8.857 M6.366,12.219 C7.213,12.25 8.20,11.690 8.755,11.227 C9.319,10.872 9.488,10.127 9.134,9.563 C8.780,8.998 8.36,8.828 7.473,9.182 C7.472,9.182 7.472,9.182 7.472,9.183 C5.786,10.245 3.616,10.244 1.932,9.183 C1.369,8.828 0.626,8.997 0.271,9.561 C0.271,9.562 0.270,9.562 0.270,9.563 C0.83,10.127 0.85,10.872 0.648,11.227 C1.383,11.690 2.190,12.24 3.37,12.219 L0.736,14.522 C0.266,14.994 0.266,15.759 0.737,16.230 C1.208,16.702 1.971,16.701 2.442,16.230 L2.442,16.230 L4.701,13.966 L6.962,16.230 C7.432,16.701 8.194,16.702 8.665,16.231 C8.665,16.230 8.666,16.230 8.666,16.230 C9.137,15.760 9.138,14.996 8.669,14.525 C8.668,14.525 8.667,14.523 8.666,14.522 L6.366,12.219 "></path>
+                        </svg></a>
+                    <a href="#" class="footer__media"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22px" height="14px">
+                            <path fill-rule="evenodd" fill="rgb(255, 255, 255)" d="M18.679,6.997 L18.679,9.557 L17.399,9.557 L17.399,6.997 L14.839,6.997 L14.839,5.717 L17.399,5.717 L17.399,3.157 L18.679,3.157 L18.679,5.717 L21.239,5.717 L21.239,6.997 L18.679,6.997 ZM7.159,13.397 C3.630,13.397 0.759,10.526 0.759,6.997 C0.759,3.468 3.630,0.597 7.159,0.597 C8.697,0.597 10.176,1.149 11.328,2.153 L9.646,4.84 C8.960,3.486 8.77,3.157 7.159,3.157 C5.42,3.157 3.319,4.880 3.319,6.997 C3.319,9.115 5.42,10.836 7.159,10.836 C8.828,10.836 10.252,9.767 10.780,8.277 L7.159,8.277 L7.159,5.717 L13.559,5.717 L13.559,6.997 C13.559,10.526 10.688,13.397 7.159,13.397 Z"></path>
+                        </svg></a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <div class="modal" id="modal-del">
+        <div class="modal-content">
+            <button class="modal-close"></button>
+            <p class="modal__heading">
+                Вы пытаетесь удалить объявление(я):
+            </p>
+            <p class="modal__text">
+                Плотник ID 393929929 имеет статус активен, срок окончания периода 05.05.2019.
+                Менеджер по продажам ID 393929929 имеет статус на модерации.
+                При подтверждение своих действий, данные объявления депубликуются!
+            </p>
+            <button class="btn fill ex delete-btn">Да</button>
+            <button class="btn red ex close-modal">Отмемна</button>
+        </div>
+    </div>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/jquery.daterangepicker.min.js"></script>
+    <script src="js/scripts.js?ver-8"></script>
+</body>
+
+</html>

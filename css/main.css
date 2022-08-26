@@ -5,16 +5,8 @@
 :root {
     /* COLORS */
 
-    /* #fede31 */
-    --clr-yellow: 51 99% 59%;
-    /* #fbf7da */
-    --clr-light-yellow: 53 80% 92%;
-
-    /* FONTS */
-    --ff-primary: 'Geometria', sans-serif;
-    --ff-secondary: 'Open Sans', sans-serif;
-
-    /* FONT SIZES */
+    --clr-yellow: #ffdd00;
+    --clr-light: #f4f4f4;
 
 }
 
@@ -68,9 +60,9 @@ html:focus-within {
 
 /* Set core body defaults */
 body {
-    font-family: var(--ff-primary);
+    font-family: 'ZabraProRegular', sans-serif;
     font-size: 1rem;
-    background-color: hsl( var(--clr-light-yellow) );
+    background-color: var(--clr-light);
     min-height: 100vh;
     text-rendering: optimizeSpeed;
     line-height: 1.6;
@@ -118,17 +110,87 @@ select {
 }
 
 /* ------------------------ */
+/* Utilities                */
+/* ------------------------ */
+
+.container {
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+@media (min-width: 1470px) {
+    .container {
+        padding: 0;
+    }
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+/* ------------------------ */
 /* Components               */
 /* ------------------------ */
 
+/* PRIMARY HEADER */
 .primary-header {
     min-height: 100px;
-    background-color: hsl( var(--clr-yellow) );
+    background-color: var(--clr-yellow);
     display: flex;
     flex-direction: column;
 }
 
 .primary-header > * {
     flex-grow: 1;
-    border-bottom: 2px solid #ffe63b;
+    border-bottom: 1px solid #ffe53b;
+}
+
+/* adv-item */
+.adv-item {
+    grid-template-areas:
+    'checkbox img title city-list stats services'
+    'checkbox img price city-list get-more-responses services'
+    'checkbox img edit-btns city-list links services'
+    '.        .        .    city-list links services';
+}
+
+.adv-item input[type="checkbox"] {
+    grid-area: checkbox;
+}
+
+.adv-item__img {
+    grid-area: img;
+}
+
+.adv-item__title {
+    grid-area: title;
+}
+
+.adv-item__edit-btns {
+    grid-area: edit-btns;
+}
+
+.adv-item__city-list {
+    grid-area: city-list;
+}
+
+.adv-item__links {
+    grid-area: links;
+}
+
+.adv-item__get-more-responses {
+    grid-area: get-more-responses;
+}
+
+.adv-item__stats {
+    grid-area: stats;
+}
+
+.adv-item__services {
+    grid-area: services;
 }
