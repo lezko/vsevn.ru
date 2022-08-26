@@ -32,7 +32,7 @@
                 <nav class="breadcrumb">
                     <ul>
                         <li><a href="#">Главная</a></li>
-                        <li><span>/ Мои объявления</span></li>
+                        <li><a href="">Мои объявления</a></li>
                     </ul>
                 </nav>
             </div>
@@ -40,11 +40,11 @@
 
         <section class="filters">
 
-            <div class="container">
+            <div class="container flow">
 
-                <div class="flex">
+                <div class="adv-top-filters flex">
                     <nav class="adv-filter-state">
-                        <ul>
+                        <ul class="flex" style="--flex-gap: 20px">
                             <li><a href="" id="adv-filter-state-active" class="tab-link"><span>Активные</span><span></span></a></li>
                             <li><a href="" id="adv-filter-state-closed" class="tab-link"><span>Завершенные</span><span>10</span></a></li>
                             <li><a href="" id="adv-filter-state-blocked" class="tab-link"><span>Блокированные</span><span>1</span></a></li>
@@ -55,8 +55,8 @@
                         </ul>
                     </nav>
 
-                    <nav class="adv-filter-type">
-                        <ul>
+                    <nav class="adv-filter-type" style="--flex-gap: 20px">
+                        <ul class="flex">
                             <li><a href="" id="adv-filter-type-all">Все</a></li>
                             <li><a href="" id="adv-filter-type-resume">Резюме</a></li>
                             <li><a href="" id="adv-filter-type-vacancies">Вакансии</a></li>
@@ -64,12 +64,12 @@
                     </nav>
                 </div>
 
-                <div class="flex">
-                    <div class="adv-filter-date">
-                        <input type="date" name="adv-filter-date-from" id="adv-filter-date-from">
-                        <input type="date" name="adv-filter-date-to" id="adv-filter-date-to">
+                <div class="adv-input-filters flex">
+                    <div class="adv-filter-date flex">
+                        <input placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
+                        <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
                     </div>
-                    <div class="adv-filter-price">
+                    <div class="adv-filter-price flex">
                         <input placeholder="Цена от" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
                         <input placeholder="Цена до" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
                     </div>
@@ -86,8 +86,8 @@
                     </div>
                 </div>
 
-                <nav class="adv-filter-period">
-                    <ul>
+                <nav class="adv-filter-period bottom-line">
+                    <ul class="flex" style="--flex-gap: 20px">
                         <li><a href="" class="tab-link" id="adv-filter-period-all">За все время</a></li>
                         <li><a href="" class="tab-link" id="adv-filter-period-today">Сегодня</a></li>
                         <li><a href="" class="tab-link" id="adv-filter-period-week">Неделя</a></li>
@@ -101,12 +101,12 @@
         </section>
 
         <section class="actions">
-            <div class="container flex">
-                <div>
+            <div class="container flex bottom-line">
+                <div class="flex" style="--flex-gap: 20px">
                     <input type="checkbox" name="action-select-all" id="action-select-all">
-                    <a id="action-activate-adv" class="action-btn">Активировать</a>
-                    <a id="action-delete-adv" class="action-btn">Удалить</a>
-                    <a id="action-create-adv" class="action-btn action-btn--red">Подать объявление</a>
+                    <a href="" id="action-activate-adv" class="action-btn">Активировать</a>
+                    <a href="" id="action-delete-adv" class="action-btn">Удалить</a>
+                    <a href="" id="action-create-adv" class="action-btn action-btn--red">Подать объявление</a>
                 </div>
                 <select name="action-sort" id="action-sort">
                     <option value="by-date">По дате</option>
@@ -116,7 +116,7 @@
 
         <section class="ads">
             <div class="container">
-                <div class="ads__field-names grid">
+                <div class="ads__field-names grid bottom-line">
                     <span>Название объявления/Зарплата</span>
                     <span>Регион/Населенный пункт</span>
                     <span>Просмотр</span>
@@ -128,7 +128,7 @@
                     <span>Период(ы) объявлений и платных услуг</span>
                 </div>
                 <div class="ads__items">
-                    <article class="adv-item grid">
+                    <article class="adv-item grid bottom-line">
 
                         <input type="checkbox" name="" id="">
 
@@ -147,25 +147,18 @@
                         </div>
 
                         <ul class="adv-item__city-list">
-                            <li class="service-btn"><a href="">Добавить</a></li>
+                            <li class="service-item"><a href="">Добавить</a></li>
                             <li><span></span><span>Нижний Новгород</span></li>
                         </ul>
 
                         <ul class="adv-item__links">
-                            <li class="service-btn"><a href="">Еще</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
+                            <li class="service-item"><a href="">Еще</a></li>
                             <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
                         </ul>
 
                         <a href="" class="adv-item__get-more-responses">Получить больше откликов</a>
 
-                        <div class="adv-item__stats">
+                        <div class="adv-item__stats flex">
                             <span class="views">1640</span>
                             <span class="in-favourites">23</span>
                             <span class="dialogs">10</span>
@@ -178,7 +171,17 @@
                             <article class="service">
                                 <img src="" alt="icon" class="service__icon">
                                 <h4 class="service__title">Платное размещение</h4>
-                                <p class="period">
+                                <p class="service__period">
+                                    <span>Период:</span>
+                                    <span class="from">15.05.2019</span>
+                                    <span class="dash">-</span>
+                                    <span class="to">15.05.2019</span>
+                                </p>
+                            </article>
+                            <article class="service">
+                                <img src="" alt="icon" class="service__icon">
+                                <h4 class="service__title">Платное размещение</h4>
+                                <p class="service__period">
                                     <span>Период:</span>
                                     <span class="from">15.05.2019</span>
                                     <span class="dash">-</span>
@@ -187,6 +190,60 @@
                             </article>
                         </div>
                     </article>
+
+                    <article class="adv-item grid bottom-line">
+
+                        <input type="checkbox" name="" id="">
+
+                        <img class="adv-item__img circle" src="" alt="logo">
+
+                        <h3 class="adv-item__title">Менеджер по продажам</h3>
+
+                        <div class="adv-item__price">
+                            <span>500</span>
+                            <span>руб</span>
+                        </div>
+
+                        <div class="adv-item__edit-btns">
+                            <a class="edit" href="">Редактировать</a>
+                            <a class="change-design" href="">Изменить дизайн</a>
+                        </div>
+
+                        <ul class="adv-item__city-list">
+                            <li class="service-item"><a href="">Добавить</a></li>
+                            <li><span></span><span>Нижний Новгород</span></li>
+                        </ul>
+
+                        <ul class="adv-item__links">
+                            <li class="service-item"><a href="">Еще</a></li>
+                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
+                        </ul>
+
+                        <a href="" class="adv-item__get-more-responses">Получить больше откликов</a>
+
+                        <div class="adv-item__stats flex">
+                            <span class="views">1640</span>
+                            <span class="in-favourites">23</span>
+                            <span class="dialogs">10</span>
+                            <span class="responses"><span>18</span><span class="growth">+1</span></span>
+                            <span class="matching-vacancies">2430</span>
+                            <span class="days-published">28</span>
+                        </div>
+
+                        <div class="adv-item__services">
+                            <article class="service">
+                                <img src="" alt="icon" class="service__icon">
+                                <h4 class="service__title">Платное размещение</h4>
+                                <p class="service__period">
+                                    <span>Период:</span>
+                                    <span class="from">15.05.2019</span>
+                                    <span class="dash">-</span>
+                                    <span class="to">15.05.2019</span>
+                                </p>
+                            </article>
+                        </div>
+                    </article>
+
                 </div>
             </div>
         </section>

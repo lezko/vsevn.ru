@@ -3,11 +3,12 @@
 /* ------------------------ */
 
 :root {
-    /* COLORS */
 
-    --clr-yellow: #ffdd00;
-    --clr-light: #f4f4f4;
+    --clr-yellow: #fede31;
+    --clr-light: #fbf7da;
+    --clr-brown: #665800;
 
+    --fz-default: 23px;
 }
 
 /* ------------------------ */
@@ -61,7 +62,7 @@ html:focus-within {
 /* Set core body defaults */
 body {
     font-family: 'ZabraProRegular', sans-serif;
-    font-size: 1rem;
+    font-size: var(--fz-default);
     background-color: var(--clr-light);
     min-height: 100vh;
     text-rendering: optimizeSpeed;
@@ -91,6 +92,11 @@ textarea,
 select {
     font: inherit;
     padding: 0;
+    margin: 0;
+    min-width: 0;
+    outline: none;
+    border: none;
+    background-color: transparent;
 }
 
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
@@ -107,6 +113,21 @@ select {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* ------------------------ */
+/* Base                     */
+/* ------------------------ */
+
+span:empty {
+    margin: 0;
+}
+
+input,
+select {
+    border: 1px solid #E3DCB2;
+    border-radius: 5px;
+    padding: 0 15px;
 }
 
 /* ------------------------ */
@@ -129,13 +150,43 @@ select {
     display: flex;
 }
 
+.flex > *:not(:last-child) {
+    margin-right: var(--flex-gap);
+}
+
 .grid {
     display: grid;
+}
+
+.bottom-line {
+    border-bottom: 1px solid #BEBEBE;
+}
+
+.flow > * + * {
+    margin-top: var(--flow-gap, 1rem);
+}
+
+.circle {
+    border-radius: 50%;
 }
 
 /* ------------------------ */
 /* Components               */
 /* ------------------------ */
+
+/* action-btn */
+.action-btn {
+    display: block;
+    border-radius: 5px;
+    background-color: #FFC000;
+    color: var(--clr-brown);
+    padding: 5px 10px;
+}
+
+.action-btn--red {
+    color: #fff;
+    background-color: #FF4949;
+}
 
 /* PRIMARY HEADER */
 .primary-header {
@@ -150,8 +201,145 @@ select {
     border-bottom: 1px solid #ffe53b;
 }
 
+/* content-header */
+.content-header {
+    margin: 30px 0;
+}
+.content-header h1 {
+    color: #665800;
+    font-family: 'ZabraProMedium', sans-serif;
+    font-size: 33px;
+}
+
+/* breadcrumb */
+.breadcrumb ul {
+    display: flex;
+}
+
+.breadcrumb a {
+    color: #665800;
+    text-decoration: none;
+    font-size: 23px;
+}
+
+.breadcrumb li:not(:last-child) a {
+    border-bottom: 1px dotted #463d00;
+}
+
+.breadcrumb li:not(:last-child):after {
+    color: #665800;
+    margin: 0 7px;
+    font-size: 23px;
+    display: inline-block;
+    content: '/';
+}
+
+.breadcrumb li:last-child a {
+    pointer-events: none;
+    text-decoration: none;
+}
+
+/* common styles for all filters */
+.adv-filter-state a,
+.adv-filter-type a,
+.adv-filter-period a {
+    color: var(--clr-brown);
+    text-decoration: none;
+}
+
+/* adv-top-filters */
+.adv-top-filters {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* adv-filter-state */
+.adv-filter-state ul {
+    flex-wrap: wrap;
+}
+
+.adv-filter-state a > span + span {
+    margin-left: 5px;
+}
+
+/* input filters */
+.adv-input-filters {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.adv-input-filters > * {
+    max-width: 350px;
+}
+
+.adv-input-filters select {
+    height: 100%;
+}
+
+/* adv-filter-periods */
+.adv-filter-period {
+    padding-bottom: 20px;
+}
+
+/* common styles for date and price filters */
+.adv-filter-date > input:first-child,
+.adv-filter-price > input:first-child {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.adv-filter-date > input:last-child,
+.adv-filter-price > input:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* actions */
+.actions > .flex {
+    justify-content: space-between;
+    padding: 16px 0;
+}
+
+/* adv-item */
+.adv-item a {
+    text-decoration: underline;
+}
+
+.adv-item__edit-btns a,
+.adv-item__links a {
+    color: #ff0000;
+}
+
+.adv-item__city-list .service-item a {
+    color: #8CAE59;
+}
+
+/* ------------------------ */
+/* Layout                   */
+/* ------------------------ */
+
+/* ads */
+
+/* ads__field-names */
+
+.ads__field-names span {
+    font-size: 16px;
+}
+
+.ads__field-names {
+    grid-template-columns: 7% 20% 10% repeat(6, 7%) 21%;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.ads__field-names span:nth-child(1) {
+    grid-column: 2 / 3;
+}
+
 /* adv-item */
 .adv-item {
+    grid-template-columns: 1% 6% 20% 10% 42% 21%;
     grid-template-areas:
     'checkbox img title city-list stats services'
     'checkbox img price city-list get-more-responses services'
@@ -165,6 +353,10 @@ select {
 
 .adv-item__img {
     grid-area: img;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #E3E6E9;
+    place-self: center;
 }
 
 .adv-item__title {
@@ -172,15 +364,32 @@ select {
 }
 
 .adv-item__edit-btns {
+    display: flex;
+    flex-wrap: wrap;
     grid-area: edit-btns;
 }
 
 .adv-item__city-list {
+    position: relative;
+    align-self: start;
     grid-area: city-list;
 }
 
+.adv-item__city-list .service-item {
+    position: absolute;
+    top: 100%;
+}
+
 .adv-item__links {
+    justify-self: start;
+    position: relative;
     grid-area: links;
+}
+
+.adv-item__links .service-item {
+    position: absolute;
+    margin-left: 20px;
+    left: 100%;
 }
 
 .adv-item__get-more-responses {
@@ -191,6 +400,33 @@ select {
     grid-area: stats;
 }
 
+.adv-item__stats > * {
+    width: 100%;
+}
+
 .adv-item__services {
     grid-area: services;
+}
+
+/* service */
+.service {
+    display: grid;
+    grid-template-areas:
+    'icon title'
+    'icon period';
+}
+
+.service__icon {
+    grid-area: icon;
+    border: 1px solid black;
+    aspect-ratio: 1;
+}
+
+.service__title {
+    grid-area: title;
+}
+
+.service__period {
+    grid-area: period;
+    font-size: 16px;
 }
