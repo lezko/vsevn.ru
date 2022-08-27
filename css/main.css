@@ -7,6 +7,9 @@
     --clr-yellow: #fede31;
     --clr-light: #fbf7da;
     --clr-brown: #665800;
+    --clr-green: #8CAE59;
+    --clr-blue: #0088D2;
+    --clr-gray: #BEBEBE;
 
     --fz-default: 23px;
 }
@@ -43,7 +46,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 400
+    font-weight: 400;
+    font-size: inherit;
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
@@ -159,20 +163,57 @@ select {
 }
 
 .bottom-line {
-    border-bottom: 1px solid #BEBEBE;
+    border-bottom: 1px solid var(--clr-gray);
 }
 
 .flow > * + * {
     margin-top: var(--flow-gap, 1rem);
 }
 
-.circle {
+.avatar-circle {
     border-radius: 50%;
+}
+
+.avatar-square {
+    border-radius: 6px;
+}
+
+.show-on-adv-item-hover {
+    height: 0;
+    overflow: hidden;
+}
+
+.adv-item:hover .show-on-adv-item-hover {
+    height: auto;
 }
 
 /* ------------------------ */
 /* Components               */
 /* ------------------------ */
+
+/* checkbox */
+.checkbox {
+    position: relative;
+    width: 45px;
+    aspect-ratio: 1;
+    display: grid;
+    place-content: center;
+    border-radius: 7px;
+    background: linear-gradient(0deg, #E6E6E7 0%, #F4F5F6 100%), #E3DCB2;
+}
+
+.checkbox.active .checkbox__inner {
+    background-color: #FFDD00;
+}
+
+.checkbox__inner {
+    width: 13px;
+    height: 13px;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 6px #E4DDB4;
+    padding: 2px;
+    background-color: #fff;
+    pointer-events: none;
+}
 
 /* action-btn */
 .action-btn {
@@ -180,7 +221,7 @@ select {
     border-radius: 5px;
     background-color: #FFC000;
     color: var(--clr-brown);
-    padding: 5px 10px;
+    padding: 5px 20px;
 }
 
 .action-btn--red {
@@ -302,8 +343,14 @@ select {
 }
 
 /* adv-item */
+.adv-item:hover {
+    background-color: #faf6e5;
+}
+
 .adv-item a {
-    text-decoration: underline;
+    text-decoration: none;
+    border-bottom: 1px dotted;
+    font-size: 18px;
 }
 
 .adv-item__edit-btns a,
@@ -311,8 +358,25 @@ select {
     color: #ff0000;
 }
 
-.adv-item__city-list .service-item a {
-    color: #8CAE59;
+.adv-item__city-list .service-item a,
+.adv-item__get-more-responses a {
+    color: var(--clr-green);
+}
+
+.adv-item__title {
+    color: #0088D2;
+}
+
+.adv-item__price {
+    font-family: 'ZabraProMedium', sans-serif;
+}
+
+.adv-item__services > *:not(:last-child) {
+    border-bottom: 1px solid var(--clr-gray);
+}
+
+.growth {
+    color: var(--clr-green);
 }
 
 /* ------------------------ */
@@ -328,9 +392,9 @@ select {
 }
 
 .ads__field-names {
-    grid-template-columns: 7% 20% 10% repeat(6, 7%) 21%;
+    grid-template-columns: 7% 19% 9% repeat(6, 7%) 21%;
     align-items: center;
-    padding: 15px 0;
+    padding: 15px;
 }
 
 .ads__field-names span:nth-child(1) {
@@ -339,16 +403,23 @@ select {
 
 /* adv-item */
 .adv-item {
-    grid-template-columns: 1% 6% 20% 10% 42% 21%;
+    grid-template-columns: 4% 5% 19% 9% 42% 21%;
+    grid-template-rows: repeat(3, 28px) 1fr;
     grid-template-areas:
-    'checkbox img title city-list stats services'
-    'checkbox img price city-list get-more-responses services'
-    'checkbox img edit-btns city-list links services'
+    'checkbox img left-block city-list stats services'
+    'checkbox img left-block city-list get-more-responses services'
+    'checkbox img left-block city-list links services'
     '.        .        .    city-list links services';
 }
 
-.adv-item input[type="checkbox"] {
+.adv-item {
+    line-height: 1.2;
+    padding: 30px 15px;
+}
+
+.checkbox {
     grid-area: checkbox;
+    align-self: center;
 }
 
 .adv-item__img {
@@ -356,17 +427,15 @@ select {
     width: 80px;
     height: 80px;
     border: 1px solid #E3E6E9;
-    place-self: center;
 }
 
-.adv-item__title {
-    grid-area: title;
+.adv-item__left-block {
+    grid-area: left-block;
 }
 
 .adv-item__edit-btns {
-    display: flex;
+    --flex-gap: 10px;
     flex-wrap: wrap;
-    grid-area: edit-btns;
 }
 
 .adv-item__city-list {
@@ -393,6 +462,8 @@ select {
 }
 
 .adv-item__get-more-responses {
+    justify-self: start;
+    align-self: center;
     grid-area: get-more-responses;
 }
 
@@ -410,6 +481,8 @@ select {
 
 /* service */
 .service {
+    padding: 10px;
+    column-gap: 5px;
     display: grid;
     grid-template-areas:
     'icon title'
@@ -417,9 +490,11 @@ select {
 }
 
 .service__icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
     grid-area: icon;
-    border: 1px solid black;
-    aspect-ratio: 1;
+    place-self: center;
 }
 
 .service__title {

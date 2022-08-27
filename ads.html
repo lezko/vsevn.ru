@@ -80,7 +80,7 @@
                     </div>
                     <div class="adv-filter-title">
                         <div>
-                            <input placeholder="Введите название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
+                            <input placeholder="Название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
                             <span></span>
                         </div>
                     </div>
@@ -103,7 +103,9 @@
         <section class="actions">
             <div class="container flex bottom-line">
                 <div class="flex" style="--flex-gap: 20px">
-                    <input type="checkbox" name="action-select-all" id="action-select-all">
+                    <div class="checkbox">
+                        <div class="checkbox__inner"></div>
+                    </div>
                     <a href="" id="action-activate-adv" class="action-btn">Активировать</a>
                     <a href="" id="action-delete-adv" class="action-btn">Удалить</a>
                     <a href="" id="action-create-adv" class="action-btn action-btn--red">Подать объявление</a>
@@ -130,20 +132,23 @@
                 <div class="ads__items">
                     <article class="adv-item grid bottom-line">
 
-                        <input type="checkbox" name="" id="">
-
-                        <img class="adv-item__img" src="" alt="logo">
-
-                        <h3 class="adv-item__title">Менеджер по продажам</h3>
-
-                        <div class="adv-item__price">
-                            <span>500</span>
-                            <span>руб</span>
+                        <div class="checkbox">
+                            <div class="checkbox__inner"></div>
                         </div>
 
-                        <div class="adv-item__edit-btns">
-                            <a class="edit" href="">Редактировать</a>
-                            <a class="change-design" href="">Изменить дизайн</a>
+                        <img class="adv-item__img avatar-square" src="https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg" alt="logo">
+
+                        <div class="adv-item__left-block"><h3 class="adv-item__title">Менеджер по продажам</h3>
+
+                            <div class="adv-item__price">
+                                <span>500</span>
+                                <span>руб</span>
+                            </div>
+
+                            <div class="adv-item__edit-btns flex show-on-adv-item-hover">
+                                <a class="edit" href="">Редактировать</a>
+                                <a class="change-design" href="">Изменить дизайн</a>
+                            </div>
                         </div>
 
                         <ul class="adv-item__city-list">
@@ -151,12 +156,14 @@
                             <li><span></span><span>Нижний Новгород</span></li>
                         </ul>
 
-                        <ul class="adv-item__links">
+                        <ul class="adv-item__links show-on-adv-item-hover">
                             <li class="service-item"><a href="">Еще</a></li>
                             <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
                         </ul>
 
-                        <a href="" class="adv-item__get-more-responses">Получить больше откликов</a>
+                        <div class="adv-item__get-more-responses show-on-adv-item-hover">
+                            <a href="">Получить больше откликов</a>
+                        </div>
 
                         <div class="adv-item__stats flex">
                             <span class="views">1640</span>
@@ -167,9 +174,9 @@
                             <span class="days-published">28</span>
                         </div>
 
-                        <div class="adv-item__services">
+                        <div class="adv-item__services show-on-adv-item-hover">
                             <article class="service">
-                                <img src="" alt="icon" class="service__icon">
+                                <img src="img/megaphone.svg" alt="icon" class="service__icon">
                                 <h4 class="service__title">Платное размещение</h4>
                                 <p class="service__period">
                                     <span>Период:</span>
@@ -179,7 +186,17 @@
                                 </p>
                             </article>
                             <article class="service">
-                                <img src="" alt="icon" class="service__icon">
+                                <img src="img/quality.svg" alt="icon" class="service__icon">
+                                <h4 class="service__title">Платное размещение</h4>
+                                <p class="service__period">
+                                    <span>Период:</span>
+                                    <span class="from">15.05.2019</span>
+                                    <span class="dash">-</span>
+                                    <span class="to">15.05.2019</span>
+                                </p>
+                            </article>
+                            <article class="service">
+                                <img src="img/rocket.svg" alt="icon" class="service__icon">
                                 <h4 class="service__title">Платное размещение</h4>
                                 <p class="service__period">
                                     <span>Период:</span>
@@ -193,20 +210,23 @@
 
                     <article class="adv-item grid bottom-line">
 
-                        <input type="checkbox" name="" id="">
-
-                        <img class="adv-item__img circle" src="" alt="logo">
-
-                        <h3 class="adv-item__title">Менеджер по продажам</h3>
-
-                        <div class="adv-item__price">
-                            <span>500</span>
-                            <span>руб</span>
+                        <div class="checkbox">
+                            <div class="checkbox__inner"></div>
                         </div>
 
-                        <div class="adv-item__edit-btns">
-                            <a class="edit" href="">Редактировать</a>
-                            <a class="change-design" href="">Изменить дизайн</a>
+                        <img class="adv-item__img avatar-circle" src="https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg" alt="logo">
+
+                        <div class="adv-item__left-block"><h3 class="adv-item__title">Менеджер по продажам</h3>
+
+                            <div class="adv-item__price">
+                                <span>500</span>
+                                <span>руб</span>
+                            </div>
+
+                            <div class="adv-item__edit-btns flex show-on-adv-item-hover">
+                                <a class="edit" href="">Редактировать</a>
+                                <a class="change-design" href="">Изменить дизайн</a>
+                            </div>
                         </div>
 
                         <ul class="adv-item__city-list">
@@ -214,12 +234,14 @@
                             <li><span></span><span>Нижний Новгород</span></li>
                         </ul>
 
-                        <ul class="adv-item__links">
+                        <ul class="adv-item__links show-on-adv-item-hover">
                             <li class="service-item"><a href="">Еще</a></li>
                             <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
                         </ul>
 
-                        <a href="" class="adv-item__get-more-responses">Получить больше откликов</a>
+                        <div class="adv-item__get-more-responses show-on-adv-item-hover">
+                            <a href="">Получить больше откликов</a>
+                        </div>
 
                         <div class="adv-item__stats flex">
                             <span class="views">1640</span>
@@ -230,9 +252,19 @@
                             <span class="days-published">28</span>
                         </div>
 
-                        <div class="adv-item__services">
+                        <div class="adv-item__services show-on-adv-item-hover">
                             <article class="service">
-                                <img src="" alt="icon" class="service__icon">
+                                <img src="img/quality.svg" alt="icon" class="service__icon">
+                                <h4 class="service__title">Платное размещение</h4>
+                                <p class="service__period">
+                                    <span>Период:</span>
+                                    <span class="from">15.05.2019</span>
+                                    <span class="dash">-</span>
+                                    <span class="to">15.05.2019</span>
+                                </p>
+                            </article>
+                            <article class="service">
+                                <img src="img/rocket.svg" alt="icon" class="service__icon">
                                 <h4 class="service__title">Платное размещение</h4>
                                 <p class="service__period">
                                     <span>Период:</span>
