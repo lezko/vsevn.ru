@@ -214,7 +214,6 @@ select {
 
 .tab-links--red .active {
     color: #ff0000;
-    border: none;
 }
 
 .tab-link span {
@@ -320,7 +319,7 @@ select {
 /* common styles for all filters and actions*/
 .filters,
 .actions {
-    font-size: 18px;
+    font-size: 21px;
 
 }
 .adv-filter-state a,
