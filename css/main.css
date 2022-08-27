@@ -188,7 +188,6 @@ select {
 
 .show-on-adv-item-hover {
     opacity: 0;
-    overflow: hidden;
 }
 
 .adv-item:hover .show-on-adv-item-hover {
@@ -233,7 +232,7 @@ select {
     border-radius: 5px;
     background-color: #FFC000;
     color: var(--clr-brown);
-    padding: .4em 1.1em;
+    padding: .3em 1.1em;
 }
 
 .action-btn--red {
@@ -337,6 +336,11 @@ select {
     flex-wrap: wrap;
 }
 
+.adv-input-filters input,
+.adv-input-filters select {
+    padding: .3em 1em;
+}
+
 .adv-input-filters > * {
     max-width: 350px;
 }
@@ -408,8 +412,7 @@ select {
 }
 
 /* 'fade' effect on overflowing text */
-.adv-item__title,
-.adv-item__city-list > li {
+.ovf-fade {
     position: relative;
 }
 
@@ -430,15 +433,27 @@ select {
 /* ads */
 
 /* ads__field-names */
+.ads__field-names {
+    column-gap: 1%;
+    grid-template-columns: 11% 19% 8% 36% 22%;
+    padding: 15px;
+}
 
 .ads__field-names span {
     font-size: 16px;
+    display: grid;
+    line-height: 1;
+    align-content: center;
 }
 
-.ads__field-names {
-    grid-template-columns: 7% 19% 9% repeat(6, 7%) 21%;
-    align-items: center;
-    padding: 15px;
+.ads__field-names--big {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.ads__field-names--big > * {
+    width: 100%;
+    overflow: hidden;
 }
 
 .ads__field-names span:nth-child(1) {
@@ -447,8 +462,9 @@ select {
 
 /* adv-item */
 .adv-item {
-    grid-template-columns: 3% 7% 19% 8% 42% 21%;
+    grid-template-columns: 3% 7% 19% 8% 36% 22%;
     grid-template-rows: repeat(3, 28px) 1fr;
+    column-gap: 1%;
     grid-template-areas:
     'checkbox img left-block city-list stats services'
     'checkbox img left-block city-list get-more-responses services'
@@ -468,6 +484,7 @@ select {
 
 .adv-item__img {
     grid-area: img;
+    place-self: center;
     max-height: 100%;
     border: 1px solid #E3E6E9;
 }
@@ -528,11 +545,16 @@ select {
 
 .adv-item__services {
     grid-area: services;
+    place-self: start;
+}
+
+.adv-item__services > *:not(:last-child) {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 /* service */
 .service {
-    padding: 10px;
     column-gap: 5px;
     display: grid;
     grid-template-areas:

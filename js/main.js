@@ -52,7 +52,7 @@ function initFadeEffects(elems, findBackground) {
     });
 }
 
-const elems = [].concat(...findAll('.adv-item__title'), ...findAll('.adv-item__city-list > li'));
+const elems = [].concat(...findAll('.adv-item__title'), ...findAll('.adv-item__city-list > li'), ...findAll('.ads__field-names--big > span'));
 initFadeEffects(elems, true);
 
 window.addEventListener('resize', () => {
