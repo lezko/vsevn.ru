@@ -12,6 +12,13 @@
     <script defer src="js/main.js"></script>
 
     <title>Мои Объявления</title>
+
+    <style>
+        .test-form {
+            /*display: flex;*/
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 <body>
 
@@ -21,6 +28,26 @@
         <section></section>
     </header>
     <!--  /PRIMARY HEADER  -->
+
+    <!--  add test articles  -->
+    <div class="text-btn">Добавить объявление (для тестов)</div>
+    <div class="test-form">
+        <input type="text" name="title" placeholder="название">
+        <input type="text" name="price" placeholder="цена">
+        <input type="text" name="city-list" placeholder="города через пробел">
+        <input type="text" name="logo-url" placeholder="logo url">
+        <input type="text" name="views" placeholder="просмотры">
+        <input type="text" name="favourites" placeholder="в избранном">
+        <input type="text" name="dialogs" placeholder="диалоги">
+        <input type="text" name="responses" placeholder="отклики">
+        <input type="text" name="matching-vacancies" placeholder="подходящие вакансии">
+        <input type="text" name="days-published" placeholder="размещалось дней">
+        <input style="width: 350px" type="text" name="services" placeholder="услуги (пока что только кол-во)">
+        <label><input type="radio" name="type" value="vacancy"> вакансия </label>
+        <label><input type="radio" name="type" value="worker"> соискатель </label> <br>
+        <a class="add" href="">добавить</a> <br>
+        <a class="delete" href="">удалить все</a>
+    </div>
 
     <!--  MAIN  -->
     <main class="main">
@@ -122,167 +149,16 @@
 
                     <div class="ads__field-names--big">
                         <span>Просмотр</span>
-                        <span>В избран - ном</span>
+                        <span>В избра - нном</span>
                         <span>Диалоги</span>
                         <span>Отклики</span>
-                        <span>Подходя - щие вакансии</span>
-                        <span>Размеща - лось дней</span>
+                        <span>Подхо - дящие вакансии</span>
+                        <span>Разме - щалось дней</span>
                     </div>
 
                     <span>Период(ы) объявлений и платных услуг</span>
                 </div>
-                <div class="ads__items">
-                    <article class="adv-item grid bottom-line">
-
-                        <div class="checkbox" role="checkbox">
-                            <div class="checkbox__inner"></div>
-                        </div>
-
-                        <img class="adv-item__img avatar-square" src="https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg" alt="logo">
-
-                        <div class="adv-item__left-block">
-                            <h3 class="adv-item__title">Менеджер по продажам</h3>
-
-                            <div class="adv-item__price">
-                                <span>500</span>
-                                <span>руб</span>
-                            </div>
-
-                            <div class="adv-item__edit-btns flex">
-                                <a class="edit" href="">Редактировать</a>
-                                <a class="change-design" href="">Изменить дизайн</a>
-                            </div>
-                        </div>
-
-                        <ul class="adv-item__city-list">
-                            <li class="service-item"><a href="">Добавить</a></li>
-                            <li><span></span><span>Нижний Новгород</span></li>
-                            <li><span></span><span>Нижний Новгород</span></li>
-                            <li><span></span><span>Нижний Новгород</span></li>
-                        </ul>
-
-                        <ul class="adv-item__links show-on-adv-item-hover">
-                            <li class="service-item"><a href="">Еще</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                        </ul>
-
-                        <div class="adv-item__get-more-responses show-on-adv-item-hover">
-                            <a href="">Получить больше откликов</a>
-                        </div>
-
-                        <div class="adv-item__stats flex">
-                            <span class="views">1640</span>
-                            <span class="favourites">23</span>
-                            <span class="dialogs">10</span>
-                            <span class="responses"><span>18</span><span class="growth">+1</span></span>
-                            <span class="matching-vacancies">2430</span>
-                            <span class="days-published">28</span>
-                        </div>
-
-                        <div class="adv-item__services">
-                            <article class="service">
-                                <img src="img/service-icons/megaphone.svg" alt="icon" class="service__icon">
-                                <h4 class="service__title">Платное размещение</h4>
-                                <p class="service__period">
-                                    <span>Период:</span>
-                                    <span class="from">15.05.2019</span>
-                                    <span class="dash">-</span>
-                                    <span class="to">15.05.2019</span>
-                                </p>
-                            </article>
-                            <article class="service">
-                                <img src="img/service-icons/quality.svg" alt="icon" class="service__icon">
-                                <h4 class="service__title">Платное размещение</h4>
-                                <p class="service__period">
-                                    <span>Период:</span>
-                                    <span class="from">15.05.2019</span>
-                                    <span class="dash">-</span>
-                                    <span class="to">15.05.2019</span>
-                                </p>
-                            </article>
-                            <article class="service">
-                                <img src="img/service-icons/rocket.svg" alt="icon" class="service__icon">
-                                <h4 class="service__title">Платное размещение</h4>
-                                <p class="service__period">
-                                    <span>Период:</span>
-                                    <span class="from">15.05.2019</span>
-                                    <span class="dash">-</span>
-                                    <span class="to">15.05.2019</span>
-                                </p>
-                            </article>
-                        </div>
-                    </article>
-
-                    <article class="adv-item grid bottom-line">
-
-                        <div class="checkbox" role="checkbox">
-                            <div class="checkbox__inner"></div>
-                        </div>
-
-                        <img class="adv-item__img avatar-circle" src="https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg" alt="logo">
-
-                        <div class="adv-item__left-block">
-                            <h3 class="adv-item__title">Менеджер по продажам sfsdfsd sdfsdfsdf</h3>
-
-                            <div class="adv-item__price">
-                                <span>500</span>
-                                <span>руб</span>
-                            </div>
-
-                            <div class="adv-item__edit-btns flex">
-                                <a class="edit" href="">Редактировать</a>
-                                <a class="change-design" href="">Изменить дизайн</a>
-                            </div>
-                        </div>
-
-                        <ul class="adv-item__city-list">
-                            <li class="service-item"><a href="">Добавить</a></li>
-                            <li><span></span><span>Нижний Новгород</span></li>
-                        </ul>
-
-                        <ul class="adv-item__links show-on-adv-item-hover">
-                            <li class="service-item"><a href="">Еще</a></li>
-                            <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-                        </ul>
-
-                        <div class="adv-item__get-more-responses show-on-adv-item-hover">
-                            <a href="">Получить больше откликов</a>
-                        </div>
-
-                        <div class="adv-item__stats flex">
-                            <span class="views">1640</span>
-                            <span class="favourites">23</span>
-                            <span class="dialogs">10</span>
-                            <span class="responses"><span>18</span><span class="growth">+1</span></span>
-                            <span class="matching-vacancies">2430</span>
-                            <span class="days-published">28</span>
-                        </div>
-
-                        <div class="adv-item__services">
-                            <article class="service">
-                                <img src="img/service-icons/quality.svg" alt="icon" class="service__icon">
-                                <h4 class="service__title">Платное размещение</h4>
-                                <p class="service__period">
-                                    <span>Период:</span>
-                                    <span class="from">15.05.2019</span>
-                                    <span class="dash">-</span>
-                                    <span class="to">15.05.2019</span>
-                                </p>
-                            </article>
-                            <article class="service">
-                                <img src="img/service-icons/rocket.svg" alt="icon" class="service__icon">
-                                <h4 class="service__title">Платное размещение</h4>
-                                <p class="service__period">
-                                    <span>Период:</span>
-                                    <span class="from">15.05.2019</span>
-                                    <span class="dash">-</span>
-                                    <span class="to">15.05.2019</span>
-                                </p>
-                            </article>
-                        </div>
-                    </article>
-
-                </div>
+                <div class="ads__items"></div>
             </div>
         </section>
 
