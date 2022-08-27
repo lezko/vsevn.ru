@@ -52,9 +52,30 @@ function initFadeEffects(elems, findBackground) {
     });
 }
 
-const elems = [].concat(...findAll('.adv-item__title'), ...findAll('.adv-item__city-list > li'), ...findAll('.ads__field-names--big > span'));
+const elems = [].concat(...findAll('.adv-item__title'), ...findAll('.adv-item__city-list > li'), ...findAll('.ads__field-names span'));
 initFadeEffects(elems, true);
 
 window.addEventListener('resize', () => {
     initFadeEffects(elems, false);
 });
+
+// tab links (most used on filters)
+findAll('.tab-links').forEach(parent => {
+    const links = Array.from(parent.querySelectorAll('.tab-link'));
+    let active = links.find(l => l.classList.contains('active'));
+    if (!active) {
+        active = links[0];
+        active.classList.add('active');
+    }
+
+    links.forEach(l => l.addEventListener('click', e => {
+        if (e.target === active || !links.includes(e.target)) {
+            return;
+        }
+        active.classList.remove('active');
+        active = e.target;
+        active.classList.add('active');
+    }));
+});
+
+// advertisement rendering system
