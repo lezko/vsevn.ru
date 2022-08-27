@@ -103,6 +103,20 @@ select {
     background-color: transparent;
 }
 
+/* remove arrows from number input fields */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
     html:focus-within {
@@ -141,13 +155,7 @@ select {
 .container {
     max-width: 1450px;
     margin: 0 auto;
-    padding: 0 10px;
-}
-
-@media (min-width: 1470px) {
-    .container {
-        padding: 0;
-    }
+    padding: 0 30px;
 }
 
 .flex {
@@ -179,12 +187,16 @@ select {
 }
 
 .show-on-adv-item-hover {
-    height: 0;
+    opacity: 0;
     overflow: hidden;
 }
 
 .adv-item:hover .show-on-adv-item-hover {
-    height: auto;
+    opacity: 1;
+}
+
+.bg-yellow {
+    background-color: var(--clr-light);
 }
 
 /* ------------------------ */
@@ -194,7 +206,7 @@ select {
 /* checkbox */
 .checkbox {
     position: relative;
-    width: 45px;
+    min-width: var(--checkbox-size, 30px);
     aspect-ratio: 1;
     display: grid;
     place-content: center;
@@ -221,7 +233,7 @@ select {
     border-radius: 5px;
     background-color: #FFC000;
     color: var(--clr-brown);
-    padding: 5px 20px;
+    padding: .4em 1.1em;
 }
 
 .action-btn--red {
@@ -280,12 +292,28 @@ select {
     text-decoration: none;
 }
 
-/* common styles for all filters */
+/* white background on several components */
+.filters .container,
+.actions.container,
+.ads .container {
+    background-color: #fff;
+}
+
+/* common styles for all filters and actions*/
+.filters,
+.actions {
+    font-size: 18px;
+
+}
 .adv-filter-state a,
 .adv-filter-type a,
 .adv-filter-period a {
     color: var(--clr-brown);
     text-decoration: none;
+}
+
+.filters .container {
+    padding-top: 15px;
 }
 
 /* adv-top-filters */
@@ -342,11 +370,11 @@ select {
     padding: 16px 0;
 }
 
-/* adv-item */
-.adv-item:hover {
-    background-color: #faf6e5;
+.action-sort {
+    min-width: 350px;
 }
 
+/* adv-item */
 .adv-item a {
     text-decoration: none;
     border-bottom: 1px dotted;
@@ -379,6 +407,22 @@ select {
     color: var(--clr-green);
 }
 
+/* 'fade' effect on overflowing text */
+.adv-item__title,
+.adv-item__city-list > li {
+    position: relative;
+}
+
+.ovf-fade:after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background:linear-gradient(90deg, transparent 60%, var(--ovf-fade-clr));
+}
+
 /* ------------------------ */
 /* Layout                   */
 /* ------------------------ */
@@ -403,7 +447,7 @@ select {
 
 /* adv-item */
 .adv-item {
-    grid-template-columns: 4% 5% 19% 9% 42% 21%;
+    grid-template-columns: 3% 7% 19% 8% 42% 21%;
     grid-template-rows: repeat(3, 28px) 1fr;
     grid-template-areas:
     'checkbox img left-block city-list stats services'
@@ -424,12 +468,14 @@ select {
 
 .adv-item__img {
     grid-area: img;
-    width: 80px;
-    height: 80px;
+    max-height: 100%;
     border: 1px solid #E3E6E9;
 }
 
 .adv-item__left-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     grid-area: left-block;
 }
 
@@ -442,6 +488,11 @@ select {
     position: relative;
     align-self: start;
     grid-area: city-list;
+}
+
+.adv-item__city-list > li {
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .adv-item__city-list .service-item {

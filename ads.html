@@ -70,8 +70,8 @@
                         <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
                     </div>
                     <div class="adv-filter-price flex">
-                        <input placeholder="Цена от" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
-                        <input placeholder="Цена до" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
+                        <input placeholder="Цена от" value="105000" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
+                        <input placeholder="Цена до" value="124000" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
                     </div>
                     <div class="adv-filter-region">
                         <select name="adv-filter-region" id="adv-filter-region">
@@ -100,17 +100,17 @@
 
         </section>
 
-        <section class="actions">
-            <div class="container flex bottom-line">
+        <section class="actions container">
+            <div class="flex bottom-line">
                 <div class="flex" style="--flex-gap: 20px">
-                    <div class="checkbox">
+                    <div class="checkbox" role="checkbox" style="--checkbox-size: 45px">
                         <div class="checkbox__inner"></div>
                     </div>
                     <a href="" id="action-activate-adv" class="action-btn">Активировать</a>
                     <a href="" id="action-delete-adv" class="action-btn">Удалить</a>
                     <a href="" id="action-create-adv" class="action-btn action-btn--red">Подать объявление</a>
                 </div>
-                <select name="action-sort" id="action-sort">
+                <select name="action-sort" class="action-sort" id="action-sort">
                     <option value="by-date">По дате</option>
                 </select>
             </div>
@@ -132,20 +132,21 @@
                 <div class="ads__items">
                     <article class="adv-item grid bottom-line">
 
-                        <div class="checkbox">
+                        <div class="checkbox" role="checkbox">
                             <div class="checkbox__inner"></div>
                         </div>
 
                         <img class="adv-item__img avatar-square" src="https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg" alt="logo">
 
-                        <div class="adv-item__left-block"><h3 class="adv-item__title">Менеджер по продажам</h3>
+                        <div class="adv-item__left-block">
+                            <h3 class="adv-item__title">Менеджер по продажам</h3>
 
                             <div class="adv-item__price">
                                 <span>500</span>
                                 <span>руб</span>
                             </div>
 
-                            <div class="adv-item__edit-btns flex show-on-adv-item-hover">
+                            <div class="adv-item__edit-btns flex">
                                 <a class="edit" href="">Редактировать</a>
                                 <a class="change-design" href="">Изменить дизайн</a>
                             </div>
@@ -153,6 +154,8 @@
 
                         <ul class="adv-item__city-list">
                             <li class="service-item"><a href="">Добавить</a></li>
+                            <li><span></span><span>Нижний Новгород</span></li>
+                            <li><span></span><span>Нижний Новгород</span></li>
                             <li><span></span><span>Нижний Новгород</span></li>
                         </ul>
 
@@ -174,7 +177,7 @@
                             <span class="days-published">28</span>
                         </div>
 
-                        <div class="adv-item__services show-on-adv-item-hover">
+                        <div class="adv-item__services">
                             <article class="service">
                                 <img src="img/megaphone.svg" alt="icon" class="service__icon">
                                 <h4 class="service__title">Платное размещение</h4>
@@ -210,20 +213,21 @@
 
                     <article class="adv-item grid bottom-line">
 
-                        <div class="checkbox">
+                        <div class="checkbox" role="checkbox">
                             <div class="checkbox__inner"></div>
                         </div>
 
                         <img class="adv-item__img avatar-circle" src="https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg" alt="logo">
 
-                        <div class="adv-item__left-block"><h3 class="adv-item__title">Менеджер по продажам</h3>
+                        <div class="adv-item__left-block">
+                            <h3 class="adv-item__title">Менеджер по продажам</h3>
 
                             <div class="adv-item__price">
                                 <span>500</span>
                                 <span>руб</span>
                             </div>
 
-                            <div class="adv-item__edit-btns flex show-on-adv-item-hover">
+                            <div class="adv-item__edit-btns flex">
                                 <a class="edit" href="">Редактировать</a>
                                 <a class="change-design" href="">Изменить дизайн</a>
                             </div>
@@ -252,7 +256,7 @@
                             <span class="days-published">28</span>
                         </div>
 
-                        <div class="adv-item__services show-on-adv-item-hover">
+                        <div class="adv-item__services">
                             <article class="service">
                                 <img src="img/quality.svg" alt="icon" class="service__icon">
                                 <h4 class="service__title">Платное размещение</h4>
