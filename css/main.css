@@ -159,6 +159,10 @@ select,
 /* Utilities                */
 /* ------------------------ */
 
+.lock {
+    overflow: hidden;
+}
+
 .hidden {
     display: none;
 }
@@ -791,6 +795,16 @@ select,
     'img info';
 }
 
+.service a {
+    text-decoration: none;
+    color: #ff0000;
+    border-bottom: 1px dotted #a90101;
+}
+
+.service a:hover {
+    color: #c50000;
+}
+
 .service + .service {
     border-top: 1px solid var(--clr-gray);
 }
@@ -814,12 +828,15 @@ select,
     justify-content: space-between;
 }
 
+.service__info > * {
+    white-space: nowrap;
+}
+
 .service__title {
     grid-area: title;
 }
 
 .service__period {
-    grid-area: period;
     font-size: 16px;
 }
 

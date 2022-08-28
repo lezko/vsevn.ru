@@ -119,14 +119,17 @@ function showModal(el) {
     const closeBtn = document.createElement('span');
     closeBtn.classList.add('icon-cross-svgrepo-com', 'modal__close-btn');
     modalContent.appendChild(closeBtn);
+    document.body.classList.add('lock');
 
     modal.classList.add('modal--visible');
     closeBtn.addEventListener('click', e => {
         modal.classList.remove('modal--visible');
+        document.body.classList.remove('lock');
     });
     modal.addEventListener('click', e => {
         if (e.target === modal) {
             modal.classList.remove('modal--visible');
+            document.body.classList.remove('lock');
         }
     });
 }
@@ -173,12 +176,21 @@ function renderElement(elem, payload = null) {
                             <div class="service__img">${servicesLogos[k]}</div>
                             <div class="service__info">
                                 <h4 class="service__title">${services[k].title}</h4>
-                                <p class="service__period">
-                                    <span>Период:</span>
-                                    <span class="from">23.23.23</span>
-                                    <span class="dash">-</span>
-                                    <span class="to">23.23.23</span>
-                                </p>
+                                ${ k in payload ? `
+                                    <p>
+                                        <span>Период:</span>
+                                        <span class="from">${payload[k].dateFrom}</span>
+                                        <span class="dash">-</span>
+                                        <span class="to">${payload[k].dateTo}</span>
+                                    </p>
+                                    <p>
+                                        Услуга АКТИВНА до ${payload[k].dateTo}
+                                    </p>
+                                ` : `
+                                    <p>
+                                        Услуга не активна, <a href="">активировать</a>?
+                                    </p>
+                                `}  
                             </div>
                         </article>
                     `).join('')
@@ -212,7 +224,7 @@ function renderArticle(data) {
     }
 
     article.querySelector('.adv-item__services a').addEventListener('click', e => {
-        showModal(renderElement('services'));
+        showModal(renderElement('services', data._services));
     });
 
     return article;
