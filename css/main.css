@@ -242,8 +242,8 @@ select,
     cursor: pointer;
     font-size: 40px;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: -60px;
+    right: -60px;
 }
 
 /* tab-links */
@@ -841,6 +841,8 @@ select,
 }
 
 .services-header {
+    line-height: 1;
     font-size: 30px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    margin-top: 0;
 }

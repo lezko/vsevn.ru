@@ -1,7 +1,7 @@
 {
   "0": {
     "title": "Платное размещение",
-    "logoUrl": "img/service-icons/gift.html"
+    "logoUrl": "img/service-icons/paid-publishing.html"
   },
   "1": {
     "title": "Выделить объявление цветом",
@@ -22,5 +22,9 @@
   "5": {
     "title": "Премиум объявление",
     "logoUrl": "img/service-icons/premium.html"
+  },
+  "6": {
+    "title": "Бесплатное размещение",
+    "logoUrl": "img/service-icons/free-publishing.html"
   }
 }

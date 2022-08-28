@@ -236,6 +236,9 @@ async function fetchData() {
 
     for (const k of Object.keys(services)) {
         servicesLogos[k] = await fetch(services[k].logoUrl).then(data => data.text());
+        if (k === '4') {
+            console.log(servicesLogos[k]);
+        }
     }
 
     const json = await fetch(ARTICLES_URL).then(data => data.json());
