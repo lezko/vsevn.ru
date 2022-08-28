@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="img/font-icons/style.css">
     <link rel="stylesheet" href="css/main.css">
 
     <script defer src="js/main.js"></script>
@@ -103,10 +104,11 @@
                     <div class="adv-filter-price flex">
                         <input placeholder="Цена от" min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
                         <input placeholder="Цена до" min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
+                        <span class="icon icon-currency_rub_icon_173204"></span>
                     </div>
                     <div class="adv-filter-region">
                         <div class="select" id="adv-filter-region">
-                            <span data-empty="true"></span>
+                            <span class="text" data-empty="true"></span>
                             <ul data-expanded="false">
                                 <li data-default="true">Регион / Населенный пункт</li>
                                 <li>Ростов</li>
@@ -120,7 +122,7 @@
                     </div>
                     <div class="adv-filter-title">
                         <input placeholder="Название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
-                        <span></span>
+                        <span class="icon icon-search"></span>
                     </div>
                 </div>
 
@@ -157,7 +159,7 @@
         <section class="ads">
             <div class="container">
                 <div class="ads__field-names grid bottom-line">
-                    <span>Название объявления/Зарплата</span>
+                    <span>Название объявления / Зарплата</span>
                     <span>Регион / Населенный пункт</span>
 
                     <div class="ads__field-names--big">
@@ -169,7 +171,7 @@
                         <span>Разме - щалось дней</span>
                     </div>
 
-                    <span>Период(ы) объявлений и платных услуг</span>
+                    <span>Наличие услуг по продвижению</span>
                 </div>
                 <div class="ads__items"></div>
             </div>
@@ -183,6 +185,12 @@
 
     </footer>
     <!--  /FOOTER  -->
+
+    <!--  MODAL  -->
+    <div class="modal">
+        <div class="modal__content"></div>
+    </div>
+    <!--  /MODAL  -->
 
 </body>
 </html>

@@ -1,22 +1,26 @@
 {
   "0": {
     "title": "Платное размещение",
-    "logoUrl": "img/service-icons/inclined-rocket.svg"
+    "logoUrl": "img/service-icons/gift.html"
   },
   "1": {
-    "title": "Платное размещение",
-    "logoUrl": "img/service-icons/megaphone.svg"
+    "title": "Выделить объявление цветом",
+    "logoUrl": "img/service-icons/highlight.html"
   },
   "2": {
-    "title": "Платное размещение",
-    "logoUrl": "img/service-icons/quality.svg"
+    "title": "Поднять объявление в поиске",
+    "logoUrl": "img/service-icons/bring-up.html"
   },
   "3": {
-    "title": "Платное размещение",
-    "logoUrl": "img/service-icons/rocket.svg"
+    "title": "Сделать XXL объявлением",
+    "logoUrl": "img/service-icons/xxl.svg"
   },
   "4": {
-    "title": "Платное размещение",
-    "logoUrl": "img/service-icons/pencil.svg"
+    "title": "VIP - объявление",
+    "logoUrl": "img/service-icons/vip.svg"
+  },
+  "5": {
+    "title": "Премиум объявление",
+    "logoUrl": "img/service-icons/premium.html"
   }
 }

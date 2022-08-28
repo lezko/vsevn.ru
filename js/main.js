@@ -20,9 +20,11 @@ function getBackgroundColor(el) {
 
 // set onclick = 'return false' to all links with empty href attribute
 // to prevent them from reloading the page
-findAll('a[href=""]').forEach(a => {
-    a.addEventListener('click', e => e.preventDefault());
-});
+function initLinkPreventReload() {
+    findAll('a[href=""]').forEach(a => {
+        a.addEventListener('click', e => e.preventDefault());
+    });
+}
 
 // custom checkbox
 function initCustomCheckbox() {
@@ -107,6 +109,28 @@ findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e
     }
 }));
 
+// show modal
+const modal = find('.modal');
+const modalContent = modal.querySelector('.modal__content');
+
+function showModal(el) {
+    modalContent.innerHTML = '';
+    modalContent.innerHTML = el;
+    const closeBtn = document.createElement('span');
+    closeBtn.classList.add('icon-cross-svgrepo-com', 'modal__close-btn');
+    modalContent.appendChild(closeBtn);
+
+    modal.classList.add('modal--visible');
+    closeBtn.addEventListener('click', e => {
+        modal.classList.remove('modal--visible');
+    });
+    modal.addEventListener('click', e => {
+        if (e.target === modal) {
+            modal.classList.remove('modal--visible');
+        }
+    });
+}
+
 // advertisement rendering system
 const DEFAULT_LOGO_URL = 'img/profile-icons/def.png';
 const ARTICLES_URL = 'data.json';
@@ -115,13 +139,14 @@ const SERVICES_URL = 'services.json';
 
 const articlesContainer = find('.ads__items');
 
-let services, articleTemplate;
+let services, articleTemplate, servicesLogos = [];
 
 const selectors = {
     img: '.adv-item__img',
     title: '.adv-item__title',
     price: '.adv-item__price > span:first-child',
     cityList: '.adv-item__city-list',
+    links: '.adv-item__links',
     views: '.adv-item__stats .views',
     favourites: '.adv-item__stats .favourites',
     dialogs: '.adv-item__stats .dialogs',
@@ -131,29 +156,44 @@ const selectors = {
     services: '.adv-item__services'
 };
 
-function renderElement(elem, payload) {
+function renderElement(elem, payload = null) {
     switch (elem) {
         case 'cityList':
             return `
                 <li class="service-item"><a href="">Добавить</a></li>
-                ${payload.map(c => `<li><span></span><span>${c}</span></li>`).join('')}
+                ${payload.map(c => `<li><span></span><span>г. ${c}</span></li>`).join('')}
             `;
         case 'services':
-            return payload.map(s => `
-                <article class="service">
-                    <img src="${services[s.id].logoUrl}" alt="icon" class="service__icon">
-                    <h4 class="service__title">Платное размещение</h4>
-                    <p class="service__period">
-                        <span>Период:</span>
-                        <span class="from">${s.dateFrom}</span>
-                        <span class="dash">-</span>
-                        <span class="to">${s.dateTo}</span>
-                    </p>
-                </article>
-            `).join('');
+
+            return `
+                <h4 class="services-header">Услуги продвижения</h4>
+                ${
+                    Object.keys(services).map(k => `
+                        <article class="service">
+                            <div class="service__img">${servicesLogos[k]}</div>
+                            <div class="service__info">
+                                <h4 class="service__title">${services[k].title}</h4>
+                                <p class="service__period">
+                                    <span>Период:</span>
+                                    <span class="from">23.23.23</span>
+                                    <span class="dash">-</span>
+                                    <span class="to">23.23.23</span>
+                                </p>
+                            </div>
+                        </article>
+                    `).join('')
+                }   
+            `;
         case 'img':
             return `
                 <div class="${payload.className}" style="background-image: url(${payload.url})" alt="logo"></div>
+            `;
+        case 'links':
+            return `
+                <li class="service-item"><a href="">Еще</a></li>
+                ${ payload.map(l => `
+                    <li><span class="icon icon-link"></span><a href="">${l.text}</a></li>
+                `).join('') }   
             `;
         default:
             return payload;
@@ -170,12 +210,21 @@ function renderArticle(data) {
         }
         article.querySelector(selectors[key]).innerHTML = renderElement(key, value);
     }
+
+    article.querySelector('.adv-item__services a').addEventListener('click', e => {
+        showModal(renderElement('services'));
+    });
+
     return article;
 }
 
 async function fetchData() {
     services = await fetch(SERVICES_URL).then(data => data.json());
     articleTemplate = await fetch(ARTICLE_TEMPLATE_URL).then(data => data.text());
+
+    for (const k of Object.keys(services)) {
+        servicesLogos[k] = await fetch(services[k].logoUrl).then(data => data.text());
+    }
 
     const json = await fetch(ARTICLES_URL).then(data => data.json());
     return json.map(obj => ({
@@ -190,13 +239,17 @@ async function fetchData() {
             _type: obj.type,
             price: obj.price,
             cityList: obj.city_list,
+            links: obj.links.map(l => ({
+                test: l.text,
+                url: l.url
+            })),
             views: obj.views,
             favourites: obj.favourites,
             dialogs: obj.dialogs,
             responses: obj.responses,
             matchingVacancies: obj.matching_vacancies,
             daysPublished: obj.days_published,
-            services: obj.services.map(s => ({
+            _services: obj.services.map(s => ({
                 id: s.id,
                 dateFrom: s.date_from,
                 dateTo: s.date_to
@@ -233,6 +286,7 @@ function updateArticle(el, data) {
 
 function initArticles(data) {
     printArticles(filterArticles(data));
+    initLinkPreventReload();
     initFadeEffects();
     initActionBar(data);
     initActionDelete(data);
