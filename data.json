@@ -1,12 +1,12 @@
 [
   {
     "logo_url": "img/profile-icons/worker-0.jpg",
-    "title": "manager",
-    "type": "worker",
+    "title": "Менеджер",
+    "type": "resume",
     "price": 1000,
     "city_list": [
-      "Voronezh",
-      "Rostov"
+      "Москва",
+      "Самара"
     ],
     "views": 100500,
     "favourites": 100,
@@ -34,16 +34,15 @@
   },
   {
     "logo_url": "img/profile-icons/worker-1.jpg",
-    "title": "manager",
-    "type": "worker",
-    "price": 1000,
+    "title": "Инженер",
+    "type": "resume",
+    "price": 1500,
     "city_list": [
-      "Voronezh",
-      "Rostov"
+      "Таганрог"
     ],
-    "views": 100500,
+    "views": 500,
     "favourites": 100,
-    "dialogs": 30,
+    "dialogs": 3,
     "responses": 20,
     "matching_vacancies": 42,
     "days_published": 1,
@@ -67,14 +66,70 @@
   },
   {
     "logo_url": "",
-    "title": "manager",
-    "type": "worker",
-    "price": 1000,
+    "title": "Очень-очень длинное название",
+    "type": "resume",
+    "price": 3200,
     "city_list": [
-      "Voronezh",
-      "Rostov"
+      "Хабаровск"
     ],
-    "views": 100500,
+    "views": 500,
+    "favourites": 100,
+    "dialogs": 3,
+    "responses": 20,
+    "matching_vacancies": 42,
+    "days_published": 1,
+    "services": [
+      {
+        "id": 1,
+        "date_from": "11.05.2022",
+        "date_to": "11.06.2022"
+      },
+      {
+        "id": 2,
+        "date_from": "11.05.2022",
+        "date_to": "11.06.2022"
+      }
+    ]
+  },
+  {
+    "logo_url": "https://rd.centraltest.com/tests/AVATARTestLogos/TG_Avatar_Logo.png",
+    "title": "Кассир",
+    "type": "vacancy",
+    "price": 1100,
+    "city_list": [
+      "Пермь",
+      "Москва",
+      "Таганрог"
+    ],
+    "views": 150,
+    "favourites": 100,
+    "dialogs": 30,
+    "responses": 20,
+    "matching_vacancies": 42,
+    "days_published": 1,
+    "services": [
+      {
+        "id": 0,
+        "date_from": "11.05.2022",
+        "date_to": "11.06.2022"
+      },
+      {
+        "id": 2,
+        "date_from": "11.05.2022",
+        "date_to": "11.06.2022"
+      }
+    ]
+  },
+  {
+    "logo_url": "https://pickaface.net/gallery/avatar/unr_test_180821_0925_9k0pgs.png",
+    "title": "Директор",
+    "type": "vacancy",
+    "price": 20500,
+    "city_list": [
+      "Санкт-Петербург",
+      "Москва"
+    ],
+    "views": 422,
     "favourites": 100,
     "dialogs": 30,
     "responses": 20,
@@ -88,6 +143,11 @@
       },
       {
         "id": 1,
+        "date_from": "11.05.2022",
+        "date_to": "11.06.2022"
+      },
+      {
+        "id": 3,
         "date_from": "11.05.2022",
         "date_to": "11.06.2022"
       },

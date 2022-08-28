@@ -25,21 +25,38 @@ findAll('a[href=""]').forEach(a => {
 });
 
 // custom checkbox
-findAll('.checkbox').forEach(c => {
-    c.addEventListener('click', e => {
-        e.target.classList.toggle('active');
+function initCustomCheckbox() {
+    findAll('.checkbox').forEach(c => {
+        c.addEventListener('click', e => {
+            e.target.classList.toggle('active');
+        });
     });
-});
+}
 
-// set yellow background on every even adv-item
-findAll('.ads__items > article').forEach((a, i) => {
-    if (i % 2 === 0) {
-        a.classList.add('bg-yellow');
-    }
+// custom select
+findAll('.select').forEach(sel => {
+    const mainField = sel.querySelector('span');
+    mainField.innerHTML = sel.querySelector('ul li[data-default="true"]').textContent;
+    sel.addEventListener('mouseenter', e => {
+        sel.querySelector('ul').setAttribute('data-expanded', 'true');
+    });
+    sel.addEventListener('mouseleave', e => {
+        sel.querySelector('ul').setAttribute('data-expanded', 'false');
+    });
+    sel.querySelectorAll('li').forEach(li => li.addEventListener('click', e => {
+        sel.querySelectorAll('li').forEach(li => li.removeAttribute('data-selected'));
+        mainField.innerHTML = e.target.textContent;
+        mainField.removeAttribute('data-empty');
+        if (e.target.getAttribute('data-default') === 'true') {
+            mainField.setAttribute('data-empty', 'true');
+        }
+        li.setAttribute('data-selected', 'true');
+        sel.querySelector('ul').setAttribute('data-expanded', 'false');
+    }));
 });
 
 // handle text overflow
-function initFadeEffects(elems, findBackground) {
+function setFadeEffects(elems, findBackground) {
     elems.forEach(el => {
         if (findBackground) {
             el.style.setProperty('--ovf-fade-clr', getBackgroundColor(el));
@@ -52,12 +69,14 @@ function initFadeEffects(elems, findBackground) {
     });
 }
 
-const elems = [].concat(...findAll('.adv-item__title'), ...findAll('.adv-item__city-list > li'), ...findAll('.ads__field-names span'));
-initFadeEffects(elems, true);
+function initFadeEffects() {
+    const elems = [].concat(...findAll('.adv-item__title'), ...findAll('.adv-item__city-list > li'), ...findAll('.ads__field-names span'));
+    setFadeEffects(elems, true);
 
-window.addEventListener('resize', () => {
-    initFadeEffects(elems, false);
-});
+    window.addEventListener('resize', () => {
+        setFadeEffects(elems, false);
+    });
+}
 
 // tab links (most used on filters)
 findAll('.tab-links').forEach(parent => {
@@ -78,53 +97,25 @@ findAll('.tab-links').forEach(parent => {
     }));
 });
 
+// input validation
+findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e => {
+    if (isNaN(e.key) && !(e.keyCode !== 8 || e.key.toLowerCase() === 'backspace')) {
+        e.preventDefault();
+    }
+    if (e.target.value < 0) {
+        e.target.value = '';
+    }
+}));
+
 // advertisement rendering system
 const DEFAULT_LOGO_URL = 'img/profile-icons/def.png';
+const ARTICLES_URL = 'data.json';
+const ARTICLE_TEMPLATE_URL = 'article-template.html';
+const SERVICES_URL = 'services.json';
+
 const articlesContainer = find('.ads__items');
 
-const articleTemplate = `
-    <div class="checkbox" role="checkbox">
-        <div class="checkbox__inner"></div>
-    </div>
-
-    <div class="adv-item__img"></div>
-
-    <div class="adv-item__left-block">
-        <h3 class="adv-item__title"></h3>
-
-        <div class="adv-item__price">
-            <span></span>
-            <span>руб</span>
-        </div>
-
-        <div class="adv-item__edit-btns flex">
-            <a class="edit" href="">Редактировать</a>
-            <a class="change-design" href="">Изменить дизайн</a>
-        </div>
-    </div>
-
-    <ul class="adv-item__city-list"></ul>
-
-    <ul class="adv-item__links show-on-adv-item-hover">
-        <li class="service-item"><a href="">Еще</a></li>
-        <li><a href="">Ссылка на Ваше резюме без контактов</a></li>
-    </ul>
-
-    <div class="adv-item__get-more-responses show-on-adv-item-hover">
-        <a href="">Получить больше откликов</a>
-    </div>
-
-    <div class="adv-item__stats flex">
-        <span class="views"></span>
-        <span class="favourites"></span>
-        <span class="dialogs"></span>
-        <span class="responses"><span></span><span class="growth"></span></span>
-        <span class="matching-vacancies"></span>
-        <span class="days-published"></span>
-    </div>
-
-    <div class="adv-item__services"></div>
-`
+let services, articleTemplate;
 
 const selectors = {
     img: '.adv-item__img',
@@ -138,32 +129,14 @@ const selectors = {
     matchingVacancies: '.adv-item__stats .matching-vacancies',
     daysPublished: '.adv-item__stats .days-published',
     services: '.adv-item__services'
-}
-
-const services = {
-    0: {
-        logoUrl: 'img/service-icons/inclined-rocket.svg',
-    },
-    1: {
-        logoUrl: 'img/service-icons/megaphone.svg',
-    },
-    2: {
-        logoUrl: 'img/service-icons/quality.svg',
-    },
-    3: {
-        logoUrl: 'img/service-icons/rocket.svg',
-    },
-    4: {
-        logoUrl: 'img/service-icons/pencil.svg',
-    },
-}
+};
 
 function renderElement(elem, payload) {
     switch (elem) {
         case 'cityList':
             return `
                 <li class="service-item"><a href="">Добавить</a></li>
-                ${ payload.map(c => `<li><span></span><span>${c}</span></li>`).join('') }
+                ${payload.map(c => `<li><span></span><span>${c}</span></li>`).join('')}
             `;
         case 'services':
             return payload.map(s => `
@@ -181,7 +154,7 @@ function renderElement(elem, payload) {
         case 'img':
             return `
                 <div class="${payload.className}" style="background-image: url(${payload.url})" alt="logo"></div>
-            `
+            `;
         default:
             return payload;
     }
@@ -200,14 +173,18 @@ function renderArticle(data) {
     return article;
 }
 
-async function fetchData(url) {
-    const json = await fetch(url).then(data => data.json());
+async function fetchData() {
+    services = await fetch(SERVICES_URL).then(data => data.json());
+    articleTemplate = await fetch(ARTICLE_TEMPLATE_URL).then(data => data.text());
+
+    const json = await fetch(ARTICLES_URL).then(data => data.json());
     return json.map(obj => ({
         el: null,
+        checked: false,
         data: {
             img: {
                 url: obj.logo_url || DEFAULT_LOGO_URL,
-                className: obj.type === 'worker' ? 'avatar-circle' : 'avatar-square'
+                className: obj.type === 'resume' ? 'avatar-circle' : 'avatar-square'
             },
             title: obj.title,
             _type: obj.type,
@@ -234,35 +211,220 @@ function appendArticle(data) {
     return article;
 }
 
-function initArticles(url) {
+function printArticles(articles) {
     articlesContainer.innerHTML = '';
-    fetchData(url).then(articles => articles.forEach(a => a.el = appendArticle(a.data)));
+    articles.forEach(a => {
+        a.el = appendArticle(a.data);
+        a.el.querySelector('.checkbox').addEventListener('click', e => {
+            if (a.checked) {
+                setArticleCheckState(a, false);
+            } else {
+                setArticleCheckState(a, true);
+            }
+        });
+    });
 }
 
-initArticles('data.json');
+function updateArticle(el, data) {
+    for (const [key, value] of Object.entries(data)) {
+        el.querySelector(selectors[key]).innerHTML = renderElement(key, value);
+    }
+}
 
+function initArticles(data) {
+    printArticles(filterArticles(data));
+    initFadeEffects();
+    initActionBar(data);
+    initActionDelete(data);
+}
+
+// advertisement checkboxes
+let checkedArticles = [];
+
+const checkbox = find('.actions .checkbox');
+const activateBtn = find('#action-activate-adv');
+const deleteBtn = find('#action-delete-adv');
+
+function setArticleCheckState(article, checked) {
+    if (article.checked === checked) {
+        return;
+    }
+    article.checked = checked;
+    if (checked) {
+        checkedArticles.push(article);
+        article.el.querySelector('.checkbox').classList.add('active');
+    } else {
+        checkedArticles.splice(checkedArticles.indexOf(article), 1);
+        article.el.querySelector('.checkbox').classList.remove('active');
+        checkbox.classList.remove('active');
+    }
+
+    if (checkedArticles.length !== 0) {
+       activateBtn.classList.remove('disabled');
+       deleteBtn.classList.remove('disabled');
+    } else {
+        activateBtn.classList.add('disabled');
+        deleteBtn.classList.add('disabled');
+    }
+}
+
+function initActionBar(articles) {
+    checkbox.addEventListener('click', e => {
+        const checked = !checkbox.classList.contains('active');
+        checkbox.classList.toggle('active');
+        if (checked) {
+            articles.forEach(a => {
+                setArticleCheckState(a, true);
+            });
+        } else {
+            [...checkedArticles].forEach(a => setArticleCheckState(a, false));
+        }
+    });
+}
+
+function initActionDelete(articles) {
+    deleteBtn.addEventListener('click', e => {
+        [...checkedArticles].forEach(a => {
+            setArticleCheckState(a, false);
+            articles.splice(articles.indexOf(a), 1);
+            a.el.remove();
+        });
+
+        initArticles(articles);
+    });
+}
+
+// advertisement filters
+const filters = [
+    function(a) {
+        const strings = find('#adv-filter-title').value.trim().split(' ');
+        let match = false;
+        for (let i = 0; i < strings.length; i++) {
+            if ( (a.data.title.toLowerCase().includes(strings[i]) && strings[i].length > 2) || strings[i] === '' ) {
+                match = true;
+                break;
+            }
+        }
+        return match;
+    },
+    function (a) {
+        const type = find('.adv-filter-type .tab-link.active').getAttribute('id').toLowerCase();
+        if (type.endsWith('all')) {
+            return true;
+        }
+        if (type.endsWith('resume')) {
+            return a.data._type.toLowerCase() === 'resume';
+        }
+        if (type.endsWith('vacancy')) {
+            return a.data._type.toLowerCase() === 'vacancy';
+        }
+    },
+    function (a) {
+        const priceFrom = +find('#adv-filter-price-from').value;
+        const priceTo = +find('#adv-filter-price-to').value || Number.POSITIVE_INFINITY;
+        const price = +a.data.price;
+        return price >= priceFrom && price <= priceTo;
+    },
+    function (a) {
+        const field = find('.adv-filter-region .select span');
+        if (field.getAttribute('data-empty') === 'true') {
+            return true;
+        }
+        const city = field.textContent.toLowerCase();
+        let match = false;
+        for (let i = 0; i < a.data.cityList.length; i++) {
+            if (a.data.cityList[i].toLowerCase() === city) {
+                match = true;
+                break;
+            }
+        }
+        return match;
+    }
+];
+
+const listeners = [
+    {
+        selector: ['#adv-filter-title'],
+        event: 'input',
+    },
+    {
+        selector: ['.adv-filter-type .tab-link'],
+        event: 'click',
+    },
+    {
+        selector: ['#adv-filter-price-from', '#adv-filter-price-to'],
+        event: 'input',
+    },
+    {
+        selector: ['.adv-filter-region .select ul li'],
+        event: 'click'
+    }
+]
+
+function filterArticles(articles) {
+    return articles.filter(a => {
+        let match = true;
+        for (let i = 0; i < filters.length; i++) {
+            if (!filters[i](a)) {
+                match = false;
+                break;
+            }
+        }
+        return match;
+    });
+}
+
+function initFilters(articles) {
+    listeners.forEach(l => {
+        Array.from(findAll(l.selector)).forEach(el => {
+            el.addEventListener(l.event, e => {
+                if (l.checker === undefined || l.checker(e)) {
+                    initArticles(filterArticles(articles));
+                }
+            });
+        }) ;
+    });
+}
+
+let globalTestData;
+
+fetchData().then(data => {
+    initArticles(data);
+    initFilters(data);
+    globalTestData = data;
+});
+
+
+// TEST
 const testInputs = findAll('.test-form input');
 find('.test-form .add').addEventListener('click', () => {
-    appendArticle({
-        title: testInputs[0].value,
-        price: testInputs[1].value,
-        img: {
-            url: testInputs[3].value || DEFAULT_LOGO_URL,
-            className: find('input[name="type"]:checked').value === 'worker' ? 'avatar-circle' : 'avatar-square'
-        },
-        cityList: testInputs[2].value.split(' '),
-        views: testInputs[4].value,
-        favourites: testInputs[5].value,
-        dialogs: testInputs[6].value,
-        responses: testInputs[7].value,
-        matchingVacancies: testInputs[8].value,
-        daysPublished: testInputs[9].value,
-        services: Array(+testInputs[10].value).fill().map((el, i) => ({
-            id: i,
-            dateFrom: '10.05.2022',
-            dateTo: '10.06.2022'
-        }))
-    });
+    const type = find('input[name="type"]:checked').value;
+    globalTestData = [...globalTestData, {
+        el: null,
+        data: {
+            title: testInputs[0].value,
+            price: testInputs[1].value,
+            _type: type,
+            img: {
+                url: testInputs[3].value || DEFAULT_LOGO_URL,
+                className: type === 'resume' ? 'avatar-circle' : 'avatar-square'
+            },
+            cityList: testInputs[2].value.split(' '),
+            views: testInputs[4].value,
+            favourites: testInputs[5].value,
+            dialogs: testInputs[6].value,
+            responses: testInputs[7].value,
+            matchingVacancies: testInputs[8].value,
+            daysPublished: testInputs[9].value,
+            services: Array(+testInputs[10].value).fill().map((el, i) => ({
+                id: i,
+                dateFrom: '10.05.2022',
+                dateTo: '10.06.2022'
+            }))
+        }
+    }];
+    initArticles(globalTestData);
+    initFilters(globalTestData);
 });
 find('.test-form .delete').addEventListener('click', () => {
     articlesContainer.innerHTML = '';

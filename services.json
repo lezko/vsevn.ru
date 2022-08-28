@@ -1,0 +1,22 @@
+{
+  "0": {
+    "title": "Платное размещение",
+    "logoUrl": "img/service-icons/inclined-rocket.svg"
+  },
+  "1": {
+    "title": "Платное размещение",
+    "logoUrl": "img/service-icons/megaphone.svg"
+  },
+  "2": {
+    "title": "Платное размещение",
+    "logoUrl": "img/service-icons/quality.svg"
+  },
+  "3": {
+    "title": "Платное размещение",
+    "logoUrl": "img/service-icons/rocket.svg"
+  },
+  "4": {
+    "title": "Платное размещение",
+    "logoUrl": "img/service-icons/pencil.svg"
+  }
+}
