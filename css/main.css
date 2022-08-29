@@ -718,6 +718,13 @@ select,
     top: 100%;
 }
 
+.adv-item__city-list span.icon {
+    cursor: pointer;
+    color: #ff0000;
+    font-size: 16px;
+    margin-right: 7px;
+}
+
 .adv-item__links {
     overflow: hidden;
     padding-right: 40px;

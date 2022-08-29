@@ -113,6 +113,10 @@ findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e
 function initExpandingLists() {
     findAll('.adv-item__links').forEach(list => {
 
+        if (list.querySelectorAll('li').length === 2) {
+            return;
+        }
+
         const defaultBtnText = 'Еще';
         const clickedBtnText = 'Свернуть';
 
@@ -198,7 +202,7 @@ function renderElement(elem, payload = null) {
         case 'cityList':
             return `
                 <li class="service-item"><a href="">Добавить</a></li>
-                ${payload.map(c => `<li><span></span><span>г. ${c}</span></li>`).join('')}
+                ${payload.map(c => `<li><span class="icon icon-cross"></span><span>г. ${c}</span></li>`).join('')}
             `;
         case 'services':
 
@@ -210,21 +214,23 @@ function renderElement(elem, payload = null) {
                             <div class="service__img">${servicesLogos[k]}</div>
                             <div class="service__info">
                                 <h4 class="service__title">${services[k].title}</h4>
-                                ${ k in payload && !services[k].free ? `
-                                    <p>
-                                        <span>Период:</span>
-                                        <span class="from">${payload[k].dateFrom}</span>
-                                        <span class="dash">-</span>
-                                        <span class="to">${payload[k].dateTo}</span>
-                                    </p>
-                                    <p>
-                                        Услуга АКТИВНА до ${payload[k].dateTo}
-                                    </p>
-                                ` : !services[k].free ? `
-                                    <p>
-                                        Услуга не активна, <a href="">активировать</a>?
-                                    </p>
-                                ` : '' }  
+                                ${ !services[k].free ? (
+                                    k in payload ? `
+                                        <p>
+                                            <span>Период:</span>
+                                            <span class="from">${payload[k].dateFrom}</span>
+                                            <span class="dash">-</span>
+                                            <span class="to">${payload[k].dateTo}</span>
+                                        </p>
+                                        <p>
+                                            Услуга АКТИВНА до ${payload[k].dateTo}
+                                        </p>
+                                    ` : `
+                                        <p>
+                                            Услуга не активна, <a href="">активировать</a>?
+                                        </p>
+                                    `
+                                ) : '' }
                             </div>
                         </article>
                     `).join('')

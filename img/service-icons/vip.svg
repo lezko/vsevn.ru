@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Creator: CorelDRAW 2021 (64-Bit) -->
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="76mm" height="76mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-     viewBox="0 0 7600 7600"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+<svg id="service-vip-logo" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="76mm" height="76mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 7600 7600"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
  <defs>
   <style type="text/css">
    <![CDATA[
-    .fil0 {fill:url(#id0);fill-rule:nonzero}
-    .fil6 {fill:url(#id1);fill-rule:nonzero}
-    .fil7 {fill:url(#id2);fill-rule:nonzero}
-    .fil4 {fill:url(#id3);fill-rule:nonzero}
-    .fil1 {fill:url(#id4);fill-rule:nonzero}
-    .fil3 {fill:url(#id5);fill-rule:nonzero}
-    .fil2 {fill:url(#id6);fill-rule:nonzero}
-    .fil5 {fill:url(#id7);fill-rule:nonzero}
+    #service-vip-logo .fil0 {fill:url(#id0);fill-rule:nonzero}
+    #service-vip-logo .fil6 {fill:url(#id1);fill-rule:nonzero}
+    #service-vip-logo .fil7 {fill:url(#id2);fill-rule:nonzero}
+    #service-vip-logo .fil4 {fill:url(#id3);fill-rule:nonzero}
+    #service-vip-logo .fil1 {fill:url(#id4);fill-rule:nonzero}
+    #service-vip-logo .fil3 {fill:url(#id5);fill-rule:nonzero}
+    #service-vip-logo .fil2 {fill:url(#id6);fill-rule:nonzero}
+    #service-vip-logo .fil5 {fill:url(#id7);fill-rule:nonzero}
    ]]>
   </style>
   <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="3955.97" y1="24.82" x2="3664.41" y2="7605.42">
