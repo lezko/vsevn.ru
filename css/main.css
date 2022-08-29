@@ -716,6 +716,8 @@ select,
 
 .adv-item__city-list > li:hover span.icon {
     width: 15px;
+    margin-right: 7px;
+
 }
 
 .adv-item__city-list .service-item {
@@ -730,7 +732,6 @@ select,
     cursor: pointer;
     color: #ff0000;
     font-size: 16px;
-    margin-right: 7px;
     transition: width .3s;
 }
 

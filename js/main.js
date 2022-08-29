@@ -20,15 +20,15 @@ function getBackgroundColor(el) {
 
 // set onclick = 'return false' to all links with empty href attribute
 // to prevent them from reloading the page
-function initLinkPreventReload() {
-    findAll('a[href=""]').forEach(a => {
+function initLinkPreventReload(target) {
+    target.querySelectorAll('a[href=""]').forEach(a => {
         a.addEventListener('click', e => e.preventDefault());
     });
 }
 
 // custom checkbox
-function initCustomCheckbox() {
-    findAll('.checkbox').forEach(c => {
+function initCustomCheckbox(target) {
+    target.querySelectorAll('.checkbox').forEach(c => {
         c.addEventListener('click', e => {
             e.target.classList.toggle('active');
         });
@@ -71,8 +71,12 @@ function setFadeEffects(elems, findBackground) {
     });
 }
 
-function initFadeEffects() {
-    const elems = [].concat(...findAll('.adv-item__title'), ...findAll('.adv-item__city-list > li'), ...findAll('.ads__field-names span'));
+function initFadeEffects(target) {
+    const elems = [].concat(
+        ...target.querySelectorAll('.adv-item__title'),
+        ...target.querySelectorAll('.adv-item__city-list > li'),
+        ...target.querySelectorAll('.ads__field-names span')
+    );
     setFadeEffects(elems, true);
 
     window.addEventListener('resize', () => {
@@ -110,8 +114,8 @@ findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e
 }));
 
 // expanding list with links
-function initExpandingLists() {
-    findAll('.adv-item__links').forEach(list => {
+function initExpandingLists(target) {
+    target.querySelectorAll('.adv-item__links').forEach(list => {
 
         if (list.querySelectorAll('li').length === 2) {
             return;
@@ -180,7 +184,7 @@ const SERVICES_URL = 'services.json';
 
 const articlesContainer = find('.ads__items');
 
-let services, articleTemplate, servicesLogos = [];
+let services, articleTemplate, servicesLogos = [], articles = [];
 
 const selectors = {
     img: '.adv-item__img',
@@ -263,14 +267,6 @@ function renderArticle(data) {
         article.querySelector(selectors[key]).innerHTML = renderElement(key, value);
     }
 
-    article.querySelector('.adv-item__services a').addEventListener('click', e => {
-        showModal(renderElement('services', data._services));
-    });
-
-    article.querySelectorAll('.adv-item__city-list > li > span.icon').forEach(b => b.addEventListener('click', e => {
-        e.target.parentNode.remove();
-    }));
-
     return article;
 }
 
@@ -283,7 +279,7 @@ async function fetchData() {
     }
 
     const json = await fetch(ARTICLES_URL).then(data => data.json());
-    return json.map(obj => ({
+    articles = json.map(obj => ({
         el: null,
         checked: false,
         data: {
@@ -313,39 +309,54 @@ async function fetchData() {
             }))
         }
     }));
+
+    return articles;
 }
 
-function appendArticle(data) {
-    const article = renderArticle(data);
+function appendArticle(article) {
     articlesContainer.appendChild(article);
-    return article;
 }
 
 function printArticles(articles) {
     articlesContainer.innerHTML = '';
     articles.forEach(a => {
-        a.el = appendArticle(a.data);
-        a.el.querySelector('.checkbox').addEventListener('click', e => {
-            if (a.checked) {
-                setArticleCheckState(a, false);
-            } else {
-                setArticleCheckState(a, true);
-            }
-        });
+        if (a.el === null) {
+            a.el = renderArticle(a.data);
+        }
+
+        setupArticle(a)
+        appendArticle(a.el);
     });
 }
 
-function updateArticle(el, data) {
-    el.innerHTML = renderArticle(data).innerHTML;
+function setupArticle(article) {
+    initLinkPreventReload(article.el);
+    initExpandingLists(article.el);
+    initFadeEffects(article.el);
+
+    article.el.querySelector('.checkbox').addEventListener('click', e => {
+        if (article.checked) {
+            setArticleCheckState(article, false);
+        } else {
+            setArticleCheckState(article, true);
+        }
+    });
+
+    article.el.querySelector('.adv-item__services a').addEventListener('click', () => {
+        showModal(renderElement('services', article.data._services));
+    });
+
+    article.el.querySelectorAll('.adv-item__city-list > li > span.icon').forEach(b => b.addEventListener('click', e => {
+        e.target.parentNode.remove();
+    }));
+}
+
+function updateArticle(article, data) {
+    article.el.replaceWith(renderArticle(data));
 }
 
 function initArticles(data) {
     printArticles(filterArticles(data));
-    initLinkPreventReload();
-    initExpandingLists();
-    initFadeEffects();
-    initActionBar(data);
-    initActionDelete(data);
 }
 
 // advertisement checkboxes

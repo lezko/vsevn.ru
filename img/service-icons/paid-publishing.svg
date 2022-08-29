@@ -19,10 +19,10 @@ viewBox="0 0 3500 3500"
     #service-paid-publishing-logo .fil8 {fill:#727172;fill-rule:nonzero}
     #service-paid-publishing-logo .fil10 {fill:#D6CB78;fill-rule:nonzero}
     #service-paid-publishing-logo .fil11 {fill:#ECE17E;fill-rule:nonzero}
-    #service-paid-publishing-logo .fil0 {fill:url(#id0);fill-rule:nonzero}
+    #service-paid-publishing-logo .fil0 {fill:url(#id9);fill-rule:nonzero}
    ]]>
   </style>
-  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="1752.6" y1="17.4" x2="1752.6" y2="3498.55">
+  <linearGradient id="id9" gradientUnits="userSpaceOnUse" x1="1752.6" y1="17.4" x2="1752.6" y2="3498.55">
    <stop offset="0" style="stop-opacity:1; stop-color:#FF9982"/>
    <stop offset="0.509804" style="stop-opacity:1; stop-color:#FFAE9C"/>
    <stop offset="1" style="stop-opacity:1; stop-color:#FFC4B6"/>
