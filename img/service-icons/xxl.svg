@@ -20,19 +20,19 @@ viewBox="0 0 7600 7600"
   <style type="text/css">
    <![CDATA[
     @font-face { font-family:"ZaharovAE Pro Medium";font-variant:normal;font-weight:500;src:url("#FontID0") format(svg)}
-    .fil1 {fill:#FAFAFA}
-    .fil0 {fill:url(#id0);fill-rule:nonzero}
+    .fil8 {fill:#FAFAFA}
+    .fil9 {fill:url(#id12);fill-rule:nonzero}
     .fnt0 {font-weight:500;font-size:3249.12px;font-family:'ZaharovAE Pro Medium'}
    ]]>
   </style>
-  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="4672.1" y1="121.24" x2="2948.28" y2="7509">
+  <linearGradient id="id12" gradientUnits="userSpaceOnUse" x1="4672.1" y1="121.24" x2="2948.28" y2="7509">
    <stop offset="0" style="stop-opacity:1; stop-color:#0067F7"/>
    <stop offset="1" style="stop-opacity:1; stop-color:#82D0F5"/>
   </linearGradient>
  </defs>
  <g id="Слой_x0020_1">
   <metadata id="CorelCorpID_0Corel-Layer"/>
-  <path class="fil0" d="M7603.3 3815.12c-0.01,-2094.87 -1698.24,-3793.11 -3793.11,-3793.1 -2094.87,0 -3793.11,1698.23 -3793.11,3793.1 0.01,2094.87 1698.24,3793.11 3793.11,3793.11 2094.87,-0.01 3793.11,-1698.24 3793.11,-3793.11z"/>
-  <text x="1002.95" y="4929.57"  class="fil1 fnt0">XXL</text>
+  <path class="fil9" d="M7603.3 3815.12c-0.01,-2094.87 -1698.24,-3793.11 -3793.11,-3793.1 -2094.87,0 -3793.11,1698.23 -3793.11,3793.1 0.01,2094.87 1698.24,3793.11 3793.11,3793.11 2094.87,-0.01 3793.11,-1698.24 3793.11,-3793.11z"/>
+  <text x="1002.95" y="4929.57"  class="fil8 fnt0">XXL</text>
  </g>
 </svg>

@@ -718,9 +718,12 @@ select,
 }
 
 .adv-item__links {
+    overflow: hidden;
+    padding-right: 40px;
     justify-self: start;
     position: relative;
     grid-area: links;
+    transition: height .3s ease;
 }
 
 .adv-item__links .icon {
@@ -730,8 +733,13 @@ select,
 
 .adv-item__links .service-item {
     position: absolute;
-    margin-left: 20px;
-    left: 100%;
+    right: 0;
+}
+
+.adv-item__links .service-item.active {
+    margin-left: 21px;
+    left: 0;
+    bottom: 0;
 }
 
 .adv-item__get-more-responses {
@@ -786,10 +794,10 @@ select,
 /* service */
 .service {
     line-height: 1;
-    column-gap: 15px;
+    column-gap: 20px;
     padding: 10px 0;
     display: grid;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 50px 1fr;
     grid-template-areas:
     'img info'
     'img info';
@@ -810,7 +818,7 @@ select,
 }
 
 .service__img {
-    width: 50px;
+    width: 60px;
     aspect-ratio: 1;
     grid-area: img;
     place-self: center;
@@ -825,7 +833,7 @@ select,
     grid-area: info;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .service__info > * {

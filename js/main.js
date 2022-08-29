@@ -109,6 +109,40 @@ findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e
     }
 }));
 
+// expanding list with links
+function initExpandingLists() {
+    findAll('.adv-item__links').forEach(list => {
+
+        const defaultBtnText = 'Еще';
+        const clickedBtnText = 'Свернуть';
+
+        const btn = list.querySelector('.service-item a');
+        btn.innerHTML = defaultBtnText;
+
+        list.setAttribute('aria-expanded', 'false');
+
+        const collapsedHeight = list.querySelector('li').clientHeight;
+        list.style.height = collapsedHeight + 'px';
+
+        btn.addEventListener('click', () => {
+            if (list.getAttribute('aria-expanded') === 'false') {
+                list.style.height = list.scrollHeight + collapsedHeight + 'px';
+                list.setAttribute('aria-expanded', 'true');
+                btn.innerHTML = clickedBtnText;
+            } else {
+                list.style.height = collapsedHeight + 'px';
+                list.setAttribute('aria-expanded', 'false');
+                btn.innerHTML = defaultBtnText;
+            }
+            btn.parentNode.classList.toggle('active');
+        });
+
+        list.addEventListener('transitionend', () => {
+            list.classList.toggle('show-on-adv-item-hover');
+        });
+    });
+}
+
 // show modal
 const modal = find('.modal');
 const modalContent = modal.querySelector('.modal__content');
@@ -176,7 +210,7 @@ function renderElement(elem, payload = null) {
                             <div class="service__img">${servicesLogos[k]}</div>
                             <div class="service__info">
                                 <h4 class="service__title">${services[k].title}</h4>
-                                ${ k in payload ? `
+                                ${ k in payload && !services[k].free ? `
                                     <p>
                                         <span>Период:</span>
                                         <span class="from">${payload[k].dateFrom}</span>
@@ -186,11 +220,11 @@ function renderElement(elem, payload = null) {
                                     <p>
                                         Услуга АКТИВНА до ${payload[k].dateTo}
                                     </p>
-                                ` : `
+                                ` : !services[k].free ? `
                                     <p>
                                         Услуга не активна, <a href="">активировать</a>?
                                     </p>
-                                `}  
+                                ` : '' }  
                             </div>
                         </article>
                     `).join('')
@@ -202,7 +236,7 @@ function renderElement(elem, payload = null) {
             `;
         case 'links':
             return `
-                <li class="service-item"><a href="">Еще</a></li>
+                <li class="service-item"><a href=""></a></li>
                 ${ payload.map(l => `
                     <li><span class="icon icon-link"></span><a href="">${l.text}</a></li>
                 `).join('') }   
@@ -236,9 +270,6 @@ async function fetchData() {
 
     for (const k of Object.keys(services)) {
         servicesLogos[k] = await fetch(services[k].logoUrl).then(data => data.text());
-        if (k === '4') {
-            console.log(servicesLogos[k]);
-        }
     }
 
     const json = await fetch(ARTICLES_URL).then(data => data.json());
@@ -255,8 +286,9 @@ async function fetchData() {
             price: obj.price,
             cityList: obj.city_list,
             links: obj.links.map(l => ({
-                test: l.text,
-                url: l.url
+                text: l.text,
+                url: l.url,
+                free: l.free
             })),
             views: obj.views,
             favourites: obj.favourites,
@@ -302,6 +334,7 @@ function updateArticle(el, data) {
 function initArticles(data) {
     printArticles(filterArticles(data));
     initLinkPreventReload();
+    initExpandingLists();
     initFadeEffects();
     initActionBar(data);
     initActionDelete(data);
