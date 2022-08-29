@@ -239,6 +239,7 @@ select,
 }
 
 .modal__close-btn {
+    color: #fff;
     cursor: pointer;
     font-size: 40px;
     position: absolute;
