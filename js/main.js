@@ -267,6 +267,10 @@ function renderArticle(data) {
         showModal(renderElement('services', data._services));
     });
 
+    article.querySelectorAll('.adv-item__city-list > li > span.icon').forEach(b => b.addEventListener('click', e => {
+        e.target.parentNode.remove();
+    }));
+
     return article;
 }
 
@@ -332,9 +336,7 @@ function printArticles(articles) {
 }
 
 function updateArticle(el, data) {
-    for (const [key, value] of Object.entries(data)) {
-        el.querySelector(selectors[key]).innerHTML = renderElement(key, value);
-    }
+    el.innerHTML = renderArticle(data).innerHTML;
 }
 
 function initArticles(data) {
