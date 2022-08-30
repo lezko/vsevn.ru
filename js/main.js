@@ -7,17 +7,6 @@ function findAll(selector) {
     return document.querySelectorAll(selector);
 }
 
-function getStyle(el, prop) {
-    return window.getComputedStyle(el, null).getPropertyValue(prop);
-}
-
-function getBackgroundColor(el) {
-    while (getStyle(el, 'background-color') === 'rgba(0, 0, 0, 0)' && el !== document.body) {
-        el = el.parentNode;
-    }
-    return getStyle(el, 'background-color');
-}
-
 // set onclick = 'return false' to all links with empty href attribute
 // to prevent them from reloading the page
 function initLinkPreventReload(target) {
@@ -39,10 +28,10 @@ function initCustomCheckbox(target) {
 findAll('.select').forEach(sel => {
     const mainField = sel.querySelector('span');
     mainField.innerHTML = sel.querySelector('ul li[data-default="true"]').textContent;
-    sel.addEventListener('mouseenter', e => {
+    sel.addEventListener('mouseenter', () => {
         sel.querySelector('ul').setAttribute('data-expanded', 'true');
     });
-    sel.addEventListener('mouseleave', e => {
+    sel.addEventListener('mouseleave', () => {
         sel.querySelector('ul').setAttribute('data-expanded', 'false');
     });
     sel.querySelectorAll('li').forEach(li => li.addEventListener('click', e => {
@@ -58,11 +47,8 @@ findAll('.select').forEach(sel => {
 });
 
 // handle text overflow
-function setFadeEffects(elems, findBackground) {
+function setFadeEffects(elems) {
     elems.forEach(el => {
-        if (findBackground) {
-            el.style.setProperty('--ovf-fade-clr', getBackgroundColor(el));
-        }
         if (el.scrollWidth > el.clientWidth) {
             el.classList.add('ovf-fade');
         } else {
@@ -77,10 +63,11 @@ function initFadeEffects(target) {
         ...target.querySelectorAll('.adv-item__city-list > li'),
         ...target.querySelectorAll('.ads__field-names span')
     );
-    setFadeEffects(elems, true);
+
+    setFadeEffects(elems);
 
     window.addEventListener('resize', () => {
-        setFadeEffects(elems, false);
+        setFadeEffects(elems);
     });
 }
 
@@ -164,7 +151,7 @@ function showModal(el) {
     document.body.classList.add('lock');
 
     modal.classList.add('modal--visible');
-    closeBtn.addEventListener('click', e => {
+    closeBtn.addEventListener('click', () => {
         modal.classList.remove('modal--visible');
         document.body.classList.remove('lock');
     });
@@ -184,7 +171,7 @@ const SERVICES_URL = 'services.json';
 
 const articlesContainer = find('.ads__items');
 
-let services, articleTemplate, servicesLogos = [], articles = [];
+let services, articleTemplate, servicesLogos = [], articles, filteredArticles;
 
 const selectors = {
     img: '.adv-item__img',
@@ -289,6 +276,7 @@ async function fetchData() {
             },
             title: obj.title,
             _type: obj.type,
+            _state: obj.state,
             price: obj.price,
             cityList: obj.city_list,
             links: obj.links.map(l => ({
@@ -320,12 +308,17 @@ function appendArticle(article) {
 function printArticles(articles) {
     articlesContainer.innerHTML = '';
     articles.forEach(a => {
+        let setupNeeded = false;
         if (a.el === null) {
             a.el = renderArticle(a.data);
+            setupNeeded = true;
         }
 
-        setupArticle(a)
         appendArticle(a.el);
+
+        if (setupNeeded) {
+            setupArticle(a);
+        }
     });
 }
 
@@ -334,7 +327,7 @@ function setupArticle(article) {
     initExpandingLists(article.el);
     initFadeEffects(article.el);
 
-    article.el.querySelector('.checkbox').addEventListener('click', e => {
+    article.el.querySelector('.checkbox').addEventListener('click', () => {
         if (article.checked) {
             setArticleCheckState(article, false);
         } else {
@@ -355,69 +348,238 @@ function updateArticle(article, data) {
     article.el.replaceWith(renderArticle(data));
 }
 
+function performFiltering() {
+    filteredArticles = filterArticles(articles);
+    printArticles(filteredArticles);
+    updateActionBar();
+}
+
 function initArticles(data) {
-    printArticles(filterArticles(data));
+    articles = data;
+    performFiltering();
 }
 
 // advertisement checkboxes
-let checkedArticles = [];
+let checkedArticlesCount = 0;
 
-const checkbox = find('.actions .checkbox');
-const activateBtn = find('#action-activate-adv');
-const deleteBtn = find('#action-delete-adv');
+const mainCheckbox = find('.actions .checkbox');
+mainCheckbox.addEventListener('click', () => {
+    const checked = switchCheckbox(mainCheckbox);
+    filteredArticles.forEach(a => {
+        setArticleCheckState(a, checked);
+    });
+});
 
-function setArticleCheckState(article, checked) {
+function switchMainCheckBoxVisibility(visible) {
+    if (visible) {
+        mainCheckbox.classList.remove('hidden');
+    } else {
+        mainCheckbox.classList.add('hidden');
+    }
+}
+
+function switchCheckbox(elem, checked = null) {
+    if (checked === null) {
+        if (elem.classList.contains('active')) {
+            elem.classList.remove('active');
+            return false;
+        } else {
+            elem.classList.add('active');
+            return true;
+        }
+    }
+
+    if (checked) {
+        elem.classList.add('active');
+    } else {
+        elem.classList.remove('active');
+    }
+
+    return checked;
+}
+
+function setArticleCheckState(article, checked, actionBarUpdateNeeded = true) {
     if (article.checked === checked) {
         return;
     }
     article.checked = checked;
     if (checked) {
-        checkedArticles.push(article);
+        checkedArticlesCount++;
         article.el.querySelector('.checkbox').classList.add('active');
     } else {
-        checkedArticles.splice(checkedArticles.indexOf(article), 1);
+        checkedArticlesCount--;
         article.el.querySelector('.checkbox').classList.remove('active');
-        checkbox.classList.remove('active');
     }
 
-    if (checkedArticles.length !== 0) {
-       activateBtn.classList.remove('disabled');
-       deleteBtn.classList.remove('disabled');
-    } else {
-        activateBtn.classList.add('disabled');
-        deleteBtn.classList.add('disabled');
+    if (actionBarUpdateNeeded) {
+        updateActionBar();
     }
 }
 
-function initActionBar(articles) {
-    checkbox.addEventListener('click', e => {
-        const checked = !checkbox.classList.contains('active');
-        checkbox.classList.toggle('active');
-        if (checked) {
-            articles.forEach(a => {
-                setArticleCheckState(a, true);
-            });
-        } else {
-            [...checkedArticles].forEach(a => setArticleCheckState(a, false));
+function updateActionBar() {
+    updateMainCheckbox();
+    switchActionsBtns(checkedArticlesCount > 0);
+}
+
+function updateMainCheckbox() {
+    switchCheckbox(mainCheckbox, checkedArticlesCount === filteredArticles.length);
+}
+
+// action bar
+const actionBtnsContainer = find('.actions .actions__container');
+let checkSensitiveBtns;
+
+const defaultActionBtns = [{
+    elem: null,
+    text: 'Подать объявление',
+    action: function () { console.log('подать объяление') }
+}];
+
+const actionBtns = {
+    delete: {
+        text: 'Удалить',
+        action: function (a) {
+            a.data._state = 'deleted';
+            setArticleCheckState(a, false, false);
         }
-    });
+    },
+    activate: {
+        text: 'Активировать',
+        action: function (a) {
+            a.data._state = 'active';
+            setArticleCheckState(a, false, false);
+        }
+    },
+    unpublish: {
+        text: 'Снять с публикации',
+        action: function (a) {
+            a.data._state = 'pending';
+            setArticleCheckState(a, false, false);
+        }
+    },
+    emptyTrash: {
+        text: 'Очистить корзину',
+        action: function (a) {
+            articles = articles.filter(article => a !== article);
+        },
+    }
+};
+
+function switchActionsBtns(enabled = null) {
+    if (enabled === null) {
+
+    }
+    if (enabled) {
+        actionBtnsContainer.querySelectorAll('a:not(.action-btn--red)').forEach(b => {
+            b.classList.remove('disabled');
+        });
+    } else {
+        actionBtnsContainer.querySelectorAll('a:not(.action-btn--red)').forEach(b => {
+            b.classList.add('disabled');
+        });
+    }
 }
 
-function initActionDelete(articles) {
-    deleteBtn.addEventListener('click', e => {
-        [...checkedArticles].forEach(a => {
-            setArticleCheckState(a, false);
-            articles.splice(articles.indexOf(a), 1);
-            a.el.remove();
+function initDefaultActionBtns() {
+    defaultActionBtns.forEach(b => {
+        const btn = document.createElement('a');
+        btn.setAttribute('href', '');
+        btn.classList.add('action-btn', 'action-btn--red');
+        btn.textContent = b.text;
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            b.action();
         });
 
-        initArticles(articles);
+        b.elem = btn;
     });
+}
+
+function clearActionBtns() {
+    actionBtnsContainer.querySelectorAll('.action-btn').forEach(b => b.remove());
+    checkSensitiveBtns = [];
+}
+
+function initActionBar(state) {
+    clearActionBtns();
+    switchMainCheckBoxVisibility(true);
+
+    switch (state) {
+        case 'active':
+            addActionBtn(actionBtns.unpublish);
+            break;
+        case 'closed':
+            addActionBtn(actionBtns.activate);
+            addActionBtn(actionBtns.delete);
+            break;
+        case 'blocked':
+        case 'rejected':
+        case 'pending':
+            switchMainCheckBoxVisibility(false);
+            break;
+        case 'draft':
+            addActionBtn(actionBtns.delete);
+            break;
+        case 'deleted':
+            addActionBtn(actionBtns.emptyTrash);
+            break;
+    }
+
+
+
+    defaultActionBtns.forEach(b => {
+        actionBtnsContainer.appendChild(b.elem);
+    });
+}
+
+function addActionBtn({ text, action} ) {
+    const btn = document.createElement('a');
+    btn.setAttribute('href', '');
+    btn.textContent = text;
+    btn.classList.add('action-btn');
+    btn.addEventListener('click', e => {
+        e.preventDefault();
+        performAction(action);
+    });
+    actionBtnsContainer.appendChild(btn);
+}
+
+function performAction(action) {
+    articles.forEach(a => {
+        if (a.checked) {
+            action(a);
+        }
+    });
+    updateActionBar();
+    performFiltering();
+    updateStateFiltersNumbers();
 }
 
 // advertisement filters
+const stateFiltersBtns = Array.from(findAll('.adv-filter-state .tab-link'));
+
+function initStateFiltersBtns() {
+    stateFiltersBtns.forEach(b => {
+        const state = b.getAttribute('id').split('-').pop();
+        if (b.classList.contains('active')) {
+            initActionBar(state);
+        }
+        b.addEventListener('click', () => initActionBar(state));
+    });
+}
+
+function updateStateFiltersNumbers() {
+    stateFiltersBtns.forEach(b => {
+        b.querySelector('span:last-child').textContent = 0;
+    });
+    articles.forEach(a => {
+        const filterNumber = find(`#adv-filter-state-${a.data._state} span:last-child`);
+        filterNumber.textContent = ++filterNumber.textContent;
+    });
+}
+
 const filters = [
-    function(a) {
+    function (a) {
         const strings = find('#adv-filter-title').value.trim().split(' ');
         let match = false;
         for (let i = 0; i < strings.length; i++) {
@@ -460,6 +622,10 @@ const filters = [
             }
         }
         return match;
+    },
+    function (a) {
+        const state = find('.adv-filter-state .tab-link.active').getAttribute('id').split('-').pop();
+        return a.data._state === state;
     }
 ];
 
@@ -479,6 +645,10 @@ const listeners = [
     {
         selector: ['.adv-filter-region .select ul li'],
         event: 'click'
+    },
+    {
+        selector: ['.adv-filter-state .tab-link'],
+        event: 'click'
     }
 ]
 
@@ -488,6 +658,7 @@ function filterArticles(articles) {
         for (let i = 0; i < filters.length; i++) {
             if (!filters[i](a)) {
                 match = false;
+                setArticleCheckState(a, false);
                 break;
             }
         }
@@ -495,12 +666,12 @@ function filterArticles(articles) {
     });
 }
 
-function initFilters(articles) {
+function initFilters() {
     listeners.forEach(l => {
         Array.from(findAll(l.selector)).forEach(el => {
             el.addEventListener(l.event, e => {
                 if (l.checker === undefined || l.checker(e)) {
-                    initArticles(filterArticles(articles));
+                    performFiltering();
                 }
             });
         }) ;
@@ -509,11 +680,22 @@ function initFilters(articles) {
 
 let globalTestData;
 
+initLinkPreventReload(document.body);
+
 fetchData().then(data => {
-    initArticles(data);
+    initDefaultActionBtns();
+    initStateFiltersBtns();
+    updateStateFiltersNumbers();
+
     initFilters(data);
+    initArticles(data);
     globalTestData = data;
 });
+
+
+
+
+
 
 
 // TEST

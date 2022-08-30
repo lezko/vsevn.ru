@@ -164,7 +164,7 @@ select,
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .container {
@@ -482,6 +482,7 @@ select,
 
 .adv-filter-title {
     position: relative;
+    overflow: hidden;
 }
 
 /* adv-filter-periods */
@@ -600,7 +601,6 @@ select,
 /* 'fade' effect on overflowing text */
 .ovf-fade {
     position: relative;
-    overflow: hidden;
 }
 
 .ovf-fade:after {
@@ -610,7 +610,7 @@ select,
     height: 100%;
     top: 0;
     right: 0;
-    background:linear-gradient(90deg, transparent 60%, var(--ovf-fade-clr));
+    background:linear-gradient(90deg, transparent 60%, var(--ovf-fade-clr, #fff));
 }
 
 /* ------------------------ */
@@ -654,6 +654,12 @@ select,
 .ads__items > *:nth-child(odd) {
     background-color: var(--clr-light);
 }
+
+.ads__items > *:nth-child(odd) .ovf-fade:after {
+    --ovf-fade-clr: var(--clr-light);
+}
+
+
 
 /* adv-item */
 .adv-item {
@@ -711,6 +717,7 @@ select,
 
 .adv-item__city-list > li {
     white-space: nowrap;
+    overflow: hidden;
     position: relative;
 }
 
