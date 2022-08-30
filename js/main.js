@@ -104,7 +104,7 @@ findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e
 function initExpandingLists(target) {
     target.querySelectorAll('.adv-item__links').forEach(list => {
 
-        if (list.querySelectorAll('li').length === 2) {
+        if (list.querySelectorAll('li').length < 3) {
             return;
         }
 
@@ -185,7 +185,7 @@ const selectors = {
     responses: '.adv-item__stats .responses',
     matchingVacancies: '.adv-item__stats .matching-vacancies',
     daysPublished: '.adv-item__stats .days-published',
-    services: '.adv-item__services'
+    servicesCount: '.adv-item__services'
 };
 
 function renderElement(elem, payload = null) {
@@ -195,6 +195,11 @@ function renderElement(elem, payload = null) {
                 <li class="service-item"><a href="">Добавить</a></li>
                 ${payload.map(c => `<li><span class="icon icon-cross"></span><span>г. ${c}</span></li>`).join('')}
             `;
+        case 'servicesCount':
+            return `
+                <p>Активно: ${payload}</p>
+                <a href="">Показать</a>
+            `
         case 'services':
 
             return `
@@ -290,6 +295,7 @@ async function fetchData() {
             responses: obj.responses,
             matchingVacancies: obj.matching_vacancies,
             daysPublished: obj.days_published,
+            servicesCount: obj.services.length,
             _services: obj.services.map(s => ({
                 id: s.id,
                 dateFrom: s.date_from,
@@ -422,7 +428,7 @@ function updateActionBar() {
 }
 
 function updateMainCheckbox() {
-    switchCheckbox(mainCheckbox, checkedArticlesCount === filteredArticles.length);
+    switchCheckbox(mainCheckbox, checkedArticlesCount === filteredArticles.length && checkedArticlesCount > 0);
 }
 
 // action bar

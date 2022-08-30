@@ -94,13 +94,23 @@
 
                 <div class="adv-input-filters flex">
                     <div class="adv-filter-date flex">
-                        <input placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
-                        <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
+                        <div>
+                            <input placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
+                        </div>
+                        <div>
+                            <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
+                        </div>
                     </div>
                     <div class="adv-filter-price flex">
-                        <input placeholder="Цена от" min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
-                        <input placeholder="Цена до" min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
-                        <span class="icon icon-currency_rub_icon_173204"></span>
+                        <div>
+                            <span>Цена от</span>
+                            <input min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
+                        </div>
+                        <div>
+                            <span>до</span>
+                            <input min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
+                            <span class="icon icon-currency_rub_icon_173204"></span>
+                        </div>
                     </div>
                     <div class="adv-filter-region">
                         <div class="select" id="adv-filter-region">
