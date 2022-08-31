@@ -15,15 +15,6 @@ function initLinkPreventReload(target) {
     });
 }
 
-// custom checkbox
-function initCustomCheckbox(target) {
-    target.querySelectorAll('.checkbox').forEach(c => {
-        c.addEventListener('click', e => {
-            e.target.classList.toggle('active');
-        });
-    });
-}
-
 // custom select
 findAll('.select').forEach(sel => {
     const mainField = sel.querySelector('span');
@@ -51,8 +42,10 @@ function setFadeEffects(elems) {
     elems.forEach(el => {
         if (el.scrollWidth > el.clientWidth) {
             el.classList.add('ovf-fade');
+            el.classList.add('hint');
         } else {
             el.classList.remove('ovf-fade');
+            el.classList.remove('hint');
         }
     });
 }
@@ -61,7 +54,7 @@ function initFadeEffects(target) {
     const elems = [].concat(
         ...target.querySelectorAll('.adv-item__title'),
         ...target.querySelectorAll('.adv-item__city-list > li'),
-        ...target.querySelectorAll('.ads__field-names span')
+        // ...target.querySelectorAll('.ads__field-names span')
     );
 
     setFadeEffects(elems);
@@ -114,26 +107,57 @@ function initExpandingLists(target) {
         const btn = list.querySelector('.service-item a');
         btn.innerHTML = defaultBtnText;
 
-        list.setAttribute('aria-expanded', 'false');
+        toggleExpandingList(list, false);
 
-        const collapsedHeight = list.querySelector('li').clientHeight;
-        list.style.height = collapsedHeight + 'px';
-
-        btn.addEventListener('click', () => {
-            if (list.getAttribute('aria-expanded') === 'false') {
-                list.style.height = list.scrollHeight + collapsedHeight + 'px';
-                list.setAttribute('aria-expanded', 'true');
-                btn.innerHTML = clickedBtnText;
-            } else {
-                list.style.height = collapsedHeight + 'px';
-                list.setAttribute('aria-expanded', 'false');
-                btn.innerHTML = defaultBtnText;
-            }
-            btn.parentNode.classList.toggle('active');
+        btn.addEventListener('click', e => {
+            toggleExpandingList(list);
+            btn.innerHTML = btn.innerHTML === defaultBtnText ? clickedBtnText : defaultBtnText;
         });
 
-        list.addEventListener('transitionend', () => {
-            list.classList.toggle('show-on-adv-item-hover');
+        // const collapsedHeight = list.querySelector('li').clientHeight;
+        // list.style.height = collapsedHeight + 'px';
+
+        // btn.addEventListener('click', () => {
+        //     if (list.getAttribute('aria-expanded') === 'false') {
+        //         list.style.height = list.scrollHeight + collapsedHeight + 'px';
+        //         list.setAttribute('aria-expanded', 'true');
+        //         btn.innerHTML = clickedBtnText;
+        //     } else {
+        //         list.style.height = collapsedHeight + 'px';
+        //         list.setAttribute('aria-expanded', 'false');
+        //         btn.innerHTML = defaultBtnText;
+        //     }
+        //     btn.parentNode.classList.toggle('active');
+        // });
+        //
+        // list.addEventListener('transitionend', () => {
+        //     list.classList.toggle('show-on-adv-item-hover');
+        // });
+    });
+}
+
+function toggleExpandingList(list, expanded = null) {
+    if (expanded === null) {
+        expanded = !(list.getAttribute('aria-expanded') === 'true');
+    }
+
+    list.setAttribute('aria-expanded', expanded);
+    const links = list.querySelectorAll('li:not(.service-item)');
+    for (let i = 1; i < links.length; i++) {
+        if (expanded) {
+            links[i].classList.remove('hidden');
+        } else {
+            links[i].classList.add('hidden');
+        }
+    }
+}
+
+// copy link to clipboard
+function initCopyLinkBtns(target) {
+    target.querySelectorAll('.copy-link-modal').forEach(m => {
+        m.querySelector('.copy-link-modal__btn').addEventListener('click', () => {
+            const url = m.querySelector('.copy-link-modal__url').textContent;
+            navigator.clipboard.writeText(url).then(() => {}, err => console.error);
         });
     });
 }
@@ -182,19 +206,25 @@ const selectors = {
     views: '.adv-item__stats .views',
     favourites: '.adv-item__stats .favourites',
     dialogs: '.adv-item__stats .dialogs',
+    newMessages: '.adv-item__stats .new-messages',
+    growth: '.adv-item__stats .growth',
     responses: '.adv-item__stats .responses',
     matchingVacancies: '.adv-item__stats .matching-vacancies',
     daysPublished: '.adv-item__stats .days-published',
     servicesCount: '.adv-item__services'
 };
 
-function renderElement(elem, payload = null) {
+async function renderElement(elem, payload = null) {
     switch (elem) {
         case 'cityList':
             return `
                 <li class="service-item"><a href="">Добавить</a></li>
-                ${payload.map(c => `<li><span class="icon icon-cross"></span><span>г. ${c}</span></li>`).join('')}
+                ${payload.map(c => `<li><span class="icon icon-cross"></span><span>г. ${ c }</span></li>`).join('')}
             `;
+        case 'newMessages':
+            return `(${ payload })`;
+        case 'growth':
+            return `+${ payload }`
         case 'servicesCount':
             return `
                 <p>Активно: ${payload}</p>
@@ -233,22 +263,34 @@ function renderElement(elem, payload = null) {
                 }   
             `;
         case 'img':
+            if (payload.url.endsWith('.html')) {
+                const logo = await fetch(payload.url).then(data => data.text());
+                return `<div class="${payload.className}">${logo}</div>`;
+            }
             return `
                 <div class="${payload.className}" style="background-image: url(${payload.url})" alt="logo"></div>
             `;
         case 'links':
             return `
-                <li class="service-item"><a href=""></a></li>
                 ${ payload.map(l => `
-                    <li><span class="icon icon-link"></span><a href="">${l.text}</a></li>
+                    <li>
+                        <span class="icon icon-link"></span>
+                        <a href="">${l.text}</a>
+                        
+                        <div class="copy-link-modal">
+                        <span class="copy-link-modal__url">${l.url}</span>
+                        <span class="copy-link-modal__btn"><span class="icon icon-link"></span>Скопировать ссылку</span>
+                    </div>
+                    </li>
                 `).join('') }   
+                <li class="service-item"><a href=""></a></li>
             `;
         default:
             return payload;
     }
 }
 
-function renderArticle(data) {
+async function renderArticle(data) {
     const article = document.createElement('article');
     article.innerHTML = articleTemplate;
     article.classList.add('adv-item', 'grid', 'bottom-line');
@@ -256,7 +298,7 @@ function renderArticle(data) {
         if (key.startsWith('_')) {
             continue;
         }
-        article.querySelector(selectors[key]).innerHTML = renderElement(key, value);
+        article.querySelector(selectors[key]).innerHTML = await renderElement(key, value);
     }
 
     return article;
@@ -292,6 +334,8 @@ async function fetchData() {
             views: obj.views,
             favourites: obj.favourites,
             dialogs: obj.dialogs,
+            newMessages: obj.new_messages,
+            growth: obj.growth,
             responses: obj.responses,
             matchingVacancies: obj.matching_vacancies,
             daysPublished: obj.days_published,
@@ -311,12 +355,12 @@ function appendArticle(article) {
     articlesContainer.appendChild(article);
 }
 
-function printArticles(articles) {
+async function printArticles(articles) {
     articlesContainer.innerHTML = '';
-    articles.forEach(a => {
+    for (const a of articles) {
         let setupNeeded = false;
         if (a.el === null) {
-            a.el = renderArticle(a.data);
+            a.el = await renderArticle(a.data);
             setupNeeded = true;
         }
 
@@ -325,13 +369,14 @@ function printArticles(articles) {
         if (setupNeeded) {
             setupArticle(a);
         }
-    });
+    }
 }
 
 function setupArticle(article) {
     initLinkPreventReload(article.el);
     initExpandingLists(article.el);
     initFadeEffects(article.el);
+    initCopyLinkBtns(article.el);
 
     article.el.querySelector('.checkbox').addEventListener('click', () => {
         if (article.checked) {
@@ -341,8 +386,8 @@ function setupArticle(article) {
         }
     });
 
-    article.el.querySelector('.adv-item__services a').addEventListener('click', () => {
-        showModal(renderElement('services', article.data._services));
+    article.el.querySelector('.adv-item__services a').addEventListener('click', async () => {
+        showModal(await renderElement('services', article.data._services));
     });
 
     article.el.querySelectorAll('.adv-item__city-list > li > span.icon').forEach(b => b.addEventListener('click', e => {
@@ -356,13 +401,12 @@ function updateArticle(article, data) {
 
 function performFiltering() {
     filteredArticles = filterArticles(articles);
-    printArticles(filteredArticles);
-    updateActionBar();
+    printArticles(filteredArticles).then(updateActionBar);
 }
 
-function initArticles(data) {
+async function initArticles(data) {
     articles = data;
-    performFiltering();
+    await performFiltering();
 }
 
 // advertisement checkboxes
@@ -459,7 +503,7 @@ const actionBtns = {
     unpublish: {
         text: 'Снять с публикации',
         action: function (a) {
-            a.data._state = 'pending';
+            a.data._state = 'closed';
             setArticleCheckState(a, false, false);
         }
     },
