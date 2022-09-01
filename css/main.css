@@ -971,9 +971,10 @@ select,
 /* adv-item */
 .adv-item {
     grid-template-columns: 3% 7% 15% 16% 1fr 8%;
-    grid-template-rows: repeat(3, 28px) 1fr;
+    grid-template-rows: auto repeat(3, 28px) 1fr;
     column-gap: 1%;
     grid-template-areas:
+    '    .       .  state    state     state state'
     'checkbox img left-block city-list stats services'
     'checkbox img left-block city-list rating services'
     'checkbox img left-block city-list get-more-responses .'
@@ -1015,6 +1016,19 @@ select,
 
 .adv-item:hover:after {
     display: none;
+}
+
+.adv-item__state {
+    grid-area: state;
+    font-size: 18px;
+}
+
+.adv-item__state .icon .path1:before {
+    color: #ff8800 !important;
+}
+
+.adv-item__state .info {
+    margin-bottom: 20px;
 }
 
 .checkbox {

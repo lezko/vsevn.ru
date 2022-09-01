@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?sug17c');
-  src:  url('fonts/icomoon.eot?sug17c#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?sug17c') format('truetype'),
-    url('fonts/icomoon.woff?sug17c') format('woff'),
-    url('fonts/icomoon.svg?sug17c#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?kdnuw8');
+  src:  url('fonts/icomoon.eot?kdnuw8#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?kdnuw8') format('truetype'),
+    url('fonts/icomoon.woff?kdnuw8') format('woff'),
+    url('fonts/icomoon.svg?kdnuw8#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-warn-triangle .path1:before {
+  content: "\e901";
+  color: rgb(0, 0, 0);
+}
+.icon-warn-triangle .path2:before {
+  content: "\e902";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-warn-triangle .path3:before {
+  content: "\e903";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
 .icon-cross-svgrepo-com:before {
   content: "\e900";
 }

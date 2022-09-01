@@ -50,7 +50,7 @@ function initFadeEffects(target) {
     setFadeEffects(elems);
 
     window.addEventListener('resize', () => {
-        setFadeEffects(elems);
+        // setFadeEffects(elems);
     });
 }
 
@@ -186,6 +186,7 @@ let services, articleTemplate, servicesLogos = [], articles, filteredArticles;
 const selectors = {
     img: '.adv-item__img',
     title: '.adv-item__title',
+    state: '.adv-item__state',
     price: '.adv-item__price > span:first-child',
     cityList: '.adv-item__city-list',
     rating: '.adv-item__rating',
@@ -203,6 +204,17 @@ const selectors = {
 
 async function renderElement(elem, payload = null) {
     switch (elem) {
+        case 'state':
+            if (payload === 'active') {
+                return `
+                    <p>
+                        <span class="icon icon-warn-triangle"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                        Активное объявление
+                    </p>
+                    <p class="info">Обновлена: 10.05.2022, 9:00  Осталось 27 дней до депубликации</p>
+                `;
+            }
+            return '';
         case 'title':
             return `
                 <span class="hint__text">${ payload }</span>
@@ -330,7 +342,7 @@ async function fetchData() {
             },
             title: obj.title,
             _type: obj.type,
-            _state: obj.state,
+            state: obj.state,
             price: obj.price,
             rating: obj.rating,
             cityList: obj.city_list,
@@ -399,7 +411,7 @@ function setupArticle(article) {
         showModal(await renderElement('services', article.data._services));
     });
 
-    article.el.setAttribute('data-state', article.data._state);
+    article.el.setAttribute('data-state', article.data.state);
 }
 
 function updateArticle(article, options) {
@@ -547,21 +559,21 @@ const actionBtns = {
     delete: {
         text: 'Удалить',
         action: function (a) {
-            a.data._state = 'deleted';
+            a.data.state = 'deleted';
             setArticleCheckState(a, false, false);
         }
     },
     activate: {
         text: 'Активировать',
         action: function (a) {
-            a.data._state = 'active';
+            a.data.state = 'active';
             setArticleCheckState(a, false, false);
         }
     },
     unpublish: {
         text: 'Снять с публикации',
         action: function (a) {
-            a.data._state = 'closed';
+            a.data.state = 'closed';
             setArticleCheckState(a, false, false);
         }
     },
@@ -681,7 +693,7 @@ function updateStateFiltersNumbers() {
         b.querySelector('span:last-child').textContent = 0;
     });
     articles.forEach(a => {
-        const filterNumber = find(`#adv-filter-state-${a.data._state} span:last-child`);
+        const filterNumber = find(`#adv-filter-state-${a.data.state} span:last-child`);
         filterNumber.textContent = ++filterNumber.textContent;
     });
 }
@@ -733,7 +745,7 @@ const filters = [
     },
     function (a) {
         const state = find('.adv-filter-state .tab-link.active').getAttribute('id').split('-').pop();
-        return a.data._state === state;
+        return a.data.state === state;
     }
 ];
 
