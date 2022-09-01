@@ -16,25 +16,15 @@ function initLinkPreventReload(target) {
 }
 
 // custom select
-findAll('.select').forEach(sel => {
-    const mainField = sel.querySelector('span');
-    mainField.innerHTML = sel.querySelector('ul li[data-default="true"]').textContent;
-    sel.addEventListener('mouseenter', () => {
-        sel.querySelector('ul').setAttribute('data-expanded', 'true');
+findAll('.select:not(#adv-filter-region)').forEach(sel => {
+    const text = sel.querySelector('span.text');
+    text.innerHTML = sel.querySelector('ul li[data-default="true"]').textContent;
+
+    let expanded = false;
+    sel.querySelector('div').addEventListener('click', () => {
+        expanded = !expanded;
+        sel.setAttribute('aria-expanded', expanded);
     });
-    sel.addEventListener('mouseleave', () => {
-        sel.querySelector('ul').setAttribute('data-expanded', 'false');
-    });
-    sel.querySelectorAll('li').forEach(li => li.addEventListener('click', e => {
-        sel.querySelectorAll('li').forEach(li => li.removeAttribute('data-selected'));
-        mainField.innerHTML = e.target.textContent;
-        mainField.removeAttribute('data-empty');
-        if (e.target.getAttribute('data-default') === 'true') {
-            mainField.setAttribute('data-empty', 'true');
-        }
-        li.setAttribute('data-selected', 'true');
-        sel.querySelector('ul').setAttribute('data-expanded', 'false');
-    }));
 });
 
 // handle text overflow
@@ -42,18 +32,18 @@ function setFadeEffects(elems) {
     elems.forEach(el => {
         if (el.scrollWidth > el.clientWidth) {
             el.classList.add('ovf-fade');
-            el.classList.add('hint');
+            el.parentNode.classList.add('hint');
         } else {
             el.classList.remove('ovf-fade');
-            el.classList.remove('hint');
+            el.parentNode.classList.remove('hint');
         }
     });
 }
 
 function initFadeEffects(target) {
     const elems = [].concat(
-        ...target.querySelectorAll('.adv-item__title'),
-        ...target.querySelectorAll('.adv-item__city-list > li'),
+        ...target.querySelectorAll('.adv-item__title span.text'),
+        ...target.querySelectorAll('.adv-item__city-list > li > div'),
         // ...target.querySelectorAll('.ads__field-names span')
     );
 
@@ -84,14 +74,13 @@ findAll('.tab-links').forEach(parent => {
 });
 
 // input validation
-findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e => {
-    if (isNaN(e.key) && !(e.keyCode !== 8 || e.key.toLowerCase() === 'backspace')) {
-        e.preventDefault();
-    }
-    if (e.target.value < 0) {
-        e.target.value = '';
-    }
-}));
+function initInputValidation() {
+    findAll('input[type="number"]').forEach(inp => inp.addEventListener('keydown', e => {
+        if ((isNaN(e.key) && e.keyCode !== 8 && e.key.toLowerCase() !== 'backspace') || e.keyCode === 32) {
+            e.preventDefault();
+        }
+    }));
+}
 
 // expanding list with links
 function initExpandingLists(target) {
@@ -113,26 +102,6 @@ function initExpandingLists(target) {
             toggleExpandingList(list);
             btn.innerHTML = btn.innerHTML === defaultBtnText ? clickedBtnText : defaultBtnText;
         });
-
-        // const collapsedHeight = list.querySelector('li').clientHeight;
-        // list.style.height = collapsedHeight + 'px';
-
-        // btn.addEventListener('click', () => {
-        //     if (list.getAttribute('aria-expanded') === 'false') {
-        //         list.style.height = list.scrollHeight + collapsedHeight + 'px';
-        //         list.setAttribute('aria-expanded', 'true');
-        //         btn.innerHTML = clickedBtnText;
-        //     } else {
-        //         list.style.height = collapsedHeight + 'px';
-        //         list.setAttribute('aria-expanded', 'false');
-        //         btn.innerHTML = defaultBtnText;
-        //     }
-        //     btn.parentNode.classList.toggle('active');
-        // });
-        //
-        // list.addEventListener('transitionend', () => {
-        //     list.classList.toggle('show-on-adv-item-hover');
-        // });
     });
 }
 
@@ -216,10 +185,22 @@ const selectors = {
 
 async function renderElement(elem, payload = null) {
     switch (elem) {
+        case 'title':
+            return `
+                <span class="hint__text">${ payload }</span>
+                <span class="text">${ payload }</span>
+            `;
         case 'cityList':
             return `
                 <li class="service-item"><a href="">Добавить</a></li>
-                ${payload.map(c => `<li><span class="icon icon-cross"></span><span>г. ${ c }</span></li>`).join('')}
+                ${payload.map(c => `
+                    <li>
+                        <span class="hint__text">${ c }</span>
+                        <div>
+                            <span class="icon icon-cross"></span><span class="text">${ c }</span>
+                        </div>
+                    </li>
+                `).join('')}
             `;
         case 'newMessages':
             return `(${ payload })`;
@@ -227,7 +208,7 @@ async function renderElement(elem, payload = null) {
             return `+${ payload }`
         case 'servicesCount':
             return `
-                <p>Активно: ${payload}</p>
+                <p>Активно: ${ payload }</p>
                 <a href="">Показать</a>
             `
         case 'services':
@@ -278,8 +259,11 @@ async function renderElement(elem, payload = null) {
                         <a href="">${l.text}</a>
                         
                         <div class="copy-link-modal">
-                        <span class="copy-link-modal__url">${l.url}</span>
-                        <span class="copy-link-modal__btn"><span class="icon icon-link"></span>Скопировать ссылку</span>
+                        <span class="copy-link-modal__url">${ l.url }</span>
+                        <span class="copy-link-modal__btn">
+                            <span class="icon icon-link"></span>
+                            <span class="text">Скопировать ссылку</span>
+                        </span>
                     </div>
                     </li>
                 `).join('') }   
@@ -376,7 +360,8 @@ function setupArticle(article) {
     initLinkPreventReload(article.el);
     initExpandingLists(article.el);
     initFadeEffects(article.el);
-    initCopyLinkBtns(article.el);
+    initCopyLinkModals(article);
+    initDeleteCityBtns(article);
 
     article.el.querySelector('.checkbox').addEventListener('click', () => {
         if (article.checked) {
@@ -389,14 +374,16 @@ function setupArticle(article) {
     article.el.querySelector('.adv-item__services a').addEventListener('click', async () => {
         showModal(await renderElement('services', article.data._services));
     });
-
-    article.el.querySelectorAll('.adv-item__city-list > li > span.icon').forEach(b => b.addEventListener('click', e => {
-        e.target.parentNode.remove();
-    }));
 }
 
-function updateArticle(article, data) {
-    article.el.replaceWith(renderArticle(data));
+function updateArticle(article, options) {
+    article.data = {...article.data, ...options};
+    renderArticle(article.data).then(a => {
+        article.el.replaceWith(a);
+        article.el = a;
+        setupArticle(article);
+        performFiltering();
+    });
 }
 
 function performFiltering() {
@@ -407,6 +394,51 @@ function performFiltering() {
 async function initArticles(data) {
     articles = data;
     await performFiltering();
+}
+
+// setup article functions
+function initDeleteCityBtns(article) {
+    article.el.querySelectorAll('.adv-item__city-list > li:not(.service-item)').forEach(li => {
+        const city = li.querySelector('span.text').textContent;
+        li.querySelector('span.icon').addEventListener('click', () => {
+            updateArticle(article, { cityList: article.data.cityList.filter(c => c !== city) });
+        });
+    });
+}
+
+function initCopyLinkModals(article) {
+    article.el.querySelectorAll('.adv-item__links > li:not(.service-item)').forEach(li => {
+        const defaultText = 'Скопировать ссылку';
+        const clickedText = 'Ссылка скопирована';
+
+        const url = li.querySelector('.copy-link-modal__url');
+        const btn = li.querySelector('.copy-link-modal__btn');
+
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(url.textContent).then(() => {
+                btn.querySelector('span.text').textContent = clickedText;
+            }, console.error);
+        });
+        btn.parentNode.addEventListener('mouseleave', () => {
+            btn.querySelector('span.text').textContent = defaultText;
+        });
+
+        let string = null;
+        li.addEventListener('mouseenter', () => {
+            if (string || url.scrollWidth <= url.clientWidth) {
+                return;
+            }
+
+            string = url.textContent;
+            while (url.scrollWidth > url.clientWidth) {
+                string = string.slice(0, -1);
+                url.textContent = string;
+            }
+            string = string.slice(0, -2);
+            url.textContent = string;
+            url.classList.add('ovf');
+        });
+    });
 }
 
 // advertisement checkboxes
@@ -731,6 +763,7 @@ function initFilters() {
 let globalTestData;
 
 initLinkPreventReload(document.body);
+initInputValidation();
 
 fetchData().then(data => {
     initDefaultActionBtns();

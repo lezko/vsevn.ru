@@ -5,7 +5,10 @@
 <div class="adv-item__img"></div>
 
 <div class="adv-item__left-block">
-    <h3 class="adv-item__title"></h3>
+    <h3 class="adv-item__title">
+        <span class="hint__text"></span>
+        <span class="text"></span>
+    </h3>
 
     <div class="adv-item__price">
         <span></span>
@@ -26,12 +29,39 @@
 </div>
 
 <div class="adv-item__stats flex">
-    <div><span class="icon icon-eye"></span><span class="views"></span></div>
-    <div><span class="icon icon-heart"></span><span class="favourites"></span></div>
-    <div><span class="icon icon-bubble"></span><span class="dialogs hint" style="--hint-text: 'Всего диалогов по данной вакансии'"></span><span class="new-messages hint" style="--hint-text: 'Есть новые сообщения вам по этой вакансии'"></span></div>
-    <div><span class="responses hint" style="--hint-text: 'Всего откликов'"></span><span class="growth hint" style="--hint-text: 'Есть новые отклики по этой вакансии'"></span></div>
-    <div><span class="matching-vacancies"></span></div>
-    <div><span class="days-published"></span></div>
+    <div>
+        <span class="icon icon-eye"></span><span class="views"></span>
+    </div>
+    <div>
+        <span class="icon icon-heart"></span><span class="favourites"></span>
+    </div>
+    <div class="flex">
+        <span class="flex hint">
+            <span class="icon icon-bubble"></span>
+            <span class="hint__text">Всего диалогов по данной вакансии</span>
+            <span class="dialogs"></span>
+        </span>
+        <span class="flex hint">
+            <span class="hint__text">Есть новые сообщения вам по этой вакансии</span>
+            <span class="new-messages"></span>
+        </span>
+    </div>
+    <div class="flex">
+        <span class="flex hint">
+            <span class="hint__text">Всего откликов</span>
+            <span class="responses"></span>
+        </span>
+        <span class="flex hint">
+            <span class="hint__text">Есть новые отклики по этой вакансии</span>
+            <span class="growth"></span>
+        </span>
+    </div>
+    <div>
+        <span class="matching-vacancies"></span>
+    </div>
+    <div>
+        <span class="days-published"></span>
+    </div>
 </div>
 
 <div class="adv-item__services">

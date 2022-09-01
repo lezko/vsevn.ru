@@ -114,16 +114,8 @@
                     </div>
                     <div class="adv-filter-region">
                         <div class="select" id="adv-filter-region">
-                            <span class="text" data-empty="true"></span>
-                            <ul data-expanded="false">
-                                <li data-default="true">Регион / Населенный пункт</li>
-                                <li>Ростов</li>
-                                <li>Москва</li>
-                                <li>Пермь</li>
-                                <li>Самара</li>
-                                <li>Таганрог</li>
-                                <li>Хабаровск</li>
-                            </ul>
+                            <span class="text" data-empty="true">Регион / Населенный пункт</span>
+
                         </div>
                     </div>
                     <div class="adv-filter-title">
@@ -153,9 +145,27 @@
                         <div class="checkbox__inner"></div>
                     </div>
                 </div>
-                <select name="action-sort" class="action-sort" id="action-sort">
-                    <option value="by-date">По дате</option>
-                </select>
+                <div name="action-sort" class="action-sort select" id="action-sort" aria-expanded="false">
+                    <div>
+                        <span class="text"></span>
+                        <span class="icon icon-down-arrow_icon-iconscom_73047"></span>
+                    </div>
+
+                    <ul>
+                        <li class="category">По дате</li>
+                        <li>По дате в поиске <span class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li>По дате в поиске <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
+                        <li>По дате завершения <span class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li>По дате завершения <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
+                        <li data-default="true">По дате подачи <span class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li class="category">По цене</li>
+                        <li>По цене <span class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li>По цене <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
+                        <li class="category">По расположению</li>
+                        <li>По городу <span class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li>По городу <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
+                    </ul>
+                </div>
             </div>
         </section>
 
