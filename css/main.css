@@ -205,7 +205,7 @@ select,
 }
 
 .avatar-square {
-    border-radius: 6px;
+    border-radius: 1px;
 }
 
 .show-on-adv-item-hover {
@@ -897,13 +897,19 @@ select,
     content: 'г. ';
 }
 
-.adv-item__city-list .service-item a,
+.adv-item__city-list .service-item a {
+    color: #ff4d00;
+}
+
+.adv-item__city-list .service-item a:hover {
+    color: orange;
+}
+
 .adv-item__get-more-responses a {
     color: var(--clr-green);
 }
 
-.adv-item__get-more-responses a:hover,
-.adv-item__city-list .service-item a:hover {
+.adv-item__get-more-responses a:hover {
     color: #577039;
 }
 
@@ -931,7 +937,7 @@ select,
 /* ads__field-names */
 .ads__field-names {
     column-gap: 1%;
-    grid-template-columns: 11% 15% 16% 1fr 8%;
+    grid-template-columns: 10% 21% 13% 1fr 8%;
     padding: 15px;
 }
 
@@ -970,11 +976,9 @@ select,
     display: none;
 }
 
-
-
 /* adv-item */
 .adv-item {
-    grid-template-columns: 3% 7% 15% 16% 1fr 8%;
+    grid-template-columns: 3% 6% 21% 13% 1fr 8%;
     grid-template-rows: auto repeat(3, 28px) 1fr;
     column-gap: 1%;
     grid-template-areas:
@@ -982,7 +986,17 @@ select,
     'checkbox img left-block city-list stats services'
     'checkbox img left-block city-list rating services'
     'checkbox img left-block city-list get-more-responses .'
-    '. img . city-list links .';
+    '. . . city-list links .';
+}
+
+
+.ads__field-names--big > *:nth-child(4),
+.ads__field-names--big > *:nth-child(5),
+.ads__field-names--big > *:nth-child(6),
+.adv-item__stats > *:nth-child(4),
+.adv-item__stats > *:nth-child(5),
+.adv-item__stats > *:nth-child(6) {
+    flex: 0 0 70px;
 }
 
 .adv-item {
@@ -1042,19 +1056,23 @@ select,
 
 .adv-item__img {
     grid-area: img;
+    display: grid;
+    align-content: center;
 }
 
 .adv-item__img > div {
     display: grid;
     place-content: center;
     overflow: hidden;
-    box-shadow: 0 0 0 4px #fff, 0 0 0 6px #E3E6E9;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 5px #E3E6E9;
+    width: 100%;
     max-height: 100%;
     aspect-ratio: 1;
     margin: 0 auto;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    background-color: #fff;
 }
 
 .adv-item__img > div > * {
@@ -1094,7 +1112,7 @@ select,
 
 .adv-item__city-list .service-item {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 1px);
 }
 
 .adv-item__city-list span.icon {
@@ -1108,8 +1126,14 @@ select,
 }
 
 .adv-item__rating {
+    position: relative;
+    top: 1px;
     grid-area: rating;
     align-self: center;
+}
+
+.adv-item__rating a {
+    margin-left: 5px;
 }
 
 .adv-item__links {

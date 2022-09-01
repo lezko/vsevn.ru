@@ -240,7 +240,7 @@ async function renderElement(elem, payload = null) {
         case 'growth':
             return `+${ payload }`;
         case 'rating':
-            return `Объявление на ${ payload } месте в поиске. <a href="">Поднять на 1 (первое) место в поиске?</a>`
+            return `<span>Объявление на ${ payload } месте в поиске.</span><a href="">Поднять на 1 (первое) место в поиске?</a>`
         case 'servicesCount':
             return `
                 <p>Активно: ${ payload }</p>
