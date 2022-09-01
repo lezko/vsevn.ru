@@ -398,6 +398,7 @@ function setupArticle(article) {
     initFadeEffects(article.el);
     initCopyLinkModals(article);
     initDeleteCityBtns(article);
+    initArticleStateBackground(article);
 
     article.el.querySelector('.checkbox').addEventListener('click', () => {
         if (article.checked) {
@@ -410,8 +411,6 @@ function setupArticle(article) {
     article.el.querySelector('.adv-item__services a').addEventListener('click', async () => {
         showModal(await renderElement('services', article.data._services));
     });
-
-    article.el.setAttribute('data-state', article.data.state);
 }
 
 function updateArticle(article, options) {
@@ -420,7 +419,6 @@ function updateArticle(article, options) {
         article.el.replaceWith(a);
         article.el = a;
         setupArticle(article);
-        performFiltering();
     });
 }
 
@@ -435,11 +433,16 @@ async function initArticles(data) {
 }
 
 // setup article functions
+function initArticleStateBackground(article) {
+    article.el.setAttribute('data-state', article.data.state);
+}
+
 function initDeleteCityBtns(article) {
     article.el.querySelectorAll('.adv-item__city-list > li:not(.service-item)').forEach(li => {
         const city = li.querySelector('span.text').textContent;
         li.querySelector('span.icon').addEventListener('click', () => {
             updateArticle(article, { cityList: article.data.cityList.filter(c => c !== city) });
+            performFiltering();
         });
     });
 }
@@ -645,8 +648,6 @@ function initActionBar(state) {
             break;
     }
 
-
-
     defaultActionBtns.forEach(b => {
         actionBtnsContainer.appendChild(b.elem);
     });
@@ -668,6 +669,7 @@ function performAction(action) {
     articles.forEach(a => {
         if (a.checked) {
             action(a);
+            a.el = null;
         }
     });
     updateActionBar();
