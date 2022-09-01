@@ -197,7 +197,10 @@ async function renderElement(elem, payload = null) {
                     <li>
                         <span class="hint__text">${ c }</span>
                         <div>
-                            <span class="icon icon-cross"></span><span class="text">${ c }</span>
+                            <span class="icon icon-cross hint">
+                                <span class="hint__text hint__text--center">Удалить данный населенный пункт</span>
+                            </span>
+                            <span class="text">${ c }</span>
                         </div>
                     </li>
                 `).join('')}
