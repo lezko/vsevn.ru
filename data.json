@@ -3,7 +3,7 @@
     "logo_url": "img/profile-icons/worker-0.jpg",
     "title": "Продавец-грузчик в магазин хозтоваров",
     "type": "resume",
-    "price": 1000,
+    "price": 111200,
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -54,7 +54,7 @@
     "logo_url": "img/profile-icons/logo-0.html",
     "title": "Контроллер технического состояния автотранспортных средств",
     "type": "vacancy",
-    "price": 50000,
+    "price": 111200,
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -86,7 +86,7 @@
     "logo_url": "img/profile-icons/logo-1.html",
     "title": "Резчики металла на ленточнопильных станках с числовым программным управлением",
     "type": "vacancy",
-    "price": 50000,
+    "price": 111200,
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -118,7 +118,7 @@
     "logo_url": "img/profile-icons/logo-2.html",
     "title": "Директор",
     "type": "vacancy",
-    "price": 50000,
+    "price": 111200,
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -150,7 +150,7 @@
     "logo_url": "img/profile-icons/logo-3.html",
     "title": "Директор",
     "type": "vacancy",
-    "price": 50000,
+    "price": 111200,
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -182,7 +182,7 @@
     "logo_url": "img/profile-icons/logo-4.html",
     "title": "Директор",
     "type": "vacancy",
-    "price": 50000,
+    "price": 111200,
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -214,7 +214,7 @@
     "logo_url": "img/profile-icons/logo-0.html",
     "title": "Художник",
     "type": "resume",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "closed",
     "city_list": [
@@ -240,7 +240,7 @@
     "logo_url": "",
     "title": "deleted",
     "type": "resume",
-    "price": 50000,
+    "price": 111200,
     "rating": 133,
     "state": "deleted",
     "city_list": [
@@ -272,7 +272,7 @@
     "logo_url": "",
     "title": "Фотограф",
     "type": "resume",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "closed",
     "city_list": [
@@ -293,7 +293,7 @@
     "logo_url": "",
     "title": "Учитель",
     "type": "resume",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "blocked",
     "city_list": [
@@ -314,7 +314,7 @@
     "logo_url": "",
     "title": "Секретарь",
     "type": "vacancy",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "rejected",
     "city_list": [
@@ -335,7 +335,7 @@
     "logo_url": "",
     "title": "Художник",
     "type": "pending",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "closed",
     "city_list": [
@@ -356,7 +356,7 @@
     "logo_url": "",
     "title": "Уборщик",
     "type": "resume",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "pending",
     "city_list": [
@@ -377,7 +377,7 @@
     "logo_url": "",
     "title": "Волшебник",
     "type": "resume",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "draft",
     "city_list": [
@@ -398,7 +398,7 @@
     "logo_url": "",
     "title": "Удаленный",
     "type": "vacancy",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "deleted",
     "city_list": [
@@ -419,7 +419,7 @@
     "logo_url": "",
     "title": "",
     "type": "resume",
-    "price": 2500,
+    "price": 111200,
     "rating": 133,
     "state": "closed",
     "city_list": [

@@ -636,6 +636,14 @@ select,
 }
 
 /* input filters */
+.adv-input-filters {
+    color: var(--clr-gray);
+}
+
+.adv-input-filters input {
+    color: #7a7a7a;
+}
+
 .adv-input-filters > .flex {
     justify-content: space-between;
     flex-wrap: wrap;
@@ -645,21 +653,12 @@ select,
     background-color: #f4f4f4;
 }
 
-.adv-input-filters .icon {
-    color: var(--clr-gray)
-}
-
 .adv-input-filters *[data-empty="true"] .cross {
     display: none;
 }
 
 .adv-input-filters *[data-empty="false"] .cross-sibling {
     right: 40px;
-}
-
-.adv-input-filters input::placeholder {
-    color: var(--clr-gray);
-    opacity: 1;
 }
 
 .adv-input-filters input,
