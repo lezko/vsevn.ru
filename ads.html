@@ -68,9 +68,9 @@
 
         <section class="filters">
 
-            <div class="container flow">
 
-                <div class="adv-top-filters flex">
+            <div class="adv-top-filters">
+                <div class="container flex">
                     <nav class="adv-filter-state">
                         <ul class="flex tab-links" style="--flex-gap: 20px">
                             <li><a href="" id="adv-filter-state-active" class="tab-link"><span>Активные</span><span></span></a></li>
@@ -91,26 +91,40 @@
                         </ul>
                     </nav>
                 </div>
+            </div>
 
-                <div class="adv-input-filters flex">
+            <div class="adv-input-filters">
+                <div class="container flex">
                     <div class="adv-filter-date flex">
                         <div>
                             <input placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
+                            <span aria-controls="adv-filter-date-from" class="hint icon cross icon-cross-svgrepo-com">
+                                <span class="hint__text hint__text--center">Очистить поле?</span>
+                            </span>
                         </div>
                         <div>
                             <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
+                            <span aria-controls="adv-filter-date-to" class="hint icon cross icon-cross-svgrepo-com">
+                                <span class="hint__text hint__text--center">Очистить поле?</span>
+                            </span>
                         </div>
                     </div>
                     <div class="adv-filter-price flex">
-                        <div>
+                        <label>
                             <span class="placeholder">Цена от</span>
                             <input min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
-                        </div>
-                        <div>
+                            <span aria-controls="adv-filter-price-from" class="hint icon cross icon-cross-svgrepo-com">
+                                <span class="hint__text hint__text--center">Очистить поле?</span>
+                            </span>
+                        </label>
+                        <label>
                             <span class="placeholder">до</span>
                             <input min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
-                            <span class="icon icon-currency_rub_icon_173204"></span>
-                        </div>
+                            <span id="adv-filter-price-to-icon" class="icon cross-sibling icon-currency_rub_icon_173204"></span>
+                            <span aria-controls="adv-filter-price-to" class="hint icon cross icon-cross-svgrepo-com">
+                                <span class="hint__text hint__text--center">Очистить поле?</span>
+                            </span>
+                        </label>
                     </div>
                     <div class="adv-filter-region">
                         <div class="select" id="adv-filter-region">
@@ -120,11 +134,16 @@
                     </div>
                     <div class="adv-filter-title">
                         <input placeholder="Название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
-                        <span class="icon icon-search"></span>
+                        <span class="icon cross-sibling icon-search"></span>
+                        <span aria-controls="adv-filter-title" class="hint icon cross icon-cross-svgrepo-com">
+                            <span class="hint__text hint__text--center">Очистить поле?</span>
+                        </span>
                     </div>
                 </div>
+            </div>
 
-                <nav class="adv-filter-period bottom-line">
+            <nav class="adv-filter-period">
+                <div class="container">
                     <ul class="flex tab-links" style="--flex-gap: 20px">
                         <li><a href="" class="tab-link" id="adv-filter-period-all">За все время</a></li>
                         <li><a href="" class="tab-link" id="adv-filter-period-today">Сегодня</a></li>
@@ -133,13 +152,13 @@
                         <li><a href="" class="tab-link" id="adv-filter-period-half-year">Полгода</a></li>
                         <li><a href="" class="tab-link" id="adv-filter-period-year">Год</a></li>
                     </ul>
-                </nav>
-            </div>
+                </div>
+            </nav>
 
         </section>
 
         <section class="actions container">
-            <div class="flex bottom-line">
+            <div class="flex bottom-line top-line">
                 <div class="actions__container flex" style="--flex-gap: 20px">
                     <div class="checkbox" role="checkbox" style="--checkbox-size: 40px">
                         <div class="checkbox__inner"></div>

@@ -82,6 +82,22 @@ function initInputValidation() {
     }));
 }
 
+// cross clear field
+function initClearFieldBtns(target) {
+    target.querySelectorAll('.cross').forEach(c => {
+        const field = find('#' + c.getAttribute('aria-controls'));
+        const parent = c.parentNode;
+        parent.setAttribute('data-empty', 'true');
+
+        field.addEventListener('input', () => field.value !== '' ? parent.setAttribute('data-empty', 'false') : parent.setAttribute('data-empty', 'true'));
+        c.addEventListener('click', () => {
+            field.value = '';
+            parent.setAttribute('data-empty', 'true');
+        });
+
+    });
+}
+
 // expanding list with links
 function initExpandingLists(target) {
     target.querySelectorAll('.adv-item__links').forEach(list => {
@@ -766,6 +782,7 @@ function initFilters() {
 let globalTestData;
 
 initLinkPreventReload(document.body);
+initClearFieldBtns(document.body);
 initInputValidation();
 
 fetchData().then(data => {

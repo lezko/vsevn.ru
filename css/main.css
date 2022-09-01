@@ -192,6 +192,10 @@ select,
     border-bottom: 1px solid var(--clr-gray);
 }
 
+.top-line {
+    border-top: 1px solid var(--clr-gray);
+}
+
 .flow > * + * {
     margin-top: var(--flow-gap, 1rem);
 }
@@ -215,6 +219,20 @@ select,
 /* ------------------------ */
 /* Components               */
 /* ------------------------ */
+
+/* clear field cross */
+.cross {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.cross > .hint__text {
+    top: 50px;
+    font-size: 16px;
+    font-weight: 400;
+    width: 200px;
+}
 
 /* copy link modal */
 .copy-link-modal {
@@ -303,6 +321,7 @@ select,
 .hint__text--center {
     left: 50%;
     transform: translateX(-50%);
+    text-align: center;
 }
 
 .hint__text--center:before {
@@ -399,7 +418,6 @@ select,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: .2em;
 }
 
 .select ul {
@@ -433,6 +451,7 @@ select,
 
 .select span.text {
     color: var(--clr-gray);
+    padding-bottom: .2em;
 }
 
 .select span.icon {
@@ -572,25 +591,22 @@ select,
     text-decoration: none;
 }
 
-.filters .container {
-    padding-top: 15px;
-}
-
-.adv-filter-price .icon,
-.adv-filter-region .icon,
-.adv-filter-title .icon {
+.filters span.icon {
     position: absolute;
     height: 100%;
-    aspect-ratio: 1;
     top: 0;
-    right: 0;
+    right: 10px;
     display: grid;
     place-content: center;
     font-size: 18px;
 }
 
+.filters .container {
+    padding-block: 15px;
+}
+
 /* adv-top-filters */
-.adv-top-filters {
+.adv-top-filters > .flex {
     justify-content: space-between;
     flex-wrap: wrap;
 }
@@ -605,13 +621,25 @@ select,
 }
 
 /* input filters */
-.adv-input-filters {
+.adv-input-filters > .flex {
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
+.adv-input-filters .container {
+    background-color: #f4f4f4;
+}
+
 .adv-input-filters .icon {
     color: var(--clr-gray)
+}
+
+.adv-input-filters *[data-empty="true"] .cross {
+    display: none;
+}
+
+.adv-input-filters *[data-empty="false"] .cross-sibling {
+    right: 40px;
 }
 
 .adv-input-filters input::placeholder {
@@ -625,11 +653,8 @@ select,
     padding: .3em 1em;
 }
 
-.adv-input-filters input {
-    padding-bottom: .4em;
-}
-
-.action-btn {
+.adv-input-filters input,
+.action-btn{
     padding-bottom: .5em;
 }
 
@@ -642,7 +667,7 @@ select,
 }
 
 .adv-input-filters input {
-    padding-right: 40px;
+    padding-right: 45px;
 }
 
 /* common styles for date and price filters */
@@ -650,6 +675,7 @@ select,
 .adv-filter-date > *,
 .adv-filter-price > * {
     min-width: 0;
+    position: relative;
 }
 
 .adv-filter-date input,
@@ -686,9 +712,10 @@ select,
 
 .adv-filter-price > *:last-child input {
     padding-left: 40px;
+    padding-right: 65px;
 }
 
-.adv-filter-price span:not(.icon) {
+.adv-filter-price .placeholder {
     position: absolute;
     display: inline-flex;
     align-items: center;
@@ -701,10 +728,6 @@ select,
 
 .adv-filter-price > * {
     position: relative;
-}
-
-.adv-filter-price > *:last-child {
-    widows: calc(50% + 45px);
 }
 
 /* adv-filter-region */
@@ -724,14 +747,13 @@ select,
 /* adv-filter-title */
 .adv-filter-title {
     position: relative;
-    overflow: hidden;
-    max-width: 300px;
+}
+
+.adv-filter-title input {
+    padding-right: 65px;
 }
 
 /* adv-filter-periods */
-.adv-filter-period {
-    padding-bottom: 20px;
-}
 
 /* actions */
 .actions > .flex {
