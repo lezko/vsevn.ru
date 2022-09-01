@@ -1,7 +1,7 @@
 [
   {
     "logo_url": "img/profile-icons/worker-0.jpg",
-    "title": "Менеджер чего-то там и зачем-то",
+    "title": "Продавец-грузчик в магазин хозтоваров",
     "type": "resume",
     "price": 1000,
     "state": "active",
@@ -51,7 +51,7 @@
   },
   {
     "logo_url": "img/profile-icons/logo-0.html",
-    "title": "Директор",
+    "title": "Контроллер технического состояния автотранспортных средств",
     "type": "resume",
     "price": 50000,
     "state": "active",
@@ -82,7 +82,7 @@
   },
   {
     "logo_url": "img/profile-icons/logo-1.html",
-    "title": "Директор",
+    "title": "Резчики металла на ленточнопильных станках с числовым программным управлением",
     "type": "resume",
     "price": 50000,
     "state": "active",

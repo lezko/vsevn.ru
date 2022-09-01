@@ -625,7 +625,10 @@ select,
     padding: .3em 1em;
 }
 
-.adv-input-filters input,
+.adv-input-filters input {
+    padding-bottom: .4em;
+}
+
 .action-btn {
     padding-bottom: .5em;
 }
