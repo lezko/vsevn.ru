@@ -220,6 +220,21 @@ select,
 /* Components               */
 /* ------------------------ */
 
+/* red bubble */
+.bubble--red {
+    position: absolute;
+    top: -80%;
+    left: 30%;
+    background-color: #ff6a6a;
+    border-radius: 15px;
+    z-index: 1;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 3px 5px;
+    box-shadow: 0 0 0 4px var(--bubble-border, #fff);
+}
+
 /* clear field cross */
 .cross {
     cursor: pointer;
@@ -777,18 +792,32 @@ select,
     font-size: 18px;
 }
 
-.adv-item__edit-btns a,
-.adv-item__links li > span.icon,
-.adv-item__links a,
+.adv-item__rating a,
 .adv-item__services a {
     color: #ff0000;
 }
 
-.adv-item__edit-btns a:hover,
-.adv-item__links li:hover a,
-.adv-item__services a:hover,
-.adv-item__links li:hover > span.icon {
-    color: #9f0101;
+.adv-item__rating a:hover,
+.adv-item__services a:hover {
+    color: #b90000;
+}
+
+.adv-item__edit-btns a {
+    color: var(--clr-dark-gray);
+}
+
+.adv-item__edit-btns a:hover {
+    color: var(--clr-gray);
+}
+
+.adv-item__links li > span.icon,
+.adv-item__links a {
+    color: purple;
+}
+
+.adv-item__links li > span.icon:hover,
+.adv-item__links a:hover {
+    color: #be01be;
 }
 
 .adv-item__title {
@@ -806,12 +835,17 @@ select,
 }
 
 .adv-item__stats .icon {
+    color: #afafaf;
     font-size: 18px;
-    opacity: .4;
     margin-right: 5px;
+    position: relative;
 }
 
 .adv-item__stats .new-messages {
+    margin-left: 5px;
+}
+
+.adv-item__stats .dialogs {
     margin-left: 5px;
 }
 
@@ -820,8 +854,16 @@ select,
     color: var(--clr-blue);
 }
 
+.adv-item__stats .dialogs {
+    position: relative;
+}
+
 .adv-item__stats > *:hover {
     color: var(--clr-blue);
+}
+
+.adv-item__stats > *:hover .icon {
+    color: #50b0e7
 }
 
 @media (hover: hover) {
@@ -859,6 +901,10 @@ select,
 .adv-item__get-more-responses a:hover,
 .adv-item__city-list .service-item a:hover {
     color: #577039;
+}
+
+.adv-item__rating {
+    font-size: 18px;
 }
 
 .adv-item__services-content > article:not(:last-child) {
@@ -915,6 +961,11 @@ select,
     --ovf-fade-clr: var(--clr-light);
 }
 
+.ads__items > *:nth-child(odd) .bubble--red {
+    --bubble-border: var(--clr-light);
+    display: none;
+}
+
 
 
 /* adv-item */
@@ -924,14 +975,46 @@ select,
     column-gap: 1%;
     grid-template-areas:
     'checkbox img left-block city-list stats services'
-    'checkbox img left-block city-list get-more-responses services'
-    'checkbox img left-block city-list links services'
-    '.        .        .    city-list links services';
+    'checkbox img left-block city-list rating services'
+    'checkbox img left-block city-list get-more-responses .'
+    'checkbox img . city-list links .';
 }
 
 .adv-item {
+    position: relative;
     line-height: 1.2;
     padding: 30px 15px;
+}
+
+.adv-item:after {
+    z-index: 2;
+    position: absolute;
+    content: '';
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.adv-item[data-state="closed"]:after {
+    display: block;
+    background: url(../img/bg-closed.svg) center / cover no-repeat;
+}
+
+.adv-item[data-state="blocked"]:after {
+    display: block;
+    background: url(../img/bg-blocked.svg) center / cover no-repeat;
+}
+
+.adv-item[data-state="rejected"]:after {
+    display: block;
+    background: url(../img/bg-rejected.svg) center / cover no-repeat;
+}
+
+
+.adv-item:hover:after {
+    display: none;
 }
 
 .checkbox {
@@ -1006,10 +1089,12 @@ select,
     transition: flex .3s;
 }
 
-
+.adv-item__rating {
+    grid-area: rating;
+    align-self: center;
+}
 
 .adv-item__links {
-    /*overflow-y: hidden;*/
     padding-right: 40px;
     justify-self: start;
     position: relative;

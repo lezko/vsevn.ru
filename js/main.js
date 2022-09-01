@@ -173,7 +173,7 @@ function showModal(el) {
 }
 
 // advertisement rendering system
-const DEFAULT_LOGO_URL = 'img/profile-icons/default-logo.png';
+const DEFAULT_LOGO_URL = 'img/profile-icons/default-logo.svg';
 const DEFAULT_PHOTO_URL = 'img/profile-icons/default-photo.svg';
 const ARTICLES_URL = 'data.json';
 const ARTICLE_TEMPLATE_URL = 'article-template.html';
@@ -188,6 +188,7 @@ const selectors = {
     title: '.adv-item__title',
     price: '.adv-item__price > span:first-child',
     cityList: '.adv-item__city-list',
+    rating: '.adv-item__rating',
     links: '.adv-item__links',
     views: '.adv-item__stats .views',
     favourites: '.adv-item__stats .favourites',
@@ -225,7 +226,9 @@ async function renderElement(elem, payload = null) {
         case 'newMessages':
             return `(${ payload })`;
         case 'growth':
-            return `+${ payload }`
+            return `+${ payload }`;
+        case 'rating':
+            return `Объявление на ${ payload } месте в поиске. <a href="">Поднять на 1 (первое) место в поиске?</a>`
         case 'servicesCount':
             return `
                 <p>Активно: ${ payload }</p>
@@ -329,6 +332,7 @@ async function fetchData() {
             _type: obj.type,
             _state: obj.state,
             price: obj.price,
+            rating: obj.rating,
             cityList: obj.city_list,
             links: obj.links.map(l => ({
                 text: l.text,
@@ -394,6 +398,8 @@ function setupArticle(article) {
     article.el.querySelector('.adv-item__services a').addEventListener('click', async () => {
         showModal(await renderElement('services', article.data._services));
     });
+
+    article.el.setAttribute('data-state', article.data._state);
 }
 
 function updateArticle(article, options) {

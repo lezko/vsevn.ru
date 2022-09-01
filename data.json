@@ -4,6 +4,7 @@
     "title": "Продавец-грузчик в магазин хозтоваров",
     "type": "resume",
     "price": 1000,
+    "rating": 133,
     "state": "active",
     "city_list": [
       "Нижний Новгород",
@@ -54,6 +55,7 @@
     "title": "Контроллер технического состояния автотранспортных средств",
     "type": "vacancy",
     "price": 50000,
+    "rating": 133,
     "state": "active",
     "city_list": [
       "Москва sdfsdf sdfsdf sdfdsf"
@@ -85,6 +87,7 @@
     "title": "Резчики металла на ленточнопильных станках с числовым программным управлением",
     "type": "vacancy",
     "price": 50000,
+    "rating": 133,
     "state": "active",
     "city_list": [
       "Москва sdfsdf sdfsdf sdfdsf"
@@ -116,6 +119,7 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 50000,
+    "rating": 133,
     "state": "active",
     "city_list": [
       "Москва sdfsdf sdfsdf sdfdsf"
@@ -147,6 +151,7 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 50000,
+    "rating": 133,
     "state": "active",
     "city_list": [
       "Москва sdfsdf sdfsdf sdfdsf"
@@ -178,6 +183,7 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 50000,
+    "rating": 133,
     "state": "active",
     "city_list": [
       "Москва sdfsdf sdfsdf sdfdsf"
@@ -209,6 +215,7 @@
     "title": "Художник",
     "type": "resume",
     "price": 2500,
+    "rating": 133,
     "state": "closed",
     "city_list": [
       "Петропавловск Камчатский"
@@ -234,6 +241,7 @@
     "title": "deleted",
     "type": "resume",
     "price": 50000,
+    "rating": 133,
     "state": "deleted",
     "city_list": [
       "Москва sdfsdf sdfsdf sdfdsf"
@@ -265,6 +273,7 @@
     "title": "Фотограф",
     "type": "resume",
     "price": 2500,
+    "rating": 133,
     "state": "closed",
     "city_list": [
       "Петропавловск Камчатский"
@@ -285,6 +294,7 @@
     "title": "Учитель",
     "type": "resume",
     "price": 2500,
+    "rating": 133,
     "state": "blocked",
     "city_list": [
       "Петропавловск Камчатский"
@@ -305,6 +315,7 @@
     "title": "Секретарь",
     "type": "vacancy",
     "price": 2500,
+    "rating": 133,
     "state": "rejected",
     "city_list": [
       "Петропавловск Камчатский"
@@ -325,6 +336,7 @@
     "title": "Художник",
     "type": "pending",
     "price": 2500,
+    "rating": 133,
     "state": "closed",
     "city_list": [
       "Петропавловск Камчатский"
@@ -345,6 +357,7 @@
     "title": "Уборщик",
     "type": "resume",
     "price": 2500,
+    "rating": 133,
     "state": "pending",
     "city_list": [
       "Петропавловск Камчатский"
@@ -365,6 +378,7 @@
     "title": "Волшебник",
     "type": "resume",
     "price": 2500,
+    "rating": 133,
     "state": "draft",
     "city_list": [
       "Петропавловск Камчатский"
@@ -385,6 +399,7 @@
     "title": "Удаленный",
     "type": "vacancy",
     "price": 2500,
+    "rating": 133,
     "state": "deleted",
     "city_list": [
       "Петропавловск Камчатский"
@@ -405,6 +420,7 @@
     "title": "",
     "type": "resume",
     "price": 2500,
+    "rating": 133,
     "state": "closed",
     "city_list": [
       "Петропавловск Камчатский"
