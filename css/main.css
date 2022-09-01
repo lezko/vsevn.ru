@@ -956,6 +956,11 @@ select,
     background-position: center;
 }
 
+.adv-item__img > div > * {
+    width: 90%;
+    margin: 0 auto;
+}
+
 .adv-item__left-block {
     display: flex;
     flex-direction: column;
