@@ -977,7 +977,7 @@ select,
     'checkbox img left-block city-list stats services'
     'checkbox img left-block city-list rating services'
     'checkbox img left-block city-list get-more-responses .'
-    'checkbox img . city-list links .';
+    '. img . city-list links .';
 }
 
 .adv-item {
