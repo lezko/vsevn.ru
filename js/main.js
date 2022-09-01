@@ -173,7 +173,8 @@ function showModal(el) {
 }
 
 // advertisement rendering system
-const DEFAULT_LOGO_URL = 'img/profile-icons/def.png';
+const DEFAULT_LOGO_URL = 'img/profile-icons/default-logo.png';
+const DEFAULT_PHOTO_URL = 'img/profile-icons/default-photo.svg';
 const ARTICLES_URL = 'data.json';
 const ARTICLE_TEMPLATE_URL = 'article-template.html';
 const SERVICES_URL = 'services.json';
@@ -321,7 +322,7 @@ async function fetchData() {
         checked: false,
         data: {
             img: {
-                url: obj.logo_url || DEFAULT_LOGO_URL,
+                url: obj.logo_url || (obj.type === 'resume' ? DEFAULT_PHOTO_URL : DEFAULT_LOGO_URL),
                 className: obj.type === 'resume' ? 'avatar-circle' : 'avatar-square'
             },
             title: obj.title,

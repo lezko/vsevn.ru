@@ -52,7 +52,7 @@
   {
     "logo_url": "img/profile-icons/logo-0.html",
     "title": "Контроллер технического состояния автотранспортных средств",
-    "type": "resume",
+    "type": "vacancy",
     "price": 50000,
     "state": "active",
     "city_list": [
@@ -83,7 +83,7 @@
   {
     "logo_url": "img/profile-icons/logo-1.html",
     "title": "Резчики металла на ленточнопильных станках с числовым программным управлением",
-    "type": "resume",
+    "type": "vacancy",
     "price": 50000,
     "state": "active",
     "city_list": [
@@ -114,7 +114,7 @@
   {
     "logo_url": "img/profile-icons/logo-2.html",
     "title": "Директор",
-    "type": "resume",
+    "type": "vacancy",
     "price": 50000,
     "state": "active",
     "city_list": [
@@ -145,7 +145,7 @@
   {
     "logo_url": "img/profile-icons/logo-3.html",
     "title": "Директор",
-    "type": "resume",
+    "type": "vacancy",
     "price": 50000,
     "state": "active",
     "city_list": [
@@ -176,7 +176,7 @@
   {
     "logo_url": "img/profile-icons/logo-4.html",
     "title": "Директор",
-    "type": "resume",
+    "type": "vacancy",
     "price": 50000,
     "state": "active",
     "city_list": [
