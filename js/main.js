@@ -413,13 +413,9 @@ function setupArticle(article) {
     });
 }
 
-function updateArticle(article, options) {
+function updateArticle(article, options = {}) {
     article.data = {...article.data, ...options};
-    renderArticle(article.data).then(a => {
-        article.el.replaceWith(a);
-        article.el = a;
-        setupArticle(article);
-    });
+    article.el = null;
 }
 
 function performFiltering() {
@@ -562,22 +558,22 @@ const actionBtns = {
     delete: {
         text: 'Удалить',
         action: function (a) {
-            a.data.state = 'deleted';
             setArticleCheckState(a, false, false);
+            updateArticle(a, { state: 'deleted' })
         }
     },
     activate: {
         text: 'Активировать',
         action: function (a) {
-            a.data.state = 'active';
             setArticleCheckState(a, false, false);
+            updateArticle(a, { state: 'active' })
         }
     },
     unpublish: {
         text: 'Снять с публикации',
         action: function (a) {
-            a.data.state = 'closed';
             setArticleCheckState(a, false, false);
+            updateArticle(a, { state: 'closed' })
         }
     },
     emptyTrash: {
@@ -669,7 +665,6 @@ function performAction(action) {
     articles.forEach(a => {
         if (a.checked) {
             action(a);
-            a.el = null;
         }
     });
     updateActionBar();
