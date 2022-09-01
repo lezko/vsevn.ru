@@ -311,7 +311,7 @@ select,
     z-index: 5;
     color: var(--clr-brown);
     font-size: 20px;
-    width: 300px;
+    white-space: nowrap;
     background-color: var(--hint-background-clr);
     padding: 10px 25px;
     border: 2px solid var(--hint-border-clr);
@@ -326,7 +326,7 @@ select,
     height: 15px;
     top: 0;
     left: 15px;
-    transform: rotate(45deg) translateY(-50%);
+    transform: rotate(45deg) translateY(calc(-50% - 4px));
     background-color: var(--hint-background-clr);
     border: 2px solid var(--hint-border-clr);
     border-right: none;
@@ -441,6 +441,7 @@ select,
 
     display: none;
     position: absolute;
+    z-index: 100;
     background-color: var(--clr-light);
     border-top: none;
     border-bottom-left-radius: 5px;

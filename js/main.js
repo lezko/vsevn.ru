@@ -87,7 +87,7 @@ function initClearFieldBtns(target) {
     target.querySelectorAll('.cross').forEach(c => {
         const field = find('#' + c.getAttribute('aria-controls'));
         const parent = c.parentNode;
-        parent.setAttribute('data-empty', 'true');
+        parent.setAttribute('data-empty', field.value === '');
 
         field.addEventListener('input', () => field.value !== '' ? parent.setAttribute('data-empty', 'false') : parent.setAttribute('data-empty', 'true'));
         c.addEventListener('click', () => {
