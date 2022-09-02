@@ -937,7 +937,7 @@ select,
 /* ads__field-names */
 .ads__field-names {
     column-gap: 1%;
-    grid-template-columns: 10% 21% 13% 1fr 8%;
+    grid-template-columns: 10% 23% 13% 1fr 8%;
     padding: 15px;
 }
 
@@ -978,15 +978,16 @@ select,
 
 /* adv-item */
 .adv-item {
-    grid-template-columns: 3% 6% 21% 13% 1fr 8%;
+    grid-template-columns: 3% 6% 23% 13% 1fr 8%;
     grid-template-rows: auto repeat(3, 28px) 1fr;
     column-gap: 1%;
     grid-template-areas:
     '    .       .  state    state     state state'
     'checkbox img left-block city-list stats services'
     'checkbox img left-block city-list rating services'
-    'checkbox img left-block city-list get-more-responses .'
-    '. . . city-list links .';
+    'checkbox img left-block city-list rating        .'
+    '.        .       .      city-list get-more-responses .'
+    '.        .       .      city-list links .';
 }
 
 
@@ -1127,13 +1128,8 @@ select,
 
 .adv-item__rating {
     position: relative;
-    top: 1px;
     grid-area: rating;
     align-self: center;
-}
-
-.adv-item__rating a {
-    margin-left: 5px;
 }
 
 .adv-item__links {
