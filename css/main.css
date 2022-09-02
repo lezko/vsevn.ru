@@ -796,13 +796,27 @@ select,
     font-size: 18px;
 }
 
-.adv-item__rating a,
+.adv-item__state a {
+    color: #ff2398;
+}
+
+.adv-item__state a:hover {
+    color: #e71884;
+}
+
 .adv-item__services a {
+    color: magenta;
+}
+
+.adv-item__services a:hover {
+    color: #e101e1;
+}
+
+.adv-item__rating a {
     color: #ff0000;
 }
 
-.adv-item__rating a:hover,
-.adv-item__services a:hover {
+ .adv-item__rating a:hover {
     color: #b90000;
 }
 
@@ -956,6 +970,7 @@ select,
 .ads__field-names--big > * {
     width: 100%;
     overflow: hidden;
+    text-align: center;
 }
 
 .ads__field-names span:nth-child(1) {
@@ -1002,7 +1017,7 @@ select,
 
 .adv-item {
     position: relative;
-    line-height: 1.2;
+    line-height: 28px;
     padding: 30px 15px;
 }
 
@@ -1040,6 +1055,7 @@ select,
 .adv-item__state {
     grid-area: state;
     font-size: 18px;
+    line-height: 1.2;
 }
 
 .adv-item__state .icon .path1:before {
@@ -1048,6 +1064,14 @@ select,
 
 .adv-item__state .info {
     margin-bottom: 20px;
+}
+
+.adv-item__state .info .expires {
+    color: #000;
+}
+
+.adv-item__state .info .time {
+    margin-right: 7px;
 }
 
 .checkbox {
@@ -1084,7 +1108,7 @@ select,
 .adv-item__left-block {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     grid-area: left-block;
 }
 
@@ -1113,7 +1137,7 @@ select,
 
 .adv-item__city-list .service-item {
     position: absolute;
-    top: calc(100% + 1px);
+    top: calc(100% + 0px);
 }
 
 .adv-item__city-list span.icon {
@@ -1129,7 +1153,11 @@ select,
 .adv-item__rating {
     position: relative;
     grid-area: rating;
-    align-self: center;
+}
+
+.adv-item__rating > p:last-child {
+    position: relative;
+    top: 2px;
 }
 
 .adv-item__links {
@@ -1168,6 +1196,7 @@ select,
 .adv-item__stats > * {
     width: 100%;
     cursor: default;
+    text-align: center;
 }
 
 .adv-item__stats span.icon {

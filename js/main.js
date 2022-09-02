@@ -211,7 +211,10 @@ async function renderElement(elem, payload = null) {
                         <span class="icon icon-warn-triangle"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
                         Активное объявление
                     </p>
-                    <p class="info">Обновлена: 10.05.2022, 9:00  Осталось 27 дней до депубликации</p>
+                    <div class="info">
+                        <p>Осталось <span class="expires">27 дней</span> до депубликации</p>
+                        <span class="time">Обновлена: 10.05.2022, 9:00</span><a href="">Обновить</a>
+                    </div>
                 `;
             }
             return '';
@@ -240,7 +243,7 @@ async function renderElement(elem, payload = null) {
         case 'growth':
             return `+${ payload }`;
         case 'rating':
-            return `<p>Объявление на ${ payload } месте в поиске.</p><a href="">Поднять на 1 (первое) место в поиске?</a>`
+            return `<p>Объявление на ${ payload } месте в поиске.</p><p><a href="">Поднять на 1 (первое) место в поиске?</a></p>`
         case 'servicesCount':
             return `
                 <p>Активно: ${ payload }</p>
