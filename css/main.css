@@ -1155,7 +1155,7 @@ select,
     grid-area: rating;
 }
 
-.adv-item__rating > p:last-child {
+.adv-item__rating > p {
     position: relative;
     top: 2px;
 }
