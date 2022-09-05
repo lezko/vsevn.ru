@@ -790,6 +790,7 @@ select,
 }
 
 .adv-item a {
+    /*display: inline-block;*/
     text-decoration: none;
     border-bottom: 1px dotted;
     font-family: 'ZabraProMedium', sans-serif;
@@ -988,6 +989,10 @@ select,
 
 .ads__items > *:nth-child(odd) .bubble--red {
     --bubble-border: var(--clr-light);
+    display: none;
+}
+
+.ads__items > *:nth-child(even) .new-messages {
     display: none;
 }
 
