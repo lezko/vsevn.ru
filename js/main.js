@@ -656,7 +656,7 @@ function addActionBtn({ text, action} ) {
     const btn = document.createElement('a');
     btn.setAttribute('href', '');
     btn.textContent = text;
-    btn.classList.add('action-btn');
+    btn.classList.add('action-btn', 'disabled');
     btn.addEventListener('click', e => {
         e.preventDefault();
         performAction(action);

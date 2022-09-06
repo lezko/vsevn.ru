@@ -1052,6 +1052,7 @@ select,
 
 .adv-item:after {
     z-index: 2;
+    opacity: .4;
     position: absolute;
     content: '';
     display: none;
@@ -1063,17 +1064,17 @@ select,
 
 .adv-item[data-state="closed"]:after {
     display: block;
-    background: url(../img/bg-closed.svg) center / cover no-repeat;
+    background: url(../img/bg-closed.jpg) center / 100% 100% no-repeat;
 }
 
 .adv-item[data-state="blocked"]:after {
     display: block;
-    background: url(../img/bg-blocked.svg) center / cover no-repeat;
+    background: url(../img/bg-blocked.jpg) center / 100% 100% no-repeat;
 }
 
 .adv-item[data-state="rejected"]:after {
     display: block;
-    background: url(../img/bg-rejected.svg) center / cover no-repeat;
+    background: url(../img/bg-rejected.jpg) center / 100% 100% no-repeat;
 }
 
 
