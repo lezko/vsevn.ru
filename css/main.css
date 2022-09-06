@@ -68,6 +68,10 @@ html:focus-within {
     scroll-behavior: smooth;
 }
 
+html {
+    max-height: 100vh;
+}
+
 /* Set core body defaults */
 body {
     font-family: 'ZabraProRegular', sans-serif;
@@ -214,6 +218,10 @@ select,
 
 .adv-item:hover .show-on-adv-item-hover {
     opacity: 1;
+}
+
+.ptr:hover {
+    cursor: pointer;
 }
 
 /* ------------------------ */

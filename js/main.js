@@ -137,6 +137,15 @@ function toggleExpandingList(list, expanded = null) {
     }
 }
 
+// save scroll position
+function updateScrollValue() {
+    localStorage.setItem('scrollTop', String(find('html').scrollTop));
+}
+
+function getScrollValue() {
+    return localStorage.getItem('scrollTop');
+}
+
 // copy link to clipboard
 function initCopyLinkBtns(target) {
     target.querySelectorAll('.copy-link-modal').forEach(m => {
@@ -421,9 +430,9 @@ function updateArticle(article, options = {}) {
     article.el = null;
 }
 
-function performFiltering() {
+async function performFiltering() {
     filteredArticles = filterArticles(articles);
-    printArticles(filteredArticles).then(updateActionBar);
+    await printArticles(filteredArticles).then(updateActionBar);
 }
 
 async function initArticles(data) {
@@ -810,9 +819,20 @@ fetchData().then(data => {
     updateStateFiltersNumbers();
 
     initFilters(data);
-    initArticles(data);
+    initArticles(data).then(() => {
+        const scroll = getScrollValue();
+        if (scroll) {
+            window.scrollTo(0, +scroll);
+        }
+        window.addEventListener('scroll', () => {
+            updateScrollValue();
+        });
+    });
+
     globalTestData = data;
 });
+
+
 
 
 
