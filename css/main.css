@@ -472,14 +472,15 @@ select,
 }
 
 .select span.text {
-    color: var(--clr-gray);
+    color: var(--clr-brown);
     padding-bottom: .2em;
 }
 
 .select span.icon {
     display: inline-block;
-    color: var(--clr-dark-gray);
+    color: var(--clr-brown);
     font-size: 14px;
+    font-weight: 700;
 }
 
 .select[aria-expanded='true'] {
