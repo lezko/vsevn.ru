@@ -239,7 +239,7 @@ async function renderElement(elem, payload = null) {
                 `).join('')}
             `;
         case 'newMessages':
-            return `(${ payload })`;
+            return `${ payload !== 0 ? payload : '' }`;
         case 'growth':
             return `+${ payload }`;
         case 'rating':

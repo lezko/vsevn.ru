@@ -224,15 +224,20 @@ select,
 .bubble--red {
     position: absolute;
     top: -80%;
-    left: 30%;
+    left: 20%;
     background-color: #ff6a6a;
     border-radius: 15px;
     z-index: 1;
     color: #fff;
+    text-align: center;
     font-size: 14px;
     font-weight: 500;
     padding: 3px 5px;
     box-shadow: 0 0 0 4px var(--bubble-border, #fff);
+}
+
+.bubble--red:empty {
+    display: none;
 }
 
 /* clear field cross */
@@ -313,7 +318,7 @@ select,
     font-size: 20px;
     white-space: nowrap;
     background-color: var(--hint-background-clr);
-    padding: 10px 25px;
+    padding: 10px 25px 14px 25px;
     border: 2px solid var(--hint-border-clr);
     transition: .3s;
 }
@@ -989,11 +994,6 @@ select,
 
 .ads__items > *:nth-child(odd) .bubble--red {
     --bubble-border: var(--clr-light);
-    display: none;
-}
-
-.ads__items > *:nth-child(even) .new-messages {
-    display: none;
 }
 
 /* adv-item */
