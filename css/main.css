@@ -807,6 +807,12 @@ select,
     min-width: 350px;
 }
 
+.action-sort,
+.action-btn {
+    min-height: 50.4px;
+
+}
+
 /* adv-item */
 .adv-item {
     color: var(--clr-dark-gray);
