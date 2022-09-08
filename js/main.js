@@ -64,7 +64,6 @@ findAll('.select:not(#adv-filter-region)').forEach(sel => {
 
 function toggleSelect(elem, expanded) {
     cover.classList.toggle('hidden');
-    document.body.classList.toggle('lock');
     elem.setAttribute('aria-expanded', expanded);
 }
 

@@ -152,13 +152,6 @@ input[type=number] {
 /* Base                     */
 /* ------------------------ */
 
-@media screen and (min-width: 960px) {
-    html {
-        margin-left: calc(100vw - 100%);
-        margin-right: 0;
-    }
-}
-
 span:not([class]):empty {
     margin: 0 !important;
 }
