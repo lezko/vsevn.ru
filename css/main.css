@@ -610,7 +610,7 @@ select {
     border-radius: 5px;
     background-color: #FFC000;
     color: var(--clr-brown);
-    padding: .23em 1.1em;
+    padding: .3em 1.1em;
 }
 
 .action-btn--red {
