@@ -152,6 +152,13 @@ input[type=number] {
 /* Base                     */
 /* ------------------------ */
 
+@media screen and (min-width: 960px) {
+    html {
+        margin-left: calc(100vw - 100%);
+        margin-right: 0;
+    }
+}
+
 span:not([class]):empty {
     margin: 0 !important;
 }
@@ -610,7 +617,7 @@ select {
     border-radius: 5px;
     background-color: #FFC000;
     color: var(--clr-brown);
-    padding: .4em 1.1em;
+    padding: .23em 1.1em;
 }
 
 .action-btn--red {
