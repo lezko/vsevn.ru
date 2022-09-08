@@ -29,8 +29,11 @@ findAll('.select:not(#adv-filter-region)').forEach(sel => {
     });
 
     const defaultItem = sel.querySelector('ul li[data-default="true"]');
+    let selectedItem;
     if (defaultItem) {
         field.innerHTML = defaultItem.innerHTML;
+        selectedItem = defaultItem;
+        selectedItem.setAttribute('data-selected', 'true');
         sel.setAttribute('data-empty', false);
     } else {
         field.innerHTML = placeholderText;
@@ -45,6 +48,9 @@ findAll('.select:not(#adv-filter-region)').forEach(sel => {
     sel.querySelectorAll('.select__list li').forEach(li => li.addEventListener('click', e => {
         sel.setAttribute('data-empty', false);
         field.innerHTML = e.target.innerHTML;
+        selectedItem?.removeAttribute('data-selected');
+        selectedItem = e.target;
+        selectedItem.setAttribute('data-selected', 'true');
         expanded = false;
         toggleSelect(sel, expanded);
     }));

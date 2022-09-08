@@ -467,7 +467,7 @@ select {
     cursor: pointer;
     position: relative;
     white-space: nowrap;
-    padding-left: 10px;
+    padding-left: 5px;
 }
 
 .select[aria-expanded="false"][data-empty="true"] {
@@ -482,11 +482,11 @@ select {
     align-items: center;
     justify-content: space-between;
     z-index: 70;
-    padding-inline: 10px;
+    padding-inline: 5px;
 }
 
 .select[data-empty="false"] .select__body {
-    height: calc(100% - 20px);
+    height: calc(100% - 10px);
 }
 
 .select[data-empty="false"] .select__body {
@@ -573,7 +573,7 @@ select {
 }
 
 .select__list li[data-selected='true'] {
-    color: var(--clr-blue);
+    color: var(--clr-gray);
 }
 
 @media (hover: hover) {
@@ -708,8 +708,8 @@ select {
 .filters .cross,
 .select .cross {
     font-size: 12px;
-    height: calc(100% - 20px);
-    margin: 10px;
+    height: calc(100% - 10px);
+    margin: 5px;
     background-color: var(--clr-input-filled);
     color: orange;
 }
