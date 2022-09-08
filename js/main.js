@@ -1,3 +1,6 @@
+// common elements
+const cover = find('.cover');
+
 // functions
 function find(selector) {
     return document.querySelector(selector);
@@ -17,15 +20,46 @@ function initLinkPreventReload(target) {
 
 // custom select
 findAll('.select:not(#adv-filter-region)').forEach(sel => {
-    const text = sel.querySelector('span.text');
-    text.innerHTML = sel.querySelector('ul li[data-default="true"]').textContent;
+    const field = sel.querySelector('.select__body .text');
+    const placeholderText = 'Сортировать по';
+
+    sel.querySelector('.cross').addEventListener('click', () => {
+        sel.setAttribute('data-empty', true);
+        field.innerHTML = placeholderText;
+    });
+
+    const defaultItem = sel.querySelector('ul li[data-default="true"]');
+    if (defaultItem) {
+        field.innerHTML = defaultItem.innerHTML;
+        sel.setAttribute('data-empty', false);
+    } else {
+        field.innerHTML = placeholderText;
+    }
 
     let expanded = false;
-    sel.querySelector('div').addEventListener('click', () => {
+    sel.querySelector('.select__body').addEventListener('click', () => {
         expanded = !expanded;
-        sel.setAttribute('aria-expanded', expanded);
+        toggleSelect(sel, expanded);
+    });
+
+    sel.querySelectorAll('.select__list li').forEach(li => li.addEventListener('click', e => {
+        sel.setAttribute('data-empty', false);
+        field.innerHTML = e.target.innerHTML;
+        expanded = false;
+        toggleSelect(sel, expanded);
+    }));
+
+    cover.addEventListener('click', () => {
+        expanded = false;
+        toggleSelect(sel, expanded);
     });
 });
+
+function toggleSelect(elem, expanded) {
+    cover.classList.toggle('hidden');
+    document.body.classList.toggle('lock');
+    elem.setAttribute('aria-expanded', expanded);
+}
 
 // handle text overflow
 function setFadeEffects(elems) {
@@ -86,6 +120,9 @@ function initInputValidation() {
 function initClearFieldBtns(target) {
     target.querySelectorAll('.cross').forEach(c => {
         const field = find('#' + c.getAttribute('aria-controls'));
+        if (field.tagName !== 'input') {
+            return;
+        }
         const parent = c.parentNode;
         parent.setAttribute('data-empty', field.value === '');
 

@@ -163,19 +163,19 @@
                         <div class="checkbox__inner"></div>
                     </div>
                 </div>
-                <div class="action-sort select" id="action-sort" aria-expanded="false">
-                    <div>
-                        <span class="text"></span>
+                <div class="action-sort select" id="action-sort" aria-expanded="false" data-empty="true">
+                    <div class="select__body">
+                        <span id="adv-sort-field" class="text"></span>
                         <span class="icon icon-arrow-down"></span>
                     </div>
 
-                    <ul>
+                    <ul class="select__list">
                         <li class="category">По дате</li>
                         <li>По дате в поиске <span class="icon icon-arrow_down_download_icon_123737"></span></li>
                         <li>По дате в поиске <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
                         <li>По дате завершения <span class="icon icon-arrow_down_download_icon_123737"></span></li>
                         <li>По дате завершения <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
-                        <li data-default="true">По дате подачи <span class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li data-default1="true">По дате подачи <span class="icon icon-arrow_down_download_icon_123737"></span></li>
                         <li class="category">По цене</li>
                         <li>По цене <span class="icon icon-arrow_down_download_icon_123737"></span></li>
                         <li>По цене <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
@@ -183,6 +183,8 @@
                         <li>По городу <span class="icon icon-arrow_down_download_icon_123737"></span></li>
                         <li>По городу <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
                     </ul>
+
+                    <span aria-controls="adv-sort-field" class="icon cross icon-cross-svgrepo-com"></span>
                 </div>
             </div>
         </section>
@@ -222,6 +224,10 @@
         <div class="modal__content"></div>
     </div>
     <!--  /MODAL  -->
+
+    <!--  LAYOUT  -->
+    <div class="cover hidden"></div>
+    <!--  /LAYOUT  -->
 
 </body>
 </html>
