@@ -26,6 +26,7 @@ findAll('.select:not(#adv-filter-region)').forEach(sel => {
     sel.querySelector('.cross').addEventListener('click', () => {
         sel.setAttribute('data-empty', true);
         field.innerHTML = placeholderText;
+        selectedItem.removeAttribute('data-selected');
     });
 
     const defaultItem = sel.querySelector('ul li[data-default="true"]');

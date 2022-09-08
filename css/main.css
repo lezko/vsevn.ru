@@ -462,12 +462,13 @@ select {
 .select {
     display: flex;
     align-items: center;
+    z-index: 60;
     border: 1px solid #E3DCB2;
     border-radius: 5px;
     cursor: pointer;
     position: relative;
     white-space: nowrap;
-    padding-left: 5px;
+    padding-inline: 5px;
 }
 
 .select[aria-expanded="false"][data-empty="true"] {
@@ -498,7 +499,6 @@ select {
 
     display: none;
     position: absolute;
-    z-index: 100;
     background-color: #fff;
     border-top: none;
     border-bottom-left-radius: 5px;
@@ -509,7 +509,7 @@ select {
 }
 
 .select__list > li {
-    padding: 5px 15px;
+    padding: 5px 15px 8px 15px;
 }
 
 .select__list > li > .icon {
@@ -518,7 +518,7 @@ select {
 
 .select__list > li:not(.category) {
     color: var(--clr-brown);
-    padding-left: 30px;
+    /*padding-left: 30px;*/
 }
 
 .select__list > li.category {
@@ -610,7 +610,7 @@ select {
     border-radius: 5px;
     background-color: #FFC000;
     color: var(--clr-brown);
-    padding: .3em 1.1em;
+    padding: .4em 1.1em;
 }
 
 .action-btn--red {
@@ -676,7 +676,7 @@ select {
 
 /* white background on several components */
 .filters .container,
-.actions.container,
+.actions,
 .ads .container {
     background-color: var(--clr-semi-white);
 }
