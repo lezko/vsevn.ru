@@ -589,7 +589,7 @@ span:not([class]):empty {
     }
 
     .select__list > li:hover {
-        background-color: yellow;
+        background-color: var(--clr-golden);
     }
 }
 
