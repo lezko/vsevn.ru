@@ -126,7 +126,7 @@ function initInputValidation() {
 function initClearFieldBtns(target) {
     target.querySelectorAll('.cross').forEach(c => {
         const field = find('#' + c.getAttribute('aria-controls'));
-        if (field.tagName !== 'input') {
+        if (field.tagName.toLowerCase() !== 'input') {
             return;
         }
         const parent = c.parentNode;
@@ -367,7 +367,7 @@ async function renderElement(elem, payload = null) {
 async function renderArticle(data) {
     const article = document.createElement('article');
     article.innerHTML = articleTemplate;
-    article.classList.add('adv-item', 'grid', 'bottom-line');
+    article.classList.add('adv-item', 'grid', 'underline');
     for (const [key, value] of Object.entries(data)) {
         if (key.startsWith('_')) {
             continue;

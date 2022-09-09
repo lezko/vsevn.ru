@@ -97,13 +97,19 @@
                 <div class="container flex">
                     <div class="adv-filter-date flex">
                         <label>
-                            <input placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
+                            <span class="wrapper">
+                                <input placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
+                            </span>
+
                             <span aria-controls="adv-filter-date-from" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
                         </label>
                         <label>
-                            <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
+                            <span class="wrapper">
+                                <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
+                            </span>
+
                             <span aria-controls="adv-filter-date-to" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
@@ -111,16 +117,22 @@
                     </div>
                     <div class="adv-filter-price flex">
                         <label>
-                            <span class="placeholder">Цена от</span>
-                            <input value="111000" min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
+                            <span class="wrapper">
+                                <span class="placeholder">Цена от</span>
+                                <input value="111000" min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
+                            </span>
+
                             <span aria-controls="adv-filter-price-from" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
                         </label>
                         <label>
-                            <span class="placeholder">до</span>
-                            <input value="134000" min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
-                            <span id="adv-filter-price-to-icon" class="icon cross-sibling icon-currency_rub_icon_173204"></span>
+                            <span class="wrapper">
+                                <span class="placeholder">до</span>
+                                <input value="134000" min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
+                                <span id="adv-filter-price-to-icon" class="icon icon-currency_rub_icon_173204"></span>
+                            </span>
+
                             <span aria-controls="adv-filter-price-to" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
@@ -132,8 +144,11 @@
                         </div>
                     </div>
                     <label class="adv-filter-title">
-                        <input placeholder="Название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
-                        <span class="icon cross-sibling icon-search"></span>
+                        <span class="wrapper">
+                            <input placeholder="Название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
+                            <span class="icon icon-search"></span>
+                        </span>
+
                         <span aria-controls="adv-filter-title" class="hint icon cross icon-cross-svgrepo-com">
                             <span class="hint__text hint__text--center">Очистить поле?</span>
                         </span>
@@ -157,7 +172,7 @@
         </section>
 
         <section class="actions container">
-            <div class="flex bottom-line top-line">
+            <div class="flex underline overline">
                 <div class="actions__container flex" style="--flex-gap: 20px">
                     <div class="checkbox" role="checkbox" style="--checkbox-size: 40px">
                         <div class="checkbox__inner"></div>
@@ -178,14 +193,16 @@
                         <li>По сумме <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
                     </ul>
 
-                    <span aria-controls="adv-sort-field" class="icon cross icon-cross-svgrepo-com"></span>
+                    <span aria-controls="adv-sort-field" class="hint icon cross icon-cross-svgrepo-com">
+                        <span class="hint__text hint__text--center">Очистить поле?</span>
+                    </span>
                 </div>
             </div>
         </section>
 
         <section class="ads">
             <div class="container">
-                <div class="ads__field-names grid bottom-line">
+                <div class="ads__field-names grid underline">
                     <span>Название объявления / Зарплата</span>
                     <span>Объявление опубликовано в <br> Регионе / Населенном пункте:</span>
 
