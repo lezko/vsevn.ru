@@ -172,6 +172,11 @@ span:not([class]):empty {
 /* Utilities                */
 /* ------------------------ */
 
+.on-top {
+    position: relative;
+    z-index: 100;
+}
+
 .lock {
     overflow: hidden;
 }
@@ -748,7 +753,7 @@ span:not([class]):empty {
     background-color: var(--clr-input-background-default);
 }
 
-.adv-input-filters label[data-empty="true"] .cross {
+.adv-input-filters *[data-empty="true"] .cross {
     display: none;
 }
 
@@ -762,13 +767,13 @@ span:not([class]):empty {
     /*padding: 0 1em;*/
 }
 
-.adv-input-filters .wrapper {
+.adv-input-filters label {
     display: flex;
     min-width: 0;
     padding-inline: 5px;
 }
 
-.adv-input-filters .wrapper + .cross {
+.adv-input-filters label + .cross {
     margin-left: 5px;
 }
 
@@ -776,7 +781,7 @@ span:not([class]):empty {
     background-color: #fff;
 }
 
-.adv-input-filters *[data-empty="false"] .wrapper {
+.adv-input-filters *[data-empty="false"] label {
     background-color: var(--clr-input-filled);
 }
 
@@ -798,7 +803,7 @@ span:not([class]):empty {
 }
 
 @media (hover: hover) {
-    .adv-input-filters label:hover {
+    .adv-input-filters .wrapper:hover {
         background-color: #fff;
     }
 }
@@ -861,6 +866,10 @@ span:not([class]):empty {
     width: 20%;
     display: flex;
     align-items: stretch;
+}
+
+.adv-filter-region > * {
+    width: 100%;
 }
 
 .adv-filter-region span.text {

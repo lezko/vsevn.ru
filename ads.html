@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="img/font-icons/style.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/calendar.css">
 
+    <script defer src="js/calendar.js"></script>
     <script defer src="js/main.js"></script>
 
     <title>Мои Объявления</title>
@@ -96,63 +98,63 @@
             <div class="adv-input-filters">
                 <div class="container flex">
                     <div class="adv-filter-date flex">
-                        <label>
-                            <span class="wrapper">
+                        <div class="wrapper calendar-left">
+                            <label class="calendar-open-btn--double">
                                 <input placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
-                            </span>
+                            </label>
 
                             <span aria-controls="adv-filter-date-from" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
-                        </label>
-                        <label>
-                            <span class="wrapper">
-                                <input placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
-                            </span>
+                        </div>
+                        <div class="wrapper">
+                            <label>
+                                <input class="calendar-open-btn" placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
+                            </label>
 
                             <span aria-controls="adv-filter-date-to" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
-                        </label>
+                        </div>
                     </div>
                     <div class="adv-filter-price flex">
-                        <label>
-                            <span class="wrapper">
+                        <div class="wrapper">
+                            <label>
                                 <span class="placeholder">Цена от</span>
                                 <input value="111000" min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
-                            </span>
+                            </label>
 
                             <span aria-controls="adv-filter-price-from" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
-                        </label>
-                        <label>
-                            <span class="wrapper">
+                        </div>
+                        <div class="wrapper">
+                            <label>
                                 <span class="placeholder">до</span>
                                 <input value="134000" min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
                                 <span id="adv-filter-price-to-icon" class="icon icon-currency_rub_icon_173204"></span>
-                            </span>
+                            </label>
 
                             <span aria-controls="adv-filter-price-to" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
-                        </label>
+                        </div>
                     </div>
                     <div class="adv-filter-region">
                         <div class="select" id="adv-filter-region">
                             <span class="text" data-empty="true">Регион / Населенный пункт</span>
                         </div>
                     </div>
-                    <label class="adv-filter-title">
-                        <span class="wrapper">
+                    <div class="adv-filter-title wrapper">
+                        <label>
                             <input placeholder="Название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
                             <span class="icon icon-search"></span>
-                        </span>
+                        </label>
 
                         <span aria-controls="adv-filter-title" class="hint icon cross icon-cross-svgrepo-com">
                             <span class="hint__text hint__text--center">Очистить поле?</span>
                         </span>
-                    </label>
+                    </div>
                 </div>
             </div>
 

@@ -238,7 +238,7 @@ let services, articleTemplate, servicesLogos = [], articles, filteredArticles;
 const selectors = {
     img: '.adv-item__img',
     title: '.adv-item__title',
-    state: '.adv-item__state',
+    prolong: '.adv-item__state',
     price: '.adv-item__price > span:first-child',
     cityList: '.adv-item__city-list',
     rating: '.adv-item__rating',
@@ -256,15 +256,19 @@ const selectors = {
 
 async function renderElement(elem, payload = null) {
     switch (elem) {
-        case 'state':
-            if (payload === 'active') {
+        case 'prolong':
+            if (payload.active) {
                 return `
                     <p>
                         <span class="icon icon-warn-triangle"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
                         Активное объявление
                     </p>
                     <div class="info">
-                        <p>Осталось <span class="expires">27 дней</span> до депубликации</p>
+                        <p>Осталось <span class="expires">27 дней</span> до депубликации. Изменить дату депубликации 
+                            <span class="calendar-open-btn">
+                                <input data-date="${ payload.date.deactivation }" value="${ formatDateString(payload.date.deactivation) }">
+                            </span>
+                        </p>
                         <span class="time">Обновлена: 10.05.2022, 9:00</span><a href="">Обновить</a>
                     </div>
                 `;
@@ -397,7 +401,11 @@ async function fetchData() {
             },
             title: obj.title,
             _type: obj.type,
-            state: obj.state,
+            _state: obj.state,
+            prolong: {
+                active: obj.state === 'active',
+                date: obj.date
+            },
             price: obj.price,
             rating: obj.rating,
             cityList: obj.city_list,
@@ -451,6 +459,7 @@ function setupArticle(article) {
     initLinkPreventReload(article.el);
     initExpandingLists(article.el);
     initFadeEffects(article.el);
+    initCalendar(article.el);
     initCopyLinkModals(article);
     initDeleteCityBtns(article);
     initArticleStateBackground(article);
@@ -485,7 +494,7 @@ async function initArticles(data) {
 
 // setup article functions
 function initArticleStateBackground(article) {
-    article.el.setAttribute('data-state', article.data.state);
+    article.el.setAttribute('data-state', article.data._state);
 }
 
 function initDeleteCityBtns(article) {
@@ -614,21 +623,21 @@ const actionBtns = {
         text: 'Удалить',
         action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, { state: 'deleted' })
+            updateArticle(a, { _state: 'deleted' })
         }
     },
     activate: {
         text: 'Активировать',
         action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, { state: 'active' })
+            updateArticle(a, { _state: 'active' })
         }
     },
     unpublish: {
         text: 'Снять с публикации',
         action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, { state: 'closed' })
+            updateArticle(a, { _state: 'closed' })
         }
     },
     emptyTrash: {
@@ -745,7 +754,7 @@ function updateStateFiltersNumbers() {
         b.querySelector('span:last-child').textContent = 0;
     });
     articles.forEach(a => {
-        const filterNumber = find(`#adv-filter-state-${a.data.state} span:last-child`);
+        const filterNumber = find(`#adv-filter-state-${a.data._state} span:last-child`);
         filterNumber.textContent = ++filterNumber.textContent;
     });
 }
@@ -797,7 +806,7 @@ const filters = [
     },
     function (a) {
         const state = find('.adv-filter-state .tab-link.active').getAttribute('id').split('-').pop();
-        return a.data.state === state;
+        return a.data._state === state;
     }
 ];
 
@@ -821,7 +830,12 @@ const listeners = [
     {
         selector: ['.adv-filter-state .tab-link'],
         event: 'click'
+    },
+    {
+        selector: ['.cross'],
+        event: 'click'
     }
+
 ]
 
 function filterArticles(articles) {
@@ -854,6 +868,7 @@ let globalTestData;
 
 initLinkPreventReload(document.body);
 initClearFieldBtns(document.body);
+initCalendar(document.body);
 initInputValidation();
 
 fetchData().then(data => {

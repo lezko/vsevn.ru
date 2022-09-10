@@ -4,6 +4,11 @@
     "title": "Продавец-грузчик в магазин хозтоваров",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -56,6 +61,11 @@
     "title": "Контроллер технического состояния автотранспортных средств",
     "type": "vacancy",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -88,6 +98,11 @@
     "title": "Резчики металла на ленточнопильных станках с числовым программным управлением",
     "type": "vacancy",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -120,6 +135,11 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -152,6 +172,11 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -184,6 +209,11 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "active",
     "city_list": [
@@ -216,6 +246,11 @@
     "title": "Художник",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "closed",
     "city_list": [
@@ -242,6 +277,11 @@
     "title": "deleted",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "deleted",
     "city_list": [
@@ -274,6 +314,11 @@
     "title": "Фотограф",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "closed",
     "city_list": [
@@ -295,6 +340,11 @@
     "title": "Учитель",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "blocked",
     "city_list": [
@@ -316,6 +366,11 @@
     "title": "Секретарь",
     "type": "vacancy",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "rejected",
     "city_list": [
@@ -337,6 +392,11 @@
     "title": "Художник",
     "type": "pending",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "closed",
     "city_list": [
@@ -358,6 +418,11 @@
     "title": "Уборщик",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "pending",
     "city_list": [
@@ -379,6 +444,11 @@
     "title": "Волшебник",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "draft",
     "city_list": [
@@ -400,6 +470,11 @@
     "title": "Удаленный",
     "type": "vacancy",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "deleted",
     "city_list": [
@@ -421,6 +496,11 @@
     "title": "",
     "type": "resume",
     "price": 111200,
+    "date": {
+      "created": "09/08/2022",
+      "activation": "10/08/2022",
+      "deactivation": "11/08/2022"
+    },
     "rating": 133,
     "state": "closed",
     "city_list": [
