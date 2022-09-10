@@ -786,11 +786,11 @@ span:not([class]):empty {
 }
 
 .adv-input-filters input {
-    padding-bottom: .2em;
+    padding-bottom: .1em;
 }
 
 .adv-input-filters .placeholder {
-    padding-bottom: .3em;
+    padding-bottom: .2em;
     margin-right: 5px;
 }
 
