@@ -35,7 +35,7 @@ function formatDateString(str) {
 }
 
 let calendarTemplate;
-fetch('../calendar.html')
+fetch('calendar.html')
     .then(resp => resp.text())
     .then(data => calendarTemplate = new DOMParser().parseFromString(data, 'text/html').querySelector('.calendar'));
 
