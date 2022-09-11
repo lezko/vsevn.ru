@@ -387,6 +387,7 @@ async function fetchData() {
             _state: obj.state,
             _date: obj.date,
             price: obj.price,
+            _autoProlong: obj.auto_prolong,
             rating: obj.rating,
             cityList: obj.city_list,
             links: obj.links.map(l => ({
@@ -444,6 +445,7 @@ function setupArticle(article) {
     initDeleteCityBtns(article);
     initArticleDates(article);
     initArticleStateBackground(article);
+    initProlongCheckbox(article);
 
     article.el.querySelector('.checkbox').addEventListener('click', () => {
         if (article.checked) {
@@ -474,6 +476,26 @@ async function initArticles(data) {
 }
 
 // setup article functions
+function initProlongCheckbox(article) {
+    const checkbox = article.el.querySelector('.adv-item__auto-prolong .fancy-checkbox');
+    const label = checkbox.nextElementSibling;
+
+    const id = Date.now();
+    checkbox.setAttribute('id', id);
+    label.setAttribute('for', id);
+
+    const enabledText = 'Автопродление включено';
+    const disabledText = 'Автопродление отключено';
+
+    if (article.data._autoProlong) {
+        checkbox.setAttribute('checked', 'checked');
+    }
+    label.textContent = checkbox.checked ? enabledText : disabledText;
+    label.addEventListener('click', () => {
+        label.textContent = !checkbox.checked ? enabledText : disabledText;
+    });
+}
+
 function initArticleCalendar(article) {
     const btn = article.el.querySelector('.calendar-open-btn');
     btn.addEventListener('click', () => {

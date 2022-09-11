@@ -4,6 +4,7 @@
     "title": "Продавец-грузчик в магазин хозтоваров",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -61,6 +62,7 @@
     "title": "Контроллер технического состояния автотранспортных средств",
     "type": "vacancy",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -98,6 +100,7 @@
     "title": "Резчики металла на ленточнопильных станках с числовым программным управлением",
     "type": "vacancy",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -135,6 +138,7 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -172,6 +176,7 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -209,6 +214,7 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -246,6 +252,7 @@
     "title": "Художник",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -277,6 +284,7 @@
     "title": "deleted",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -314,6 +322,7 @@
     "title": "Фотограф",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -340,6 +349,7 @@
     "title": "Учитель",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -366,6 +376,7 @@
     "title": "Секретарь",
     "type": "vacancy",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -392,6 +403,7 @@
     "title": "Художник",
     "type": "pending",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -418,6 +430,7 @@
     "title": "Уборщик",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -444,6 +457,7 @@
     "title": "Волшебник",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -470,6 +484,7 @@
     "title": "Удаленный",
     "type": "vacancy",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -496,6 +511,7 @@
     "title": "",
     "type": "resume",
     "price": 111200,
+    "auto_prolong": false,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",

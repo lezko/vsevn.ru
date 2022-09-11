@@ -469,6 +469,58 @@ span:not([class]):empty {
     pointer-events: none;
 }
 
+/* fancy checkbox */
+.fancy-checkbox {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.fancy-checkbox + label {
+    display: grid;
+    align-items: center;
+    position: relative;
+    margin-right: 1em;
+    padding-left: 2em;
+    padding-right: 1em;
+    line-height: 2;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.fancy-checkbox + label:before {
+    box-sizing: border-box;
+    content: '';
+    position: absolute;
+    left: 0;
+    display: block;
+    width: 1.4em;
+    height: 1.4em;
+    border: 2px solid var(--clr-golden);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.fancy-checkbox:checked + label {
+    padding-left: 1em;
+    color: var(--clr-light);
+}
+
+.fancy-checkbox:checked + label:before {
+    top: 0;
+    width: 100%;
+    height: 2em;
+    background: var(--clr-golden);
+    border-radius: .25em;
+}
+
+.fancy-checkbox + label,
+.fancy-checkbox + label:before {
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+}
+
 /* select */
 .select {
     display: flex;
@@ -939,6 +991,13 @@ span:not([class]):empty {
     top: 70px;
 }
 
+.adv-item__auto-prolong {
+    padding: ;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
 .adv-item__services a {
     color: magenta;
 }
@@ -1123,8 +1182,8 @@ span:not([class]):empty {
     '    .       .  state    state     state state'
     'checkbox img left-block city-list stats services'
     'checkbox img left-block city-list rating services'
-    'checkbox img left-block city-list rating        .'
-    '.        .       .      city-list get-more-responses .'
+    'checkbox img left-block  city-list   rating        .'
+    '.        .   auto-prolong city-list get-more-responses .'
     '.        .       .      city-list links .';
 }
 
@@ -1202,7 +1261,7 @@ span:not([class]):empty {
     margin-right: 7px;
 }
 
-.checkbox {
+.adv-item__checkbox.checkbox {
     grid-area: checkbox;
     align-self: center;
 }
@@ -1236,7 +1295,6 @@ span:not([class]):empty {
 .adv-item__left-block {
     display: flex;
     flex-direction: column;
-    /*justify-content: space-between;*/
     grid-area: left-block;
 }
 
@@ -1276,6 +1334,10 @@ span:not([class]):empty {
     color: #ff0000;
     font-size: 16px;
     transition: flex .3s;
+}
+
+.adv-item__auto-prolong {
+    grid-area: auto-prolong;
 }
 
 .adv-item__rating {
