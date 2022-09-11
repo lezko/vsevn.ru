@@ -279,11 +279,12 @@ span:not([class]):empty {
     font-weight: 700;
     background-color: var(--clr-input-filled);
     color: orange;
+    transition: .3s;
 }
 
 @media (hover: hover) {
     .cross:hover {
-        background-color: #fff4ab;
+        background-color: var(--clr-yellow);
     }
 }
 
@@ -478,7 +479,11 @@ span:not([class]):empty {
     cursor: pointer;
     position: relative;
     white-space: nowrap;
-    padding-inline: 5px;
+    padding: 5px;
+}
+
+.select .cross {
+    margin-left: 5px;
 }
 
 .select[aria-expanded="false"][data-empty="true"] {
@@ -494,10 +499,6 @@ span:not([class]):empty {
     justify-content: space-between;
     z-index: 70;
     padding-inline: 5px;
-}
-
-.select[data-empty="false"] .select__body {
-    height: calc(100% - 10px);
 }
 
 .select[data-empty="false"] .select__body {
