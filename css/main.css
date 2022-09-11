@@ -355,7 +355,7 @@ span:not([class]):empty {
     display: none;
     top: 40px;
     left: 0;
-    z-index: 5;
+    z-index: 100;
     color: var(--clr-brown);
     font-size: 20px;
     white-space: nowrap;
@@ -925,6 +925,18 @@ span:not([class]):empty {
 
 .adv-item__state a:hover {
     color: #e71884;
+}
+
+.adv-item__state fieldset {
+    display: inline-block;
+    margin: 0;
+    padding: 5px;
+    border-radius: 4px;
+    border-color: var(--clr-golden);
+}
+
+.adv-item__state fieldset > .hint__text {
+    top: 70px;
 }
 
 .adv-item__services a {

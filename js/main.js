@@ -264,11 +264,13 @@ async function renderElement(elem, payload = null) {
                         Активное объявление
                     </p>
                     <div class="info">
-                        <p class="calendar-container">Осталось <span class="expires">27 дней</span> до депубликации. Изменить дату депубликации 
-                            <span class="calendar-open-btn">
-                                <input data-date="${ payload.date.deactivation }" value="${ formatDateString(payload.date.deactivation) }">
-                            </span>
-                        </p>
+                        <div class="calendar-container">Осталось <span class="expires">27 дней</span> до депубликации. Изменить дату депубликации 
+                            <fieldset class="calendar-open-btn">
+                                <legend>Дата депубликации</legend>
+                                <input placeholder="дд.мм.гггг" data-date="${ payload.date.deactivation }" value="${ formatDateString(payload.date.deactivation) }">
+                                <span class="hint__text hint__text--center">Эту дату нельзя выбрать</span>
+                            </fieldset>
+                        </div>
                         <span class="time">Обновлена: 10.05.2022, 9:00</span><a href="">Обновить</a>
                     </div>
                 `;

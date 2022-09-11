@@ -105,7 +105,7 @@ function showDoubleCalendar(calendar, calendarContainer, field) {
 function closeCalendar(calendar, calendarContainer, field, getDate) {
     let dateStr;
     if (getDate) {
-        const dateStr = getDateFromCalendar(calendar).toDateString();
+        dateStr = getDateFromCalendar(calendar).toDateString();
     } else {
         dateStr = field.getAttribute('data-date');
     }
@@ -129,7 +129,19 @@ function getDateFromCalendar(calendar) {
     return new Date(year, month, day);
 }
 
+function checkDateAvailable(date) {
+    let available = false;
+    for ([startDate, finishDate] of availableDates) {
+        if (startDate <= date && date <= finishDate) {
+            available = true;
+            break
+        }
+    }
+    return available;
+}
+
 function renderCalendar(date, field) {
+    const hintText = field.parentNode.querySelector('.hint__text');
     const arr = date.toLocaleDateString().split('/');
     if (arr[1].length === 1) {
         arr[1] = '0' + arr[1];
@@ -142,13 +154,17 @@ function renderCalendar(date, field) {
         const str = field.value;
         if (str.match('[0-9]{2}.[0-9]{2}.[0-9]{4}')) {
             const arr = str.split('.');
-            date.setFullYear(arr[2]);
-            date.setMonth(arr[1]);
-            date.setDate(arr[0]);
-
-            renderDays(date, daysContainer);
-            monthSelect.selectedIndex = arr[1] - 1;
-            yearSelect.selectedIndex = (new Date()).getFullYear() - arr[2];
+            date = new Date(`${arr[1]}/${arr[0]}/${arr[2]}`);
+            console.log(date);
+            if (checkDateAvailable(date)) {
+                renderDays(date, daysContainer);
+                monthSelect.selectedIndex = arr[1] - 1;
+                yearSelect.selectedIndex = (new Date()).getFullYear() - arr[2];
+            } else {
+                hintText.style.display = 'block';
+                setTimeout(() => hintText.style.display = 'none', 2000);
+                field.value = '';
+            }
         }
     });
 
@@ -244,15 +260,8 @@ function renderDays(date, daysContainer) {
             selectedDay.classList.add('selected');
         }
         day.innerHTML = `<span class="value">${i}</span><span class="hint__text hint__text--center">Эту дату нельзя выбрать</span>`;
-        let available = false;
-        const currDate = new Date(date.getFullYear(), date.getMonth(), i);
-        for ([startDate, finishDate] of availableDates) {
-            if (startDate <= currDate && currDate <= finishDate) {
-                available = true;
-                break
-            }
-        }
 
+        const available = checkDateAvailable(new Date(date.getFullYear(), date.getMonth(), i));
         day.classList.add(available ? 'available' : 'hint');
         day.addEventListener('click', () => {
             if (!day.classList.contains('available')) {
