@@ -29,6 +29,11 @@ const monthsGenitive = [
 
 const START_YEAR = 2003;
 
+const availableDates = [
+    [new Date('8/16/2022'), new Date('8/31/2022')],
+    [new Date('9/1/2022'), new Date('9/15/2022')]
+]
+
 function formatDateString(str) {
     const date = new Date(str);
     return `${date.getDate()} ${monthsGenitive[date.getMonth()]} ${date.getFullYear()}`;
@@ -73,32 +78,37 @@ function showSingleCalendar(container, field) {
     row.classList.add('row');
     row.appendChild(calendar);
 
-    const calendarContainer = document.createElement('div');
-    calendarContainer.classList.add('calendar-container');
-    calendarContainer.appendChild(row);
+    const calendarWrapper = document.createElement('div');
+    calendarWrapper.classList.add('calendar-wrapper');
+    calendarWrapper.appendChild(row);
 
     const submitBtn = document.createElement('a');
     submitBtn.textContent = 'Применить';
     submitBtn.setAttribute('href', '');
     submitBtn.classList.add('calendar__submit-btn');
-    calendarContainer.appendChild(submitBtn);
+    calendarWrapper.appendChild(submitBtn);
 
-    container.appendChild(calendarContainer);
+    container.appendChild(calendarWrapper);
 
     submitBtn.addEventListener('click', e => {
         e.preventDefault();
-        closeCalendar(calendar, calendarContainer, field);
+        closeCalendar(calendar, calendarWrapper, field, true);
     });
     cover.addEventListener('click', () => {
-        closeCalendar(calendar, calendarContainer, field);
+        closeCalendar(calendar, calendarWrapper, field, false);
     });
 }
 
 function showDoubleCalendar(calendar, calendarContainer, field) {
 }
 
-function closeCalendar(calendar, calendarContainer, field) {
-    const dateStr = getDateFromCalendar(calendar).toDateString();
+function closeCalendar(calendar, calendarContainer, field, getDate) {
+    let dateStr;
+    if (getDate) {
+        const dateStr = getDateFromCalendar(calendar).toDateString();
+    } else {
+        dateStr = field.getAttribute('data-date');
+    }
     field.value = formatDateString(dateStr);
     field.setAttribute('data-date', dateStr);
     field.classList.remove('on-top');
@@ -114,16 +124,23 @@ function getDateFromCalendar(calendar) {
     const monthSelect = calendar.querySelector('.calendar__month select');
     const month = +monthSelect.options[monthSelect.selectedIndex].value;
 
-    const day = +calendar.querySelector('.calendar__days .selected').textContent;
+    const day = +calendar.querySelector('.calendar__days .selected .value').textContent;
 
     return new Date(year, month, day);
 }
 
 function renderCalendar(date, field) {
-    field.value = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+    const arr = date.toLocaleDateString().split('/');
+    if (arr[1].length === 1) {
+        arr[1] = '0' + arr[1];
+    }
+    if (arr[0].length === 1) {
+        arr[0] = '0' + arr[0];
+    }
+    field.value = `${arr[1]}.${arr[0]}.${arr[2]}`;
     field.addEventListener('input', () => {
         const str = field.value;
-        if (str.match('[0-9]{1,2}.[0-9]{2}.[0-9]{4}')) {
+        if (str.match('[0-9]{2}.[0-9]{2}.[0-9]{4}')) {
             const arr = str.split('.');
             date.setFullYear(arr[2]);
             date.setMonth(arr[1]);
@@ -141,6 +158,7 @@ function renderCalendar(date, field) {
     for (let i = (new Date()).getFullYear(); i >= START_YEAR; i--) {
         yearSelect.innerHTML += `<option value="${i}">${i}</option>`;
     }
+    yearSelect.selectedIndex = (new Date()).getFullYear() - date.getFullYear();
     yearSelect.addEventListener('change', () => {
         const year = +yearSelect.options[yearSelect.selectedIndex].text;
         date.setFullYear(year);
@@ -167,6 +185,7 @@ function renderCalendar(date, field) {
     for (let i = 0; i < 12; i++) {
         monthSelect.innerHTML += `<option value="${i}">${monthDefault[i]}</option>`;
     }
+    monthSelect.selectedIndex = date.getMonth();
     monthSelect.addEventListener('change', () => {
         const month = +monthSelect.options[monthSelect.selectedIndex].value;
         date.setMonth(month);
@@ -224,8 +243,21 @@ function renderDays(date, daysContainer) {
             selectedDay = day;
             selectedDay.classList.add('selected');
         }
-        day.textContent = i;
+        day.innerHTML = `<span class="value">${i}</span><span class="hint__text hint__text--center">Эту дату нельзя выбрать</span>`;
+        let available = false;
+        const currDate = new Date(date.getFullYear(), date.getMonth(), i);
+        for ([startDate, finishDate] of availableDates) {
+            if (startDate <= currDate && currDate <= finishDate) {
+                available = true;
+                break
+            }
+        }
+
+        day.classList.add(available ? 'available' : 'hint');
         day.addEventListener('click', () => {
+            if (!day.classList.contains('available')) {
+                return;
+            }
             selectedDay?.classList.remove('selected');
             selectedDay = day;
             selectedDay.classList.add('selected');

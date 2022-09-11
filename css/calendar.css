@@ -1,7 +1,11 @@
 .calendar-container {
+    position: relative;
+}
+
+.calendar-wrapper {
     z-index: 60;
     position: absolute;
-    top: 70px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -22,6 +26,10 @@
     width: 340px;
     border-collapse: collapse;
     border: 1px solid #d3c68c;
+}
+
+.calendar select {
+    color: inherit;
 }
 
 .calendar > *:not(:last-child) {
@@ -54,8 +62,24 @@
     padding-block: 5px;
 }
 
+.calendar__days > *:not(.selected) {
+
+}
+
+.calendar__days > .available {
+    background-color: var(--clr-yellow);
+    cursor: pointer;
+    transition: .3s;
+}
+
+@media (hover: hover) {
+    .calendar__days > .available:hover {
+        background-color: #cfcfcf;
+    }
+}
+
 .calendar__days > .selected {
-    background-color: yellow;
+    background-color: #cfcfcf;
 }
 
 .calendar__submit-btn {

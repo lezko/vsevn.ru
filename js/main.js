@@ -264,7 +264,7 @@ async function renderElement(elem, payload = null) {
                         Активное объявление
                     </p>
                     <div class="info">
-                        <p>Осталось <span class="expires">27 дней</span> до депубликации. Изменить дату депубликации 
+                        <p class="calendar-container">Осталось <span class="expires">27 дней</span> до депубликации. Изменить дату депубликации 
                             <span class="calendar-open-btn">
                                 <input data-date="${ payload.date.deactivation }" value="${ formatDateString(payload.date.deactivation) }">
                             </span>

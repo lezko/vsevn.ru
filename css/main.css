@@ -791,6 +791,7 @@ span:not([class]):empty {
 }
 
 .adv-input-filters .placeholder {
+    color: var(--clr-brown);
     padding-bottom: .2em;
     margin-right: 5px;
 }
