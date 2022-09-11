@@ -67,35 +67,43 @@ function getDateFromStr(dateStr) {
     }
 }
 
+function getDayDifference(date1, date2) {
+    return (date2 - date1) / 1000 / 60 / 60 / 24;
+}
+
 function showSingleCalendar(container, field) {
-    cover.classList.remove('hidden');
-    field.classList.add('on-top');
+    return new Promise((resolve, reject) => {
+        cover.classList.remove('hidden');
+        field.classList.add('on-top');
 
-    const date = getDateFromStr(field.getAttribute('data-date'));
-    const calendar = renderCalendar(date, field);
+        const date = getDateFromStr(field.getAttribute('data-date'));
+        const calendar = renderCalendar(date, field);
 
-    const row = document.createElement('div');
-    row.classList.add('row');
-    row.appendChild(calendar);
+        const row = document.createElement('div');
+        row.classList.add('row');
+        row.appendChild(calendar);
 
-    const calendarWrapper = document.createElement('div');
-    calendarWrapper.classList.add('calendar-wrapper');
-    calendarWrapper.appendChild(row);
+        const calendarWrapper = document.createElement('div');
+        calendarWrapper.classList.add('calendar-wrapper');
+        calendarWrapper.appendChild(row);
 
-    const submitBtn = document.createElement('a');
-    submitBtn.textContent = 'Применить';
-    submitBtn.setAttribute('href', '');
-    submitBtn.classList.add('calendar__submit-btn');
-    calendarWrapper.appendChild(submitBtn);
+        const submitBtn = document.createElement('a');
+        submitBtn.textContent = 'Применить';
+        submitBtn.setAttribute('href', '');
+        submitBtn.classList.add('calendar__submit-btn');
+        calendarWrapper.appendChild(submitBtn);
 
-    container.appendChild(calendarWrapper);
+        container.appendChild(calendarWrapper);
 
-    submitBtn.addEventListener('click', e => {
-        e.preventDefault();
-        closeCalendar(calendar, calendarWrapper, field, true);
-    });
-    cover.addEventListener('click', () => {
-        closeCalendar(calendar, calendarWrapper, field, false);
+        submitBtn.addEventListener('click', e => {
+            e.preventDefault();
+            closeCalendar(calendar, calendarWrapper, field, true);
+            resolve(field.getAttribute('data-date'));
+        });
+        cover.addEventListener('click', () => {
+            closeCalendar(calendar, calendarWrapper, field, false);
+            resolve(field.getAttribute('data-date'));
+        });
     });
 }
 
@@ -105,10 +113,11 @@ function showDoubleCalendar(calendar, calendarContainer, field) {
 function closeCalendar(calendar, calendarContainer, field, getDate) {
     let dateStr;
     if (getDate) {
-        dateStr = getDateFromCalendar(calendar).toDateString();
+        dateStr = getDateFromCalendar(calendar).toLocaleDateString();
     } else {
         dateStr = field.getAttribute('data-date');
     }
+    console.log(dateStr);
     field.value = formatDateString(dateStr);
     field.setAttribute('data-date', dateStr);
     field.classList.remove('on-top');

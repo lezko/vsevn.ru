@@ -1,3 +1,5 @@
+MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
 // common elements
 const cover = find('.cover');
 
@@ -238,7 +240,6 @@ let services, articleTemplate, servicesLogos = [], articles, filteredArticles;
 const selectors = {
     img: '.adv-item__img',
     title: '.adv-item__title',
-    prolong: '.adv-item__state',
     price: '.adv-item__price > span:first-child',
     cityList: '.adv-item__city-list',
     rating: '.adv-item__rating',
@@ -256,26 +257,6 @@ const selectors = {
 
 async function renderElement(elem, payload = null) {
     switch (elem) {
-        case 'prolong':
-            if (payload.active) {
-                return `
-                    <p>
-                        <span class="icon icon-warn-triangle"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                        Активное объявление
-                    </p>
-                    <div class="info">
-                        <div class="calendar-container">Осталось <span class="expires">27 дней</span> до депубликации. Изменить дату депубликации 
-                            <fieldset class="calendar-open-btn">
-                                <legend>Дата депубликации</legend>
-                                <input placeholder="дд.мм.гггг" data-date="${ payload.date.deactivation }" value="${ formatDateString(payload.date.deactivation) }">
-                                <span class="hint__text hint__text--center">Эту дату нельзя выбрать</span>
-                            </fieldset>
-                        </div>
-                        <span class="time">Обновлена: 10.05.2022, 9:00</span><a href="">Обновить</a>
-                    </div>
-                `;
-            }
-            return '';
         case 'title':
             return `
                 <span class="hint__text">${ payload }</span>
@@ -404,10 +385,7 @@ async function fetchData() {
             title: obj.title,
             _type: obj.type,
             _state: obj.state,
-            prolong: {
-                active: obj.state === 'active',
-                date: obj.date
-            },
+            _date: obj.date,
             price: obj.price,
             rating: obj.rating,
             cityList: obj.city_list,
@@ -461,9 +439,10 @@ function setupArticle(article) {
     initLinkPreventReload(article.el);
     initExpandingLists(article.el);
     initFadeEffects(article.el);
-    initCalendar(article.el);
+    initArticleCalendar(article);
     initCopyLinkModals(article);
     initDeleteCityBtns(article);
+    initArticleDates(article);
     initArticleStateBackground(article);
 
     article.el.querySelector('.checkbox').addEventListener('click', () => {
@@ -495,6 +474,27 @@ async function initArticles(data) {
 }
 
 // setup article functions
+function initArticleCalendar(article) {
+    const btn = article.el.querySelector('.calendar-open-btn');
+    btn.addEventListener('click', () => {
+        if (article.el.querySelector('.calendar') !== null) {
+            return;
+        }
+        showSingleCalendar(btn.parentNode, btn.querySelector('input')).then(date => {
+            article.data._date.deactivation = date;
+            initArticleDates(article);
+        });
+    });
+}
+
+function initArticleDates(article) {
+    const field = article.el.querySelector('.adv-item__state input');
+    field.setAttribute('data-date', article.data._date.deactivation);
+    field.value = formatDateString(article.data._date.deactivation);
+
+    article.el.querySelector('.expires .value').textContent = getDayDifference(new Date(article.data._date.activation), new Date(article.data._date.deactivation));
+}
+
 function initArticleStateBackground(article) {
     article.el.setAttribute('data-state', article.data._state);
 }

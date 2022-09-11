@@ -1182,6 +1182,10 @@ span:not([class]):empty {
     line-height: 1.2;
 }
 
+.adv-item:not([data-state="active"]) .adv-item__state {
+    display: none;
+}
+
 .adv-item__state .icon .path1:before {
     color: #ff8800 !important;
 }
