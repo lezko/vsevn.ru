@@ -156,7 +156,7 @@ span:not([class]):empty {
     margin: 0 !important;
 }
 
-.adv-filter-date > *,
+.adv-filter-date > *:not(.calendar-wrapper),
 .adv-filter-price > *,
 .adv-filter-title {
     border: 1px solid #E3DCB2;
@@ -668,7 +668,6 @@ span:not([class]):empty {
 
 /* action-btn */
 .action-btn {
-    white-space: nowrap;
     display: block;
     border-radius: 5px;
     background-color: #FFC000;
@@ -863,7 +862,7 @@ span:not([class]):empty {
 }
 
 /* common styles for date and price filters */
-.adv-filter-date > *,
+.adv-filter-date > *:not(.calendar-wrapper),
 .adv-filter-price > *,
 .adv-filter-title {
     min-width: 0;
@@ -887,16 +886,16 @@ span:not([class]):empty {
 
 /* adv-filter-date */
 .adv-filter-date {
-    width: 20%;
+    width: 32%;
 }
 
-.adv-filter-date > * {
+.adv-filter-date > *:not(.calendar-wrapper) {
     width: 50%;
 }
 
 /* adv-filters-price */
 .adv-filter-price {
-    width: 35%;
+    width: 28%;
 }
 
 .adv-filter-price .placeholder {
@@ -917,7 +916,7 @@ span:not([class]):empty {
 
 /* adv-filter-region */
 .adv-filter-region {
-    width: 20%;
+    width: 18%;
     display: flex;
     align-items: stretch;
 }
@@ -936,7 +935,7 @@ span:not([class]):empty {
 
 /* adv-filter-title */
 .adv-filter-title {
-    width: 20%;
+    width: 17%;
     position: relative;
 }
 
@@ -946,6 +945,10 @@ span:not([class]):empty {
 .actions > .flex {
     justify-content: space-between;
     padding: 16px 0;
+}
+
+.actions__container {
+    flex-grow: 1;
 }
 
 .action-sort {

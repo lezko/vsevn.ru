@@ -14,7 +14,7 @@
     display: flex;
 }
 
-.calendar-left .calendar-container {
+.calendar-container--left .calendar-wrapper {
     left: 0;
     transform: translateX(0);
 }
@@ -26,6 +26,10 @@
     width: 340px;
     border-collapse: collapse;
     border: 1px solid #d3c68c;
+}
+
+.calendar + .calendar {
+    border-left: none;
 }
 
 .calendar select {

@@ -143,6 +143,21 @@ function initClearFieldBtns(target) {
     });
 }
 
+// init filter calendar
+function initFilterCalendar(target) {
+    target.querySelectorAll('.adv-filter-date.calendar-container').forEach(c => {
+        const labels = c.querySelectorAll('.calendar-open-btn--double');
+        labels.forEach(f => f.addEventListener('click', () => {
+            if (c.querySelector('.calendar')) {
+                return;
+            }
+            showDoubleCalendar(c, labels[0].querySelector('input'), labels[1].querySelector('input')).then(performFiltering);
+        }));
+    });
+}
+
+
+
 // expanding list with links
 function initExpandingLists(target) {
     target.querySelectorAll('.adv-item__links').forEach(list => {
@@ -532,12 +547,13 @@ function switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkb
 }
 
 function initArticleCalendar(article) {
-    const btn = article.el.querySelector('.calendar-open-btn');
+    const container = article.el.querySelector('.calendar-container');
+    const btn = container.querySelector('.calendar-open-btn');
     btn.addEventListener('click', () => {
         if (article.el.querySelector('.calendar') !== null) {
             return;
         }
-        showSingleCalendar(btn.parentNode, btn.querySelector('input')).then(date => {
+        showSingleCalendar(container, btn.querySelector('input')).then(date => {
             article.data._date.deactivation = date;
             initArticleDates(article);
         });
@@ -927,7 +943,7 @@ let globalTestData;
 
 initLinkPreventReload(document.body);
 initClearFieldBtns(document.body);
-initCalendar(document.body);
+initFilterCalendar(document.body);
 initInputValidation();
 
 fetchData().then(data => {
@@ -941,7 +957,7 @@ fetchData().then(data => {
         if (scroll) {
             window.scrollTo(0, +scroll);
         }
-        window.addEventListener('scroll', () => {
+        window.addEventListener('beforeunload', () => {
             updateScrollValue();
         });
     });

@@ -29,6 +29,19 @@ const monthsGenitive = [
 
 const START_YEAR = 2003;
 
+const row = document.createElement('div');
+row.classList.add('row');
+
+const calendarWrapper = document.createElement('div');
+calendarWrapper.classList.add('calendar-wrapper');
+calendarWrapper.appendChild(row);
+
+const submitBtn = document.createElement('a');
+submitBtn.textContent = 'Применить';
+submitBtn.setAttribute('href', '');
+submitBtn.classList.add('calendar__submit-btn');
+calendarWrapper.appendChild(submitBtn);
+
 const availableDates = [
     [new Date('8/16/2022'), new Date('8/31/2022')],
     [new Date('9/1/2022'), new Date('9/15/2022')]
@@ -44,21 +57,6 @@ fetch('calendar.html')
     .then(resp => resp.text())
     .then(data => calendarTemplate = new DOMParser().parseFromString(data, 'text/html').querySelector('.calendar'));
 
-function initCalendar(target) {
-    target.querySelectorAll('.calendar-open-btn').forEach(b => b.addEventListener('click', async () => {
-        if (b.parentNode.querySelector('.calendar') !== null) {
-            return;
-        }
-        showSingleCalendar(b.parentNode, b.querySelector('input'));
-    }));
-    target.querySelectorAll('.calendar-open-btn--double').forEach(b => b.addEventListener('click', async () => {
-        if (b.parentNode.querySelector('.calendar') !== null) {
-            return;
-        }
-        showDoubleCalendar(b.parentNode, b.querySelector('input'));
-    }));
-}
-
 function getDateFromStr(dateStr) {
     if (dateStr === null) {
          return new Date();
@@ -72,26 +70,15 @@ function getDayDifference(date1, date2) {
 }
 
 function showSingleCalendar(container, field) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
         cover.classList.remove('hidden');
         field.classList.add('on-top');
 
         const date = getDateFromStr(field.getAttribute('data-date'));
         const calendar = renderCalendar(date, field);
 
-        const row = document.createElement('div');
-        row.classList.add('row');
+        row.innerHTML = '';
         row.appendChild(calendar);
-
-        const calendarWrapper = document.createElement('div');
-        calendarWrapper.classList.add('calendar-wrapper');
-        calendarWrapper.appendChild(row);
-
-        const submitBtn = document.createElement('a');
-        submitBtn.textContent = 'Применить';
-        submitBtn.setAttribute('href', '');
-        submitBtn.classList.add('calendar__submit-btn');
-        calendarWrapper.appendChild(submitBtn);
 
         container.appendChild(calendarWrapper);
 
@@ -107,7 +94,35 @@ function showSingleCalendar(container, field) {
     });
 }
 
-function showDoubleCalendar(calendar, calendarContainer, field) {
+function showDoubleCalendar(container, field1, field2) {
+    return new Promise(resolve => {
+        cover.classList.remove('hidden');
+        field1.classList.add('on-top');
+        field2.classList.add('on-top');
+
+        const date1 = getDateFromStr(field1.getAttribute('data-date'));
+        const date2 = getDateFromStr(field2.getAttribute('data-date'));
+        const calendar1 = renderCalendar(date1, field1);
+        const calendar2 = renderCalendar(date2, field2);
+
+        row.innerHTML = '';
+        row.appendChild(calendar1);
+        row.appendChild(calendar2);
+
+        container.appendChild(calendarWrapper);
+
+        submitBtn.addEventListener('click', e => {
+            e.preventDefault();
+            closeCalendar(calendar1, calendarWrapper, field1, true);
+            closeCalendar(calendar2, calendarWrapper, field2, true);
+            resolve([field1.getAttribute('data-date'), field2.getAttribute('data-date')]);
+        });
+        cover.addEventListener('click', () => {
+            closeCalendar(calendar1, calendarWrapper, field1, false);
+            closeCalendar(calendar2, calendarWrapper, field2, false);
+            resolve([field1.getAttribute('data-date'), field2.getAttribute('data-date')]);
+        });
+    });
 }
 
 function closeCalendar(calendar, calendarContainer, field, getDate) {
@@ -117,7 +132,7 @@ function closeCalendar(calendar, calendarContainer, field, getDate) {
     } else {
         dateStr = field.getAttribute('data-date');
     }
-    console.log(dateStr);
+
     field.value = formatDateString(dateStr);
     field.setAttribute('data-date', dateStr);
     field.classList.remove('on-top');
