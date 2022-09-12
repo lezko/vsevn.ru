@@ -469,14 +469,14 @@ span:not([class]):empty {
     pointer-events: none;
 }
 
-/* fancy checkbox */
-.fancy-checkbox {
+/* fancy radiobutton */
+.fancy-radiobutton {
     position: absolute;
     opacity: 0;
     z-index: -1;
 }
 
-.fancy-checkbox + label {
+.fancy-radiobutton + label {
     display: grid;
     align-items: center;
     position: relative;
@@ -488,7 +488,7 @@ span:not([class]):empty {
     z-index: 10;
 }
 
-.fancy-checkbox + label:before {
+.fancy-radiobutton + label:before {
     box-sizing: border-box;
     content: '';
     position: absolute;
@@ -497,25 +497,24 @@ span:not([class]):empty {
     width: 1.4em;
     height: 1.4em;
     border: 2px solid var(--clr-golden);
-    border-radius: 50%;
+    border-radius: 1em;
     z-index: -1;
 }
 
-.fancy-checkbox:checked + label {
+.fancy-radiobutton:checked + label {
     padding-left: 1em;
     color: var(--clr-light);
 }
 
-.fancy-checkbox:checked + label:before {
+.fancy-radiobutton:checked + label:before {
     top: 0;
     width: 100%;
     height: 2em;
     background: var(--clr-golden);
-    border-radius: .25em;
 }
 
-.fancy-checkbox + label,
-.fancy-checkbox + label:before {
+.fancy-radiobutton + label,
+.fancy-radiobutton + label:before {
     -webkit-transition: .25s all ease;
     -o-transition: .25s all ease;
     transition: .25s all ease;
@@ -669,6 +668,7 @@ span:not([class]):empty {
 
 /* action-btn */
 .action-btn {
+    white-space: nowrap;
     display: block;
     border-radius: 5px;
     background-color: #FFC000;
@@ -991,11 +991,14 @@ span:not([class]):empty {
     top: 70px;
 }
 
-.adv-item__auto-prolong {
-    padding: ;
+.adv-item__auto-prolong > * {
     font-size: 18px;
     display: flex;
     align-items: center;
+}
+
+.adv-item__auto-prolong > * {
+
 }
 
 .adv-item__services a {
@@ -1184,7 +1187,7 @@ span:not([class]):empty {
     'checkbox img left-block city-list rating services'
     'checkbox img left-block  city-list   rating        .'
     '.        .   auto-prolong city-list get-more-responses .'
-    '.        .       .      city-list links .';
+    '.        .       auto-prolong      city-list links .';
 }
 
 

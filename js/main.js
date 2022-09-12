@@ -476,24 +476,59 @@ async function initArticles(data) {
 }
 
 // setup article functions
+const autoProlongEnableChecked = 'Автопродление включено';
+const autoProlongEnableUnchecked = 'Включить автопродление';
+
+const autoProlongDisableChecked = 'Автопродление не включено';
+const autoProlongDisableUnchecked = 'Выключить автопродление';
+
 function initProlongCheckbox(article) {
-    const checkbox = article.el.querySelector('.adv-item__auto-prolong .fancy-checkbox');
-    const label = checkbox.nextElementSibling;
+    const checkboxEnable = article.el.querySelector('.adv-item__auto-prolong .enable .fancy-radiobutton');
+    const labelEnable = checkboxEnable.nextElementSibling;
+
+    const checkboxDisable = article.el.querySelector('.adv-item__auto-prolong .disable .fancy-radiobutton');
+    const labelDisable = checkboxDisable.nextElementSibling;
 
     const id = Date.now();
-    checkbox.setAttribute('id', id);
-    label.setAttribute('for', id);
+    checkboxEnable.setAttribute('id', 'auto-prolong-enable-' + id);
+    labelEnable.setAttribute('for', 'auto-prolong-enable-' + id);
 
-    const enabledText = 'Автопродление включено';
-    const disabledText = 'Автопродление отключено';
+    checkboxDisable.setAttribute('id', 'auto-prolong-disable' + id);
+    labelDisable.setAttribute('for', 'auto-prolong-disable' + id);
+
+    checkboxEnable.setAttribute('name', 'auto-prolong-' + id);
+    checkboxDisable.setAttribute('name', 'auto-prolong-' + id);
 
     if (article.data._autoProlong) {
-        checkbox.setAttribute('checked', 'checked');
+        checkboxEnable.setAttribute('checked', 'checked');
+    } else {
+        checkboxDisable.setAttribute('checked', 'checked');
     }
-    label.textContent = checkbox.checked ? enabledText : disabledText;
-    label.addEventListener('click', () => {
-        label.textContent = !checkbox.checked ? enabledText : disabledText;
+    labelEnable.textContent = checkboxEnable.checked ? autoProlongEnableChecked : autoProlongEnableUnchecked;
+    labelDisable.textContent = checkboxDisable.checked ? autoProlongDisableChecked : autoProlongDisableUnchecked;
+
+    labelEnable.addEventListener('click', e => {
+        if (checkboxEnable.checked) {
+            return
+        }
+        switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkboxDisable);
     });
+    labelDisable.addEventListener('click', e => {
+        if (checkboxDisable.checked) {
+            return;
+        }
+        switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkboxDisable);
+    });
+}
+
+function switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkboxDisable) {
+    if (!checkboxEnable.checked) { // means it became checked after click
+        labelEnable.textContent = autoProlongEnableChecked;
+        labelDisable.textContent = autoProlongDisableUnchecked;
+    } else {
+        labelEnable.textContent = autoProlongEnableUnchecked;
+        labelDisable.textContent = autoProlongDisableChecked;
+    }
 }
 
 function initArticleCalendar(article) {

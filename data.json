@@ -4,7 +4,7 @@
     "title": "Продавец-грузчик в магазин хозтоваров",
     "type": "resume",
     "price": 111200,
-    "auto_prolong": false,
+    "auto_prolong": true,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -100,7 +100,7 @@
     "title": "Резчики металла на ленточнопильных станках с числовым программным управлением",
     "type": "vacancy",
     "price": 111200,
-    "auto_prolong": false,
+    "auto_prolong": true,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -138,7 +138,7 @@
     "title": "Директор",
     "type": "vacancy",
     "price": 111200,
-    "auto_prolong": false,
+    "auto_prolong": true,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
@@ -284,7 +284,7 @@
     "title": "deleted",
     "type": "resume",
     "price": 111200,
-    "auto_prolong": false,
+    "auto_prolong": true,
     "date": {
       "created": "09/08/2022",
       "activation": "8/01/2022",
