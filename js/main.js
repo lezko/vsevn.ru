@@ -168,7 +168,7 @@ function initFilterCalendar(target) {
             cross.addEventListener('click', () => {
                 document.querySelector('#' + cross.getAttribute('aria-controls')).setAttribute('data-date', '');
                 if (c.querySelector('.calendar')) {
-                    c.querySelectorAll('.calendar')[i].querySelector('.selected')?.classList.remove('selected');
+                c.querySelectorAll('.calendar')[i].querySelector('.selected')?.classList.remove('selected');
                 }
             });
         });
@@ -943,10 +943,16 @@ const listeners = [
         event: 'click'
     },
     {
-        selector: ['.cross'],
-        event: 'click'
+        selector: ['*:not(.adv-filter-date) .cross'],
+        event: 'click',
+    },
+    {
+        selector: ['.adv-filter-date .cross'],
+        event: 'click',
+        checker: function (e) {
+            return !find('.adv-filter-date .calendar');
+        },
     }
-
 ];
 
 function filterArticles(articles) {
@@ -975,12 +981,55 @@ function initFilters() {
     });
 }
 
+// sorting
+function performSorting(compareFunction) {
+    const articlesCopy = filteredArticles;
+    articlesCopy.sort(compareFunction);
+    printArticles(articlesCopy);
+}
+
+const sorts = {
+    'date': function (a1, a2) {
+        if (a1.data._state === 'draft') {
+            return new Date(a1.data._date.created) - new Date(a2.data._date.created);
+        }
+        return new Date(a1.data._date.activation) - new Date(a2.data._date.activation);
+    },
+    'date-rev': function (a1, a2) {
+        if (a1.data._state === 'draft') {
+            return new Date(a2.data._date.created) - new Date(a1.data._date.created);
+        }
+        return new Date(a2.data._date.activation) - new Date(a1.data._date.activation);
+    },
+    'title': function (a1, a2) {
+        return a1.data.title.localeCompare(a2.data.title);
+    },
+    'title-rev': function (a1, a2) {
+        return a2.data.title.localeCompare(a1.data.title);
+    },
+    'price': function (a1, a2) {
+        return a1.data.price - a2.data.price;
+    },
+    'price-rev': function (a1, a2) {
+        return a2.data.price - a1.data.price;
+    },
+};
+
+function initSorts() {
+    findAll('.action-sort .select__list > li').forEach(opt => opt.addEventListener('click', e => {
+        const sortType = e.target.getAttribute('id').split('-').splice(3).join('-');
+        performSorting(sorts[sortType]);
+    }));
+    find('.action-sort .cross').addEventListener('click', () => printArticles(filteredArticles));
+}
+
 let globalTestData;
 
 initLinkPreventReload(document.body);
 initClearFieldBtns(document.body);
 initFilterCalendar(document.body);
 initInputValidation();
+initSorts();
 
 fetchData().then(data => {
     initDefaultActionBtns();
