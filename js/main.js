@@ -151,12 +151,33 @@ function initFilterCalendar(target) {
             if (c.querySelector('.calendar')) {
                 return;
             }
-            showDoubleCalendar(c, labels[0].querySelector('input'), labels[1].querySelector('input')).then(performFiltering);
+            labels.forEach(l => {
+                updateFieldState(l.querySelector('input'), l.parentNode);
+                l.parentNode.querySelector('.cross').classList.add('on-top');
+            });
+            showDoubleCalendar(c, labels[0].querySelector('input'), labels[1].querySelector('input')).then(() => {
+                labels.forEach(l => {
+                    updateFieldState(l.querySelector('input'), l.parentNode);
+                    l.parentNode.querySelector('.cross').classList.remove('on-top');
+                });
+                performFiltering();
+            });
         }));
+
+        c.querySelectorAll('.cross').forEach((cross, i) => {
+            cross.addEventListener('click', () => {
+                document.querySelector('#' + cross.getAttribute('aria-controls')).setAttribute('data-date', '');
+                if (c.querySelector('.calendar')) {
+                    c.querySelectorAll('.calendar')[i].querySelector('.selected')?.classList.remove('selected');
+                }
+            });
+        });
     });
 }
 
-
+function updateFieldState(field, container) {
+    container.setAttribute('data-empty', field.value ? 'false' : 'true');
+}
 
 // expanding list with links
 function initExpandingLists(target) {
@@ -211,7 +232,8 @@ function initCopyLinkBtns(target) {
     target.querySelectorAll('.copy-link-modal').forEach(m => {
         m.querySelector('.copy-link-modal__btn').addEventListener('click', () => {
             const url = m.querySelector('.copy-link-modal__url').textContent;
-            navigator.clipboard.writeText(url).then(() => {}, err => console.error);
+            navigator.clipboard.writeText(url).then(() => {
+            }, err => console.error);
         });
     });
 }
@@ -274,47 +296,47 @@ async function renderElement(elem, payload = null) {
     switch (elem) {
         case 'title':
             return `
-                <span class="hint__text">${ payload }</span>
-                <span class="text">${ payload }</span>
+                <span class="hint__text">${payload}</span>
+                <span class="text">${payload}</span>
             `;
         case 'cityList':
             return `
                 <li class="service-item"><a href="">Добавить</a></li>
                 ${payload.map(c => `
                     <li>
-                        <span class="hint__text">${ c }</span>
+                        <span class="hint__text">${c}</span>
                         <div>
                             <span class="icon icon-cross hint">
                                 <span class="hint__text hint__text--center">Удалить данный населенный пункт</span>
                             </span>
-                            <span class="text">${ c }</span>
+                            <span class="text">${c}</span>
                         </div>
                     </li>
                 `).join('')}
             `;
         case 'newMessages':
-            return `${ +payload ? payload : '' }`;
+            return `${+payload ? payload : ''}`;
         case 'growth':
-            return `+${ payload }`;
+            return `+${payload}`;
         case 'rating':
-            return `<p>Объявление на ${ payload } месте в поиске.</p><p><a href="">Поднять на 1 (первое) место в поиске?</a></p>`
+            return `<p>Объявление на ${payload} месте в поиске.</p><p><a href="">Поднять на 1 (первое) место в поиске?</a></p>`;
         case 'servicesCount':
             return `
-                <p>Активно: ${ payload }</p>
+                <p>Активно: ${payload}</p>
                 <a href="">Показать</a>
-            `
+            `;
         case 'services':
 
             return `
                 <h4 class="services-header">Услуги продвижения</h4>
                 ${
-                    Object.keys(services).map(k => `
+                Object.keys(services).map(k => `
                         <article class="service">
                             <div class="service__img">${servicesLogos[k]}</div>
                             <div class="service__info">
                                 <h4 class="service__title">${services[k].title}</h4>
-                                ${ !services[k].free ? (
-                                    k in payload ? `
+                                ${!services[k].free ? (
+                    k in payload ? `
                                         <p>
                                             <span>Период:</span>
                                             <span class="from">${payload[k].dateFrom}</span>
@@ -329,11 +351,11 @@ async function renderElement(elem, payload = null) {
                                             Услуга не активна, <a href="">активировать</a>?
                                         </p>
                                     `
-                                ) : '' }
+                ) : ''}
                             </div>
                         </article>
                     `).join('')
-                }   
+            }   
             `;
         case 'img':
             if (payload.url.endsWith('.html')) {
@@ -345,20 +367,20 @@ async function renderElement(elem, payload = null) {
             `;
         case 'links':
             return `
-                ${ payload.map(l => `
+                ${payload.map(l => `
                     <li>
                         <span class="icon icon-link"></span>
                         <a href="">${l.text}</a>
                         
                         <div class="copy-link-modal">
-                        <span class="copy-link-modal__url">${ l.url }</span>
+                        <span class="copy-link-modal__url">${l.url}</span>
                         <span class="copy-link-modal__btn">
                             <span class="icon icon-link"></span>
                             <span class="text">Скопировать ссылку</span>
                         </span>
                     </div>
                     </li>
-                `).join('') }   
+                `).join('')}   
                 <li class="service-item"><a href=""></a></li>
             `;
         default:
@@ -524,7 +546,7 @@ function initProlongCheckbox(article) {
 
     labelEnable.addEventListener('click', e => {
         if (checkboxEnable.checked) {
-            return
+            return;
         }
         switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkboxDisable);
     });
@@ -576,7 +598,7 @@ function initDeleteCityBtns(article) {
     article.el.querySelectorAll('.adv-item__city-list > li:not(.service-item)').forEach(li => {
         const city = li.querySelector('span.text').textContent;
         li.querySelector('span.icon').addEventListener('click', () => {
-            updateArticle(article, { cityList: article.data.cityList.filter(c => c !== city) });
+            updateArticle(article, {cityList: article.data.cityList.filter(c => c !== city)});
             performFiltering();
         });
     });
@@ -690,7 +712,9 @@ let checkSensitiveBtns;
 const defaultActionBtns = [{
     elem: null,
     text: 'Подать объявление',
-    action: function () { console.log('подать объяление') }
+    action: function () {
+        console.log('подать объяление');
+    }
 }];
 
 const actionBtns = {
@@ -698,21 +722,21 @@ const actionBtns = {
         text: 'Удалить',
         action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, { _state: 'deleted' })
+            updateArticle(a, {_state: 'deleted'});
         }
     },
     activate: {
         text: 'Активировать',
         action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, { _state: 'active' })
+            updateArticle(a, {_state: 'active'});
         }
     },
     unpublish: {
         text: 'Снять с публикации',
         action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, { _state: 'closed' })
+            updateArticle(a, {_state: 'closed'});
         }
     },
     emptyTrash: {
@@ -788,7 +812,7 @@ function initActionBar(state) {
     });
 }
 
-function addActionBtn({ text, action} ) {
+function addActionBtn({text, action}) {
     const btn = document.createElement('a');
     btn.setAttribute('href', '');
     btn.textContent = text;
@@ -839,7 +863,7 @@ const filters = [
         const strings = find('#adv-filter-title').value.trim().split(' ');
         let match = false;
         for (let i = 0; i < strings.length; i++) {
-            if ( (a.data.title.toLowerCase().includes(strings[i]) && strings[i].length > 2) || strings[i] === '' ) {
+            if ((a.data.title.toLowerCase().includes(strings[i]) && strings[i].length > 2) || strings[i] === '') {
                 match = true;
                 break;
             }
@@ -882,8 +906,20 @@ const filters = [
     function (a) {
         const state = find('.adv-filter-state .tab-link.active').getAttribute('id').split('-').pop();
         return a.data._state === state;
+    },
+    function (a) {
+        const comparingDate = a.data._state === 'draft' ? new Date(a.data._date.created) : new Date(a.data._date.activation);
+        const dateStartStr = find('#adv-filter-date-from').getAttribute('data-date');
+        const dateEndStr = find('#adv-filter-date-to').getAttribute('data-date');
+        if (dateStartStr && comparingDate < new Date(dateStartStr)) {
+            return false;
+        }
+        if (dateEndStr && comparingDate > new Date(dateEndStr)) {
+            return false;
+        }
+        return true;
     }
-];
+]
 
 const listeners = [
     {
@@ -911,7 +947,7 @@ const listeners = [
         event: 'click'
     }
 
-]
+];
 
 function filterArticles(articles) {
     return articles.filter(a => {
@@ -935,7 +971,7 @@ function initFilters() {
                     performFiltering();
                 }
             });
-        }) ;
+        });
     });
 }
 
@@ -964,13 +1000,6 @@ fetchData().then(data => {
 
     globalTestData = data;
 });
-
-
-
-
-
-
-
 
 
 // TEST

@@ -878,7 +878,7 @@ span:not([class]):empty {
     border-bottom-right-radius: 0;
 }
 
-.adv-filter-date > *:last-child,
+.adv-filter-date > *:nth-child(2),
 .adv-filter-price > *:last-child {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
