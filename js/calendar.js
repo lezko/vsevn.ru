@@ -321,6 +321,6 @@ function renderDays(date, daysContainer, limitDays = false, daySelected = true) 
     }
 
     for (let i = 0; i < 7 - lastDay.getDay(); i++) {
-        daysContainer.innerHTML += `<div></div>`;
+        daysContainer.appendChild(document.createElement('div'));
     }
 }

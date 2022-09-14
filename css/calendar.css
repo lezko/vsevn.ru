@@ -23,7 +23,7 @@
 .calendar {
     color: #665800;
     font-size: 18px;
-    background-color: #fff;
+    background-color: var(--clr-semi-white);
     width: 340px;
     border: 1px solid #d3c68c;
     margin: -1px 0 0 -1px;
@@ -78,19 +78,22 @@
 }
 
 .calendar__days > .available {
-    background-color: var(--clr-yellow);
+    background-color: var(--clr-light);
     cursor: pointer;
     transition: .3s;
+}
+
+.calendar__days > .selected {
+    background-color: var(--clr-yellow);
 }
 
 @media (hover: hover) {
     .calendar__days > .available:hover {
         background-color: #cfcfcf;
     }
-}
-
-.calendar__days > .selected {
-    background-color: #cfcfcf;
+    .calendar__days > .selected:hover {
+        background-color: var(--clr-yellow);
+    }
 }
 
 .calendar__submit-btn {
