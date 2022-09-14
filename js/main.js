@@ -348,25 +348,25 @@ async function renderElement(elem, payload = null) {
                 <a href="">Показать</a>
             `;
         case 'services':
-
+            const skipIdx = '1' in payload ? 0 : 1;
             return `
                 <h4 class="services-header">Услуги продвижения</h4>
                 ${
-                Object.keys(services).map(k => `
+                Object.keys(services).map((s, i) => i !== skipIdx ? `
                         <article class="service">
-                            <div class="service__img">${servicesLogos[k]}</div>
+                            <div class="service__img">${servicesLogos[s]}</div>
                             <div class="service__info">
-                                <h4 class="service__title">${services[k].title}</h4>
-                                ${!services[k].free ? (
-                    k in payload ? `
+                                <h4 class="service__title">${services[s].title}</h4>
+                                ${!services[s].free ? (
+                    i in payload ? `
                                         <p>
                                             <span>Период:</span>
-                                            <span class="from">${payload[k].dateFrom}</span>
+                                            <span class="from">${payload[s].dateFrom}</span>
                                             <span class="dash">-</span>
-                                            <span class="to">${payload[k].dateTo}</span>
+                                            <span class="to">${payload[s].dateTo}</span>
                                         </p>
                                         <p>
-                                            Услуга АКТИВНА до ${payload[k].dateTo}
+                                            Услуга АКТИВНА до ${payload[s].dateTo}
                                         </p>
                                     ` : `
                                         <p>
@@ -376,7 +376,7 @@ async function renderElement(elem, payload = null) {
                 ) : ''}
                             </div>
                         </article>
-                    `).join('')
+                    ` : '').join('')
             }   
             `;
         case 'img':
@@ -462,12 +462,14 @@ async function fetchData() {
             responses: obj.responses,
             matchingVacancies: obj.matching_vacancies,
             daysPublished: obj.days_published,
-            servicesCount: obj.services.length,
-            _services: obj.services.map(s => ({
-                id: s.id,
-                dateFrom: s.date_from,
-                dateTo: s.date_to
-            }))
+            servicesCount: obj.services.find(s => s.id === 1) ? obj.services.length : obj.services.length + 1,
+            _services: obj.services.reduce((acc, s) => {
+                acc[s.id] = {
+                    dateFrom: s.date_from,
+                    dateTo: s.date_to
+                };
+                return acc;
+            }, {}),
         }
     }));
 
