@@ -515,8 +515,6 @@ span:not([class]):empty {
 
 .fancy-radiobutton + label,
 .fancy-radiobutton + label:before {
-    -webkit-transition: .25s all ease;
-    -o-transition: .25s all ease;
     transition: .25s all ease;
 }
 

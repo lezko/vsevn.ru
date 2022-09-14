@@ -554,6 +554,12 @@ function initProlongCheckbox(article) {
 
     checkboxEnable.setAttribute('name', 'auto-prolong-' + id);
     checkboxDisable.setAttribute('name', 'auto-prolong-' + id);
+
+    if (article.data._autoProlong) {
+        checkboxEnable.setAttribute('checked', 'checked');
+    } else {
+        checkboxDisable.setAttribute('checked', 'checked');
+    }
 }
 
 function initArticleCalendar(article) {
