@@ -477,10 +477,10 @@ span:not([class]):empty {
 }
 
 .fancy-radiobutton + label {
+    white-space: nowrap;
     display: grid;
     align-items: center;
     position: relative;
-    margin-right: 1em;
     padding-left: 2em;
     padding-right: 1em;
     line-height: 2;
@@ -496,7 +496,7 @@ span:not([class]):empty {
     display: block;
     width: 1.4em;
     height: 1.4em;
-    border: 2px solid var(--clr-golden);
+    border: 2px solid #665800;
     border-radius: 1em;
     z-index: -1;
 }
@@ -507,10 +507,10 @@ span:not([class]):empty {
 }
 
 .fancy-radiobutton:checked + label:before {
-    top: 0;
+    top: .07em;
     width: 100%;
     height: 2em;
-    background: var(--clr-golden);
+    background: #665800;
 }
 
 .fancy-radiobutton + label,
@@ -1096,6 +1096,13 @@ span:not([class]):empty {
     position: relative;
 }
 
+.adv-item__links > li > .icon {
+    position: absolute;
+    top: 50%;
+    left: -25px;
+    transform: translateY(-50%);
+}
+
 @media (hover: hover) {
     .adv-item__links > li:hover .copy-link-modal {
         display: block;
@@ -1112,11 +1119,11 @@ span:not([class]):empty {
 }
 
 .adv-item__city-list .service-item a {
-    color: #ff4d00;
+    color: orange;
 }
 
 .adv-item__city-list .service-item a:hover {
-    color: orange;
+    color: #d28900;
 }
 
 .adv-item__get-more-responses a {
@@ -1151,7 +1158,7 @@ span:not([class]):empty {
 /* ads__field-names */
 .ads__field-names {
     column-gap: 1%;
-    grid-template-columns: 10% 23% 13% 1fr 8%;
+    grid-template-columns: 10% 29% 1fr 11% 8%;
     padding: 15px 0;
 }
 
@@ -1181,16 +1188,16 @@ span:not([class]):empty {
 
 /* adv-item */
 .adv-item {
-    grid-template-columns: 3% 6% 23% 13% 1fr 8%;
+    grid-template-columns: 3% 6% 29% 10% 1fr 11% 8%;
     grid-template-rows: auto repeat(3, 28px) 1fr;
     column-gap: 1%;
     grid-template-areas:
-    '    .       .  state    state     state state'
-    'checkbox img left-block city-list stats services'
-    'checkbox img left-block city-list rating services'
-    'checkbox img left-block  city-list   rating        .'
-    '.        .   auto-prolong city-list get-more-responses .'
-    '.        .       auto-prolong      city-list links .';
+    '.        .   state        state        state              state     state'
+    'checkbox img left-block   stats        stats              city-list services'
+    'checkbox img left-block   .            rating             city-list services'
+    'checkbox img left-block   .            rating             city-list .'
+    '.        .   auto-prolong auto-prolong get-more-responses city-list .'
+    '.        .   auto-prolong auto-prolong links              city-list .';
 }
 
 
@@ -1343,7 +1350,16 @@ span:not([class]):empty {
 }
 
 .adv-item__auto-prolong {
+    font-size: 16px;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 10px;
+    flex-wrap: nowrap;
     grid-area: auto-prolong;
+}
+
+.adv-item__auto-prolong > * + * {
+    margin-left: 1em;
 }
 
 .adv-item__rating {

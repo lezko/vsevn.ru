@@ -290,7 +290,7 @@ function renderCalendar(date, field, limitDays = false) {
 
 function renderDays(date, daysContainer, limitDays = false, daySelected = true) {
     daysContainer.innerHTML = '';
-    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     const prevDays = (new Date(date.getFullYear(), date.getMonth(), 1)).getDay();
 
     for (let i = 0; i < prevDays - 1; i++) {
@@ -299,7 +299,7 @@ function renderDays(date, daysContainer, limitDays = false, daySelected = true) 
 
     let selectedDay;
 
-    for (let i = 1; i <= lastDay; i++) {
+    for (let i = 1; i <= lastDay.getDate(); i++) {
         const day = document.createElement('div');
         if (daySelected && i === date.getDate()) {
             selectedDay = day;
@@ -318,5 +318,9 @@ function renderDays(date, daysContainer, limitDays = false, daySelected = true) 
             selectedDay.classList.add('selected');
         });
         daysContainer.appendChild(day);
+    }
+
+    for (let i = 0; i < 7 - lastDay.getDay(); i++) {
+        daysContainer.innerHTML += `<div></div>`;
     }
 }

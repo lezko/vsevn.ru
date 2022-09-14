@@ -238,6 +238,28 @@ function initCopyLinkBtns(target) {
     });
 }
 
+// date fields validation
+function initDateFieldsValidation(target) {
+    target.querySelectorAll('.input-date-validation').forEach(inp => {
+        inp.addEventListener('keydown', e => {
+            if ((isNaN(e.key) && !(e.keyCode === 8 || e.key.toLowerCase() === 'backspace') && e.keyCode !== 37 && e.keyCode !== 39) || e.keyCode === 32) {
+                e.preventDefault();
+            }
+            if ((e.keyCode === 8 || e.key.toLowerCase() === 'backspace') && (inp.value.length === 6 || inp.value.length === 3)) {
+                inp.value = inp.value.slice(0, -1);
+            }
+        });
+        inp.addEventListener('input', e => {
+            if (inp.value.length === 2 || inp.value.length === 5) {
+                inp.value += '.';
+            }
+            if (inp.value.length === 11) {
+                inp.value = inp.value.slice(0, -1);
+            }
+        });
+    });
+}
+
 // show modal
 const modal = find('.modal');
 const modalContent = modal.querySelector('.modal__content');
@@ -477,6 +499,7 @@ function setupArticle(article) {
     initLinkPreventReload(article.el);
     initExpandingLists(article.el);
     initFadeEffects(article.el);
+    initDateFieldsValidation(article.el);
     initArticleCalendar(article);
     initCopyLinkModals(article);
     initDeleteCityBtns(article);
@@ -513,12 +536,6 @@ async function initArticles(data) {
 }
 
 // setup article functions
-const autoProlongEnableChecked = 'Автопродление включено';
-const autoProlongEnableUnchecked = 'Включить автопродление';
-
-const autoProlongDisableChecked = 'Автопродление не включено';
-const autoProlongDisableUnchecked = 'Выключить автопродление';
-
 function initProlongCheckbox(article) {
     const checkboxEnable = article.el.querySelector('.adv-item__auto-prolong .enable .fancy-radiobutton');
     const labelEnable = checkboxEnable.nextElementSibling;
@@ -535,37 +552,6 @@ function initProlongCheckbox(article) {
 
     checkboxEnable.setAttribute('name', 'auto-prolong-' + id);
     checkboxDisable.setAttribute('name', 'auto-prolong-' + id);
-
-    if (article.data._autoProlong) {
-        checkboxEnable.setAttribute('checked', 'checked');
-    } else {
-        checkboxDisable.setAttribute('checked', 'checked');
-    }
-    labelEnable.textContent = checkboxEnable.checked ? autoProlongEnableChecked : autoProlongEnableUnchecked;
-    labelDisable.textContent = checkboxDisable.checked ? autoProlongDisableChecked : autoProlongDisableUnchecked;
-
-    labelEnable.addEventListener('click', e => {
-        if (checkboxEnable.checked) {
-            return;
-        }
-        switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkboxDisable);
-    });
-    labelDisable.addEventListener('click', e => {
-        if (checkboxDisable.checked) {
-            return;
-        }
-        switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkboxDisable);
-    });
-}
-
-function switchAutoProlongBtns(labelEnable, checkboxEnable, labelDisable, checkboxDisable) {
-    if (!checkboxEnable.checked) { // means it became checked after click
-        labelEnable.textContent = autoProlongEnableChecked;
-        labelDisable.textContent = autoProlongDisableUnchecked;
-    } else {
-        labelEnable.textContent = autoProlongEnableUnchecked;
-        labelDisable.textContent = autoProlongDisableChecked;
-    }
 }
 
 function initArticleCalendar(article) {
@@ -1028,6 +1014,7 @@ let globalTestData;
 initLinkPreventReload(document.body);
 initClearFieldBtns(document.body);
 initFilterCalendar(document.body);
+initDateFieldsValidation(document.body);
 initInputValidation();
 initSorts();
 

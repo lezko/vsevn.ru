@@ -8,6 +8,7 @@
     top: 60px;
     left: 50%;
     transform: translateX(-50%);
+    border: 1px solid #d3c68c;
 }
 
 .calendar-container .row {
@@ -24,12 +25,12 @@
     font-size: 18px;
     background-color: #fff;
     width: 340px;
-    border-collapse: collapse;
     border: 1px solid #d3c68c;
+    margin: -1px 0 0 -1px;
 }
 
 .calendar + .calendar {
-    border-left: none;
+    border-right: none;
 }
 
 .calendar select {
@@ -37,11 +38,15 @@
 }
 
 .calendar > *:not(:last-child) {
-    border-bottom: 1px solid #d3c68c;
+    /*border-bottom: 1px solid #d3c68c;*/
 }
 
 .calendar .icon {
     cursor: pointer;
+}
+
+.calendar__year {
+    border-bottom: 1px solid #d3c68c;
 }
 
 .calendar__year,
@@ -55,19 +60,21 @@
 
 .calendar__weekdays,
 .calendar__days {
+    margin-right: -1px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
 }
 
 .calendar__weekdays > *,
 .calendar__days > * {
+    border: 1px solid #d3c68c;
+    margin: -1px 0 0 -1px;
     display: grid;
     place-content: center;
     padding-block: 5px;
 }
 
-.calendar__days > *:not(.selected) {
-
+.calendar__days > * {
 }
 
 .calendar__days > .available {
@@ -88,6 +95,7 @@
 
 .calendar__submit-btn {
     display: block;
+    margin: -1px 0 0 -1px;
     text-align: center;
     text-transform: uppercase;
     padding-block: 5px;

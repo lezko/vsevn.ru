@@ -11,7 +11,7 @@
         <div class="calendar-container">Осталось <span class="expires"><span class="value"></span> дней</span> до депубликации. Изменить дату депубликации
             <fieldset class="calendar-open-btn">
                 <legend>Дата депубликации</legend>
-                <input placeholder="дд.мм.гггг">
+                <input class="input-date-validation" placeholder="дд.мм.гггг">
                 <span class="hint__text hint__text--center">Эту дату нельзя выбрать</span>
             </fieldset>
         </div>
@@ -40,11 +40,11 @@
 <div class="adv-item__auto-prolong">
     <div class="enable">
         <input type="radio" class="fancy-radiobutton"/>
-        <label></label>
+        <label>Автопродление включено</label>
     </div>
     <div class="disable">
         <input type="radio" class="fancy-radiobutton"/>
-        <label></label>
+        <label>Автопродление не включено</label>
     </div>
 </div>
 
@@ -53,16 +53,16 @@
 <p class="adv-item__rating"></p>
 
 <div class="adv-item__get-more-responses">
-    <a href="">Дополнительно выделить объявление и получить больше откликов</a>
+    <a href="">Платные услуги продвижения</a>
 </div>
 
 <ul class="adv-item__links show-on-adv-item-hover"></ul>
 
 <div class="adv-item__stats flex">
-    <div>
+    <div class="ptr">
         <span class="icon icon-eye"></span><span class="views"></span>
     </div>
-    <div>
+    <div class="ptr">
         <span class="icon icon-heart"></span><span class="favourites"></span>
     </div>
     <div class="flex hint ptr">
@@ -86,10 +86,10 @@
         </span>
     </div>
     <div>
-        <span class="matching-vacancies"></span>
+        <span class="ptr matching-vacancies"></span>
     </div>
     <div>
-        <span class="days-published"></span>
+        <span class="ptr days-published"></span>
     </div>
 </div>
 
