@@ -11,8 +11,16 @@
         <div class="calendar-container">Осталось <span class="expires"><span class="value"></span> дней</span> до депубликации. Изменить дату депубликации
             <fieldset class="calendar-open-btn">
                 <legend>Дата депубликации</legend>
-                <input class="input-date-validation" placeholder="дд.мм.гггг">
+                <span class="date-value"></span>
+                <div class="date-input-field hidden">
+                    <input placeholder="ДД" type="tel" class="day">
+                    <span>.</span>
+                    <input placeholder="ММ" type="tel" class="month">
+                    <span>.</span>
+                    <input placeholder="ГГГГ" type="tel" class="year">
+                </div>
                 <span class="hint__text hint__text--center">Эту дату нельзя выбрать</span>
+                <span class="error__text">Ведите корректную дату</span>
             </fieldset>
         </div>
         <span class="time">Обновлена: 10.05.2022, 9:00</span><a href="">Обновить</a>

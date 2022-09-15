@@ -239,7 +239,37 @@ span:not([class]):empty {
 /* Components               */
 /* ------------------------ */
 
-/* layout */
+/* date input field */
+.date-input-field > input::placeholder {
+    opacity: .2;
+}
+
+.date-input-field > input {
+    width: 2em;
+    text-align: center;
+}
+
+.date-input-field > input:last-of-type {
+    width: 3em;
+}
+
+.date-input-field > span {
+    color: #142542;
+}
+
+/* calendar additional styling */
+.calendar-container .error__text {
+    position: absolute;
+    top: 100%;
+    color: red;
+    display: none;
+}
+
+.calendar-container.error .error__text {
+    display: inline-block;
+}
+
+/* cover */
 .cover {
     position: fixed;
     top: 0;
@@ -992,6 +1022,10 @@ span:not([class]):empty {
     top: 70px;
 }
 
+.adv-item__state fieldset .date-value {
+    color: var(--clr-brown);
+}
+
 .adv-item__auto-prolong > * {
     font-size: 18px;
     display: flex;
@@ -1356,8 +1390,8 @@ span:not([class]):empty {
     grid-area: auto-prolong;
 }
 
-.adv-item__auto-prolong > * + * {
-    margin-left: 1em;
+.adv-item__auto-prolong .enable input[type="radio"]:checked + label {
+    margin-right: 1em;
 }
 
 .adv-item__rating {

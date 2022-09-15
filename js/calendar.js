@@ -62,6 +62,17 @@ function formatDateString(str) {
     return `${date.getDate()} ${monthsGenitive[date.getMonth()]} ${date.getFullYear()}`;
 }
 
+function formatDateStringDots(date) {
+    const arr = date.toLocaleDateString().split('/');
+    if (arr[0].length === 1) {
+        arr[0] = '0' + arr[0];
+    }
+    if (arr[1].length === 1) {
+        arr[1] = '0' + arr[1];
+    }
+    return `${arr[1]}.${arr[0]}.${arr[2]}`;
+}
+
 let calendarTemplate;
 fetch('calendar.html')
     .then(resp => resp.text())
@@ -71,30 +82,48 @@ function getDayDifference(date1, date2) {
     return (date2 - date1) / 1000 / 60 / 60 / 24;
 }
 
-function showSingleCalendar(container, field) {
-    return new Promise(resolve => {
-        cover.classList.remove('hidden');
-        field.classList.add('on-top');
+function showSingleCalendar(container, field, callback) {
+    cover.classList.remove('hidden');
+    field.classList.add('on-top');
 
-        const date = new Date(field.getAttribute('data-date'));
-        const calendar = renderCalendar(date, field, true);
+    // const date = new Date(field.getAttribute('data-date'));
+    const calendar = renderCalendar(null, field, callback, true);
 
-        row.innerHTML = '';
-        row.appendChild(calendar);
+    row.innerHTML = '';
+    row.appendChild(calendar.element);
 
-        submitBtn = recreateSubmitBtn();
-        container.appendChild(calendarWrapper);
+    submitBtn = recreateSubmitBtn();
+    container.appendChild(calendarWrapper);
 
-        submitBtn.addEventListener('click', e => {
-            e.preventDefault();
-            closeCalendar(calendar, calendarWrapper, field, true);
-            resolve(field.getAttribute('data-date'));
-        });
-        cover.addEventListener('click', () => {
-            closeCalendar(calendar, calendarWrapper, field, false);
-            resolve(field.getAttribute('data-date'));
-        });
-    });
+    // submitBtn.addEventListener('click', e => {
+    //     e.preventDefault();
+    //     closeCalendar(calendar.element, calendarWrapper, field, true);
+    //     resolve(field.getAttribute('data-date'));
+    // });
+    // cover.addEventListener('click', () => {
+    //     if (closeCalendar(calendar.element, calendarWrapper, field, true)) {
+    //         resolve(field.getAttribute('data-date'));
+    //     } else {
+    //         reject();
+    //     }
+    // });
+    return {
+        instance: calendar,
+        onClose: new Promise((resolve, reject) => {
+            submitBtn.addEventListener('click', e => {
+                e.preventDefault();
+                closeCalendar(calendar.element, calendarWrapper, field, true);
+                resolve(field.getAttribute('data-date'));
+            });
+            cover.addEventListener('click', () => {
+                if (closeCalendar(calendar.element, calendarWrapper, field, true)) {
+                    resolve(field.getAttribute('data-date'));
+                } else {
+                    reject();
+                }
+            });
+        }),
+    }
 }
 
 function showDoubleCalendar(container, field1, field2) {
@@ -103,35 +132,35 @@ function showDoubleCalendar(container, field1, field2) {
         field1.classList.add('on-top');
         field2.classList.add('on-top');
 
-        const dateStr1 = field1.getAttribute('data-date');
-        const dateStr2 = field2.getAttribute('data-date');
-        const date1 = dateStr1 ? new Date(dateStr1) : null;
-        const date2 = dateStr2 ? new Date(dateStr2) : null;
-        const calendar1 = renderCalendar(date1, field1);
-        const calendar2 = renderCalendar(date2, field2);
+        const calendar1 = renderCalendar(null, field1);
+        const calendar2 = renderCalendar(null, field2);
 
         row.innerHTML = '';
-        row.appendChild(calendar1);
-        row.appendChild(calendar2);
+        row.appendChild(calendar1.element);
+        row.appendChild(calendar2.element);
 
         submitBtn = recreateSubmitBtn();
         container.appendChild(calendarWrapper);
 
         submitBtn.addEventListener('click', e => {
             e.preventDefault();
-            closeCalendar(calendar1, calendarWrapper, field1, true);
-            closeCalendar(calendar2, calendarWrapper, field2, true);
+            closeCalendar(calendar1.element, calendarWrapper, field1, true);
+            closeCalendar(calendar2.element, calendarWrapper, field2, true);
             resolve([field1.getAttribute('data-date'), field2.getAttribute('data-date')]);
         });
         cover.addEventListener('click', () => {
-            closeCalendar(calendar1, calendarWrapper, field1, false);
-            closeCalendar(calendar2, calendarWrapper, field2, false);
+            closeCalendar(calendar1.element, calendarWrapper, field1, false);
+            closeCalendar(calendar2.element, calendarWrapper, field2, false);
             resolve([field1.getAttribute('data-date'), field2.getAttribute('data-date')]);
         });
     });
 }
 
 function closeCalendar(calendar, calendarContainer, field, getDate) {
+    if (field.value === '') {
+        calendarContainer.parentNode.classList.add('error');
+        return false;
+    }
     let dateStr;
     if (getDate) {
         dateStr = getDateFromCalendar(calendar)?.toLocaleDateString();
@@ -178,11 +207,12 @@ function checkDateAvailable(date) {
     return available;
 }
 
-function renderCalendar(date, field, limitDays = false) {
+function renderCalendar(date, field, callback, limitDays = false) {
     let daySelected = true;
     if (date == null) {
         date = new Date();
         daySelected = false;
+        field.value = '';
     }
     const hintText = field.parentNode.querySelector('.hint__text');
 
@@ -202,8 +232,11 @@ function renderCalendar(date, field, limitDays = false) {
         if (str.match('[0-9]{2}.[0-9]{2}.[0-9]{4}')) {
             const arr = str.split('.');
             date = new Date(`${arr[1]}/${arr[0]}/${arr[2]}`);
+            if (date.getMonth() + 1 !== +arr[1]) {
+                return;
+            }
             if (!limitDays || checkDateAvailable(date)) {
-                renderDays(date, daysContainer, limitDays);
+                renderDays(date, daysContainer, callback, limitDays);
                 monthSelect.selectedIndex = arr[1] - 1;
                 yearSelect.selectedIndex = (new Date()).getFullYear() - arr[2];
             } else {
@@ -224,7 +257,7 @@ function renderCalendar(date, field, limitDays = false) {
     yearSelect.addEventListener('change', () => {
         const year = +yearSelect.options[yearSelect.selectedIndex].text;
         date.setFullYear(year);
-        renderDays(date, daysContainer, limitDays);
+        renderDays(date, daysContainer, callback, limitDays);
     });
     yearSelect.nextElementSibling.addEventListener('click', () => {
         yearSelect.selectedIndex--;
@@ -232,7 +265,7 @@ function renderCalendar(date, field, limitDays = false) {
             yearSelect.selectedIndex = (new Date()).getFullYear() - START_YEAR;
         }
         date.setFullYear(+yearSelect.options[yearSelect.selectedIndex].text);
-        renderDays(date, daysContainer, limitDays);
+        renderDays(date, daysContainer, callback, limitDays);
     });
     yearSelect.previousElementSibling.addEventListener('click', () => {
         yearSelect.selectedIndex++;
@@ -240,7 +273,7 @@ function renderCalendar(date, field, limitDays = false) {
             yearSelect.selectedIndex = 0;
         }
         date.setFullYear(+yearSelect.options[yearSelect.selectedIndex].text);
-        renderDays(date, daysContainer, limitDays);
+        renderDays(date, daysContainer, callback, limitDays);
     });
 
     const monthSelect = calendar.querySelector('.calendar__month select');
@@ -251,7 +284,7 @@ function renderCalendar(date, field, limitDays = false) {
     monthSelect.addEventListener('change', () => {
         const month = +monthSelect.options[monthSelect.selectedIndex].value;
         date.setMonth(month);
-        renderDays(date, daysContainer, limitDays);
+        renderDays(date, daysContainer, callback, limitDays);
     });
     monthSelect.nextElementSibling.addEventListener('click', () => {
         monthSelect.selectedIndex++;
@@ -265,7 +298,7 @@ function renderCalendar(date, field, limitDays = false) {
             monthSelect.selectedIndex = 0;
         }
         date.setMonth(+monthSelect.selectedIndex);
-        renderDays(date, daysContainer, limitDays);
+        renderDays(date, daysContainer, callback, limitDays);
     });
     monthSelect.previousElementSibling.addEventListener('click', () => {
         monthSelect.selectedIndex--;
@@ -279,21 +312,32 @@ function renderCalendar(date, field, limitDays = false) {
             monthSelect.selectedIndex = 11;
         }
         date.setMonth(+monthSelect.selectedIndex);
-        renderDays(date, daysContainer, limitDays);
+        renderDays(date, daysContainer, callback, limitDays);
     });
 
     const daysContainer = calendar.querySelector('.calendar__days');
-    renderDays(date, daysContainer, limitDays, daySelected);
+    renderDays(date, daysContainer, callback, limitDays, daySelected);
 
-    return calendar;
+    return {
+        element: calendar,
+        setDate(date) {
+            if (!checkDateAvailable(date)) {
+                throw new Error("Unavailable date selected");
+            }
+            renderDays(date, daysContainer, callback, limitDays);
+        }
+    };
 }
 
-function renderDays(date, daysContainer, limitDays = false, daySelected = true) {
+function renderDays(date, daysContainer, callback, limitDays = false, daySelected = true) {
     daysContainer.innerHTML = '';
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    const prevDays = (new Date(date.getFullYear(), date.getMonth(), 1)).getDay();
+    let prevDay = (new Date(date.getFullYear(), date.getMonth(), 1)).getDay() - 1;
+    if (prevDay < 0) {
+        prevDay = 6;
+    }
 
-    for (let i = 0; i < prevDays - 1; i++) {
+    for (let i = 0; i < prevDay; i++) {
         daysContainer.innerHTML += `<div></div>`;
     }
 
@@ -316,11 +360,18 @@ function renderDays(date, daysContainer, limitDays = false, daySelected = true) 
             selectedDay?.classList.remove('selected');
             selectedDay = day;
             selectedDay.classList.add('selected');
+            date.setDate(+selectedDay.querySelector('.value').textContent);
+
+            callback(date);
         });
         daysContainer.appendChild(day);
     }
 
-    for (let i = 0; i < 7 - lastDay.getDay(); i++) {
+    let k = (lastDay.getDay() - 1);
+    if (k < 0) {
+        k = 6;
+    }
+    for (let i = 0; i < 6 - k; i++) {
         daysContainer.appendChild(document.createElement('div'));
     }
 }

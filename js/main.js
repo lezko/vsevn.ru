@@ -59,13 +59,20 @@ findAll('.select:not(#adv-filter-region)').forEach(sel => {
     }));
 
     cover.addEventListener('click', () => {
+        if (!expanded) {
+            return;
+        }
         expanded = false;
         toggleSelect(sel, expanded);
     });
 });
 
 function toggleSelect(elem, expanded) {
-    cover.classList.toggle('hidden');
+    if (expanded) {
+        cover.classList.remove('hidden');
+    } else {
+        cover.classList.add('hidden');
+    }
     elem.setAttribute('aria-expanded', expanded);
 }
 
@@ -238,26 +245,83 @@ function initCopyLinkBtns(target) {
     });
 }
 
-// date fields validation
-function initDateFieldsValidation(target) {
-    target.querySelectorAll('.input-date-validation').forEach(inp => {
-        inp.addEventListener('keydown', e => {
-            if ((isNaN(e.key) && !(e.keyCode === 8 || e.key.toLowerCase() === 'backspace') && e.keyCode !== 37 && e.keyCode !== 39) || e.keyCode === 32) {
+// date input fields
+function initDateInputFields(target) {
+    target.querySelectorAll('.date-input-field').forEach(field => {
+        field.querySelectorAll('input').forEach(f => f.addEventListener('keydown', e => {
+            if ((isNaN(e.key) && !(e.keyCode === 8 || e.key.toLowerCase() === 'backspace') && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 9) || e.keyCode === 32) {
                 e.preventDefault();
             }
-            if ((e.keyCode === 8 || e.key.toLowerCase() === 'backspace') && (inp.value.length === 6 || inp.value.length === 3)) {
-                inp.value = inp.value.slice(0, -1);
+        }));
+
+        const dayField = field.querySelector('.day');
+        const monthField = field.querySelector('.month');
+        const yearField = field.querySelector('.year');
+
+        dayField.addEventListener('input', () => {
+            const n = +dayField.value;
+            if (dayField.value.length === 2 && !(1 <= n && n <= 31)) {
+                dayField.value = dayField.value.slice(0, -1);
+            }
+            if (dayField.value.length === 2) {
+                monthField.focus();
             }
         });
-        inp.addEventListener('input', e => {
-            if (inp.value.length === 2 || inp.value.length === 5) {
-                inp.value += '.';
+        dayField.addEventListener('focusout', () => {
+            if (dayField.value.length === 1) {
+                dayField.value = prependZero(dayField.value, 2);
             }
-            if (inp.value.length === 11) {
-                inp.value = inp.value.slice(0, -1);
+        });
+
+        monthField.addEventListener('input', () => {
+            const n = +monthField.value;
+            if (monthField.value.length === 2 && !(1 <= n && n <= 12)) {
+                monthField.value = monthField.value.slice(0, -1);
+            }
+            if (monthField.value.length === 2) {
+                yearField.focus();
+            }
+        });
+        monthField.addEventListener('focusout', () => {
+            if (monthField.value.length === 1) {
+                monthField.value = prependZero(monthField.value, 2);
+            }
+        });
+
+        yearField.addEventListener('focusout', () => {
+            if (0 < yearField.value.length && yearField.value.length < 4) {
+                yearField.value = prependZero(yearField.value, 4);
             }
         });
     });
+}
+
+function prependZero(str, targetLength) {
+    while (str.length < targetLength) {
+        str = '0' + str;
+    }
+    return str;
+}
+
+function clearDateInputField(field) {
+    field.querySelectorAll('input').forEach(inp => inp.value = '');
+}
+
+function getDateInputFieldValue(field) {
+    const dateStr = field.querySelector('.day').value + '.' + field.querySelector('.month').value + '.' + field.querySelector('.year').value;
+    if (dateStr.match('[0-9]{2}.[0-9]{2}.[0-9]{4}')) {
+        return new Date(dateStr.replaceAll('.', '/'))
+    } else {
+        return null;
+    }
+}
+
+function setDateInputFieldValue(field, date) {
+    const arr = date.toLocaleDateString().split('/');
+
+    field.querySelector('.day').value = prependZero(arr[1], 2);
+    field.querySelector('.month').value = prependZero(arr[0], 2);
+    field.querySelector('.year').value = prependZero(arr[2], 4);
 }
 
 // show modal
@@ -501,7 +565,7 @@ function setupArticle(article) {
     initLinkPreventReload(article.el);
     initExpandingLists(article.el);
     initFadeEffects(article.el);
-    initDateFieldsValidation(article.el);
+    initDateInputFields(article.el);
     initArticleCalendar(article);
     initCopyLinkModals(article);
     initDeleteCityBtns(article);
@@ -569,17 +633,55 @@ function initArticleCalendar(article) {
         if (article.el.querySelector('.calendar') !== null) {
             return;
         }
-        showSingleCalendar(container, btn.querySelector('input')).then(date => {
-            article.data._date.deactivation = date;
-            initArticleDates(article);
+        const dateTextElem = container.querySelector('.date-value')
+
+        const dateInputField = container.querySelector('.date-input-field');
+        const dateInputFieldDay = dateInputField.querySelector('.day');
+
+        const errorHintText = container.querySelector('.hint__text');
+
+        const calendar = showSingleCalendar(container, btn.querySelector('input'), date => {
+            setDateInputFieldValue(dateInputField, date);
         });
+        dateTextElem.classList.toggle('hidden');
+        dateInputField.classList.toggle('hidden');
+        dateInputFieldDay.focus();
+
+        dateInputField.querySelectorAll('input').forEach(inp => inp.addEventListener('input', () => {
+            const date = getDateInputFieldValue(dateInputField);
+            if (date) {
+                try {
+                    calendar.instance.setDate(date);
+                } catch (e) {
+                    dateInputFieldDay.focus();
+                    clearDateInputField(dateInputField);
+                    errorHintText.style.display = 'block';
+                    setTimeout(() => {
+                        errorHintText.style.display = 'none';
+                    }, 2000);
+                }
+            }
+        }));
+
+        calendar.onClose
+            .then(date => {
+                article.data._date.deactivation = date;
+                initArticleDates(article);
+            })
+            .catch(() => {
+                console.error('calendar canceled');
+            })
+            .finally(() => {
+                dateTextElem.classList.toggle('hidden');
+                dateInputField.classList.toggle('hidden');
+            });
     });
 }
 
 function initArticleDates(article) {
-    const field = article.el.querySelector('.adv-item__state input');
-    field.setAttribute('data-date', article.data._date.deactivation);
-    field.value = formatDateString(article.data._date.deactivation);
+    const deactivationValueElem = article.el.querySelector('.adv-item__state .calendar-container .date-value');
+    deactivationValueElem.setAttribute('data-date', article.data._date.deactivation);
+    deactivationValueElem.textContent = formatDateString(article.data._date.deactivation);
 
     article.el.querySelector('.expires .value').textContent = getDayDifference(new Date(article.data._date.activation), new Date(article.data._date.deactivation));
 }
@@ -1021,8 +1123,8 @@ let globalTestData;
 
 initLinkPreventReload(document.body);
 initClearFieldBtns(document.body);
-initFilterCalendar(document.body);
-initDateFieldsValidation(document.body);
+// initFilterCalendar(document.body);
+initDateInputFields(document.body);
 initInputValidation();
 initSorts();
 
