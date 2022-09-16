@@ -82,78 +82,71 @@ function getDayDifference(date1, date2) {
     return (date2 - date1) / 1000 / 60 / 60 / 24;
 }
 
-function showSingleCalendar(container, field, callback) {
+function showSingleCalendar(container, selectCallback, submitCallback) {
     cover.classList.remove('hidden');
-    field.classList.add('on-top');
 
-    // const date = new Date(field.getAttribute('data-date'));
-    const calendar = renderCalendar(null, field, callback, true);
+    const calendar = renderCalendar(selectCallback, true);
 
     row.innerHTML = '';
     row.appendChild(calendar.element);
 
     submitBtn = recreateSubmitBtn();
+    submitBtn.addEventListener('click', () => {
+        let date, err;
+        try {
+            date = getDateFromCalendar(calendar.element);
+        } catch (e) {
+            err = e;
+        }
+        submitCallback(date, err);
+    });
     container.appendChild(calendarWrapper);
 
-    // submitBtn.addEventListener('click', e => {
-    //     e.preventDefault();
-    //     closeCalendar(calendar.element, calendarWrapper, field, true);
-    //     resolve(field.getAttribute('data-date'));
-    // });
-    // cover.addEventListener('click', () => {
-    //     if (closeCalendar(calendar.element, calendarWrapper, field, true)) {
-    //         resolve(field.getAttribute('data-date'));
-    //     } else {
-    //         reject();
-    //     }
-    // });
     return {
-        instance: calendar,
-        onClose: new Promise((resolve, reject) => {
-            submitBtn.addEventListener('click', e => {
-                e.preventDefault();
-                closeCalendar(calendar.element, calendarWrapper, field, true);
-                resolve(field.getAttribute('data-date'));
-            });
-            cover.addEventListener('click', () => {
-                if (closeCalendar(calendar.element, calendarWrapper, field, true)) {
-                    resolve(field.getAttribute('data-date'));
-                } else {
-                    reject();
-                }
-            });
-        }),
+        ...calendar,
+        close() {
+            calendarWrapper.remove();
+            cover.classList.add('hidden');
+        }
     }
 }
 
-function showDoubleCalendar(container, field1, field2) {
-    return new Promise(resolve => {
-        cover.classList.remove('hidden');
-        field1.classList.add('on-top');
-        field2.classList.add('on-top');
+function showDoubleCalendar(container, selectCallback1, selectCallback2, submitCallback) {
+    cover.classList.remove('hidden');
 
-        const calendar1 = renderCalendar(null, field1);
-        const calendar2 = renderCalendar(null, field2);
+    const calendar1 = renderCalendar(selectCallback1);
+    const calendar2 = renderCalendar(selectCallback2);
 
-        row.innerHTML = '';
-        row.appendChild(calendar1.element);
-        row.appendChild(calendar2.element);
+    row.innerHTML = '';
+    row.appendChild(calendar1.element);
+    row.appendChild(calendar2.element);
 
-        submitBtn = recreateSubmitBtn();
-        container.appendChild(calendarWrapper);
-
-        submitBtn.addEventListener('click', e => {
-            e.preventDefault();
-            closeCalendar(calendar1.element, calendarWrapper, field1, true);
-            closeCalendar(calendar2.element, calendarWrapper, field2, true);
-            resolve([field1.getAttribute('data-date'), field2.getAttribute('data-date')]);
-        });
-        cover.addEventListener('click', () => {
-            closeCalendar(calendar1.element, calendarWrapper, field1, false);
-            closeCalendar(calendar2.element, calendarWrapper, field2, false);
-            resolve([field1.getAttribute('data-date'), field2.getAttribute('data-date')]);
-        });
+    submitBtn = recreateSubmitBtn();
+    submitBtn.addEventListener('click', () => {
+        let date1, date2, err;
+        try {
+            date1 = getDateFromCalendar(calendar1.element);
+        } catch (e) {
+            err = e;
+        }
+        try {
+            date2 = getDateFromCalendar(calendar2.element);
+        } catch (e) {
+            err = e;
+        }
+        submitCallback(date1, date2, err);
     });
+
+    container.appendChild(calendarWrapper);
+
+    return {
+        first: calendar1,
+        second: calendar2,
+        close() {
+            calendarWrapper.remove();
+            cover.classList.add('hidden');
+        }
+    }
 }
 
 function closeCalendar(calendar, calendarContainer, field, getDate) {
@@ -193,7 +186,7 @@ function getDateFromCalendar(calendar) {
         return new Date(year, month, +day.querySelector('.value').textContent);
     }
 
-    return null;
+    throw new Error('cannot get date from calendar: no day selected');
 }
 
 function checkDateAvailable(date) {
@@ -207,46 +200,8 @@ function checkDateAvailable(date) {
     return available;
 }
 
-function renderCalendar(date, field, callback, limitDays = false) {
-    let daySelected = true;
-    if (date == null) {
-        date = new Date();
-        daySelected = false;
-        field.value = '';
-    }
-    const hintText = field.parentNode.querySelector('.hint__text');
-
-    if (daySelected) {
-        const arr = date.toLocaleDateString().split('/');
-        if (arr[1].length === 1) {
-            arr[1] = '0' + arr[1];
-        }
-        if (arr[0].length === 1) {
-            arr[0] = '0' + arr[0];
-        }
-        field.value = `${arr[1]}.${arr[0]}.${arr[2]}`;
-    }
-
-    field.addEventListener('input', () => {
-        const str = field.value;
-        if (str.match('[0-9]{2}.[0-9]{2}.[0-9]{4}')) {
-            const arr = str.split('.');
-            date = new Date(`${arr[1]}/${arr[0]}/${arr[2]}`);
-            if (date.getMonth() + 1 !== +arr[1]) {
-                return;
-            }
-            if (!limitDays || checkDateAvailable(date)) {
-                renderDays(date, daysContainer, callback, limitDays);
-                monthSelect.selectedIndex = arr[1] - 1;
-                yearSelect.selectedIndex = (new Date()).getFullYear() - arr[2];
-            } else {
-                hintText.style.display = 'block';
-                setTimeout(() => hintText.style.display = 'none', 2000);
-                field.value = '';
-            }
-        }
-    });
-
+function renderCalendar(selectCallback, limitDays = false) {
+    const date = new Date();
     const calendar = calendarTemplate.cloneNode(true);
 
     const yearSelect = calendar.querySelector('.calendar__year select');
@@ -257,7 +212,7 @@ function renderCalendar(date, field, callback, limitDays = false) {
     yearSelect.addEventListener('change', () => {
         const year = +yearSelect.options[yearSelect.selectedIndex].text;
         date.setFullYear(year);
-        renderDays(date, daysContainer, callback, limitDays);
+        renderDays(date, daysContainer, selectCallback, limitDays);
     });
     yearSelect.nextElementSibling.addEventListener('click', () => {
         yearSelect.selectedIndex--;
@@ -265,7 +220,7 @@ function renderCalendar(date, field, callback, limitDays = false) {
             yearSelect.selectedIndex = (new Date()).getFullYear() - START_YEAR;
         }
         date.setFullYear(+yearSelect.options[yearSelect.selectedIndex].text);
-        renderDays(date, daysContainer, callback, limitDays);
+        renderDays(date, daysContainer, selectCallback, limitDays);
     });
     yearSelect.previousElementSibling.addEventListener('click', () => {
         yearSelect.selectedIndex++;
@@ -273,7 +228,7 @@ function renderCalendar(date, field, callback, limitDays = false) {
             yearSelect.selectedIndex = 0;
         }
         date.setFullYear(+yearSelect.options[yearSelect.selectedIndex].text);
-        renderDays(date, daysContainer, callback, limitDays);
+        renderDays(date, daysContainer, selectCallback, limitDays);
     });
 
     const monthSelect = calendar.querySelector('.calendar__month select');
@@ -284,7 +239,7 @@ function renderCalendar(date, field, callback, limitDays = false) {
     monthSelect.addEventListener('change', () => {
         const month = +monthSelect.options[monthSelect.selectedIndex].value;
         date.setMonth(month);
-        renderDays(date, daysContainer, callback, limitDays);
+        renderDays(date, daysContainer, selectCallback, limitDays);
     });
     monthSelect.nextElementSibling.addEventListener('click', () => {
         monthSelect.selectedIndex++;
@@ -298,7 +253,7 @@ function renderCalendar(date, field, callback, limitDays = false) {
             monthSelect.selectedIndex = 0;
         }
         date.setMonth(+monthSelect.selectedIndex);
-        renderDays(date, daysContainer, callback, limitDays);
+        renderDays(date, daysContainer, selectCallback, limitDays);
     });
     monthSelect.previousElementSibling.addEventListener('click', () => {
         monthSelect.selectedIndex--;
@@ -312,24 +267,34 @@ function renderCalendar(date, field, callback, limitDays = false) {
             monthSelect.selectedIndex = 11;
         }
         date.setMonth(+monthSelect.selectedIndex);
-        renderDays(date, daysContainer, callback, limitDays);
+        renderDays(date, daysContainer, selectCallback, limitDays);
     });
 
     const daysContainer = calendar.querySelector('.calendar__days');
-    renderDays(date, daysContainer, callback, limitDays, daySelected);
+    renderDays(date, daysContainer, selectCallback, limitDays, false);
 
     return {
-        element: calendar,
         setDate(date) {
-            if (!checkDateAvailable(date)) {
+            if (limitDays && !checkDateAvailable(date)) {
                 throw new Error("Unavailable date selected");
             }
-            renderDays(date, daysContainer, callback, limitDays);
-        }
+
+            date.setFullYear(date.getFullYear());
+            yearSelect.selectedIndex = (new Date()).getFullYear() - date.getFullYear();
+
+            date.setMonth(date.getMonth());
+            monthSelect.selectedIndex = date.getMonth();
+
+            renderDays(date, daysContainer, selectCallback, limitDays, true);
+        },
+        clear() {
+            clearSelection(calendar);
+        },
+        element: calendar
     };
 }
 
-function renderDays(date, daysContainer, callback, limitDays = false, daySelected = true) {
+function renderDays(date, daysContainer, selectCallback, limitDays = false, daySelected = true) {
     daysContainer.innerHTML = '';
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     let prevDay = (new Date(date.getFullYear(), date.getMonth(), 1)).getDay() - 1;
@@ -362,7 +327,7 @@ function renderDays(date, daysContainer, callback, limitDays = false, daySelecte
             selectedDay.classList.add('selected');
             date.setDate(+selectedDay.querySelector('.value').textContent);
 
-            callback(date);
+            selectCallback(date);
         });
         daysContainer.appendChild(day);
     }
@@ -374,4 +339,8 @@ function renderDays(date, daysContainer, callback, limitDays = false, daySelecte
     for (let i = 0; i < 6 - k; i++) {
         daysContainer.appendChild(document.createElement('div'));
     }
+}
+
+function clearSelection(calendar) {
+    calendar.querySelector('.selected')?.classList.remove('selected');
 }

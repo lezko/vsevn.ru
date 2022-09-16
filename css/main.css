@@ -258,14 +258,23 @@ span:not([class]):empty {
 }
 
 /* calendar additional styling */
+.calendar-container fieldset {
+    position: relative;
+}
+
+.calendar-container[data-state="focused"] fieldset {
+    border-color: lightblue;
+}
+
 .calendar-container .error__text {
     position: absolute;
+    left: 0;
     top: 100%;
     color: red;
     display: none;
 }
 
-.calendar-container.error .error__text {
+.calendar-container[data-state="error"] .error__text {
     display: inline-block;
 }
 
@@ -917,8 +926,31 @@ span:not([class]):empty {
     width: 32%;
 }
 
+.adv-filter-date label {
+    flex-grow: 1;
+}
+
 .adv-filter-date > *:not(.calendar-wrapper) {
     width: 50%;
+}
+
+.adv-filter-date .date-input-field {
+    position: relative;
+    white-space: nowrap;
+    display: none;
+}
+
+.adv-filter-date.calendar-container.calendar-expanded .date-input-field {
+    display: block;
+    z-index: 100;
+}
+
+.adv-filter-date.calendar-container.calendar-expanded .cross {
+    z-index: 100;
+}
+
+.adv-filter-date.calendar-container.calendar-expanded .date-value {
+    display: none;
 }
 
 /* adv-filters-price */
@@ -1016,6 +1048,22 @@ span:not([class]):empty {
     padding: 5px;
     border-radius: 4px;
     border-color: var(--clr-golden);
+}
+
+.adv-item__state .calendar-container .date-input-field {
+    position: relative;
+    display: none;
+}
+
+.adv-item__state .calendar-container[data-state="focused"] .date-value,
+.adv-item__state .calendar-container[data-state="error"] .date-value {
+    display: none;
+}
+
+.adv-item__state .calendar-container[data-state="focused"] .date-input-field,
+.adv-item__state .calendar-container[data-state="error"] .date-input-field {
+    display: block;
+    z-index: 100;
 }
 
 .adv-item__state fieldset > .hint__text {

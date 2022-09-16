@@ -34,7 +34,7 @@
 
     <!--  add test articles  -->
     <div hidden class="text-btn">Добавить объявление (для тестов)</div>
-    <div hidden  class="test-form">
+    <div hidden class="test-form">
         <input type="text" name="title" placeholder="название">
         <input type="text" name="price" placeholder="цена">
         <input type="text" name="city-list" placeholder="города через пробел">
@@ -75,13 +75,20 @@
                 <div class="container flex">
                     <nav class="adv-filter-state">
                         <ul class="flex tab-links" style="--flex-gap: 20px">
-                            <li><a href="" id="adv-filter-state-active" class="tab-link"><span>Активные</span><span></span></a></li>
-                            <li><a href="" id="adv-filter-state-closed" class="tab-link"><span>Завершенные</span><span></span></a></li>
-                            <li><a href="" id="adv-filter-state-blocked" class="tab-link"><span>Блокированные</span><span></span></a></li>
-                            <li><a href="" id="adv-filter-state-rejected" class="tab-link"><span>Отклоненные</span><span></span></a></li>
-                            <li><a href="" id="adv-filter-state-pending" class="tab-link"><span>Ждут активации</span><span></span></a></li>
-                            <li><a href="" id="adv-filter-state-draft" class="tab-link"><span>Черновики</span><span></span></a></li>
-                            <li><a href="" id="adv-filter-state-deleted" class="tab-link"><span>Удаленные</span><span></span></a></li>
+                            <li><a href="" id="adv-filter-state-active"
+                                   class="tab-link"><span>Активные</span><span></span></a></li>
+                            <li><a href="" id="adv-filter-state-closed"
+                                   class="tab-link"><span>Завершенные</span><span></span></a></li>
+                            <li><a href="" id="adv-filter-state-blocked"
+                                   class="tab-link"><span>Блокированные</span><span></span></a></li>
+                            <li><a href="" id="adv-filter-state-rejected"
+                                   class="tab-link"><span>Отклоненные</span><span></span></a></li>
+                            <li><a href="" id="adv-filter-state-pending"
+                                   class="tab-link"><span>Ждут активации</span><span></span></a></li>
+                            <li><a href="" id="adv-filter-state-draft"
+                                   class="tab-link"><span>Черновики</span><span></span></a></li>
+                            <li><a href="" id="adv-filter-state-deleted"
+                                   class="tab-link"><span>Удаленные</span><span></span></a></li>
                         </ul>
                     </nav>
 
@@ -100,18 +107,30 @@
                     <div class="adv-filter-date calendar-container calendar-container--left flex">
                         <div class="wrapper">
                             <label class="calendar-open-btn--double">
-                                <input class="input-date-validation" placeholder="От" type="text" name="adv-filter-date-from" id="adv-filter-date-from">
+                                <div class="date-input-field date-from">
+                                    <input placeholder="ДД" type="tel" class="day">
+                                    <span>.</span>
+                                    <input placeholder="ММ" type="tel" class="month">
+                                    <span>.</span>
+                                    <input placeholder="ГГГГ" type="tel" class="year">
+                                </div>
+                                <span class="date-value" id="adv-filter-date-from"></span>
                             </label>
-
                             <span aria-controls="adv-filter-date-from" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
                         </div>
                         <div class="wrapper">
                             <label class="calendar-open-btn--double">
-                                <input class="input-date-validation" placeholder="До" type="text" name="adv-filter-date-to" id="adv-filter-date-to">
+                                <div class="date-input-field date-to">
+                                    <input placeholder="ДД" type="tel" class="day">
+                                    <span>.</span>
+                                    <input placeholder="ММ" type="tel" class="month">
+                                    <span>.</span>
+                                    <input placeholder="ГГГГ" type="tel" class="year">
+                                </div>
+                                <span class="date-value" id="adv-filter-date-to"></span>
                             </label>
-
                             <span aria-controls="adv-filter-date-to" class="hint icon cross icon-cross-svgrepo-com">
                                 <span class="hint__text hint__text--center">Очистить поле?</span>
                             </span>
@@ -121,7 +140,8 @@
                         <div class="wrapper">
                             <label>
                                 <span class="placeholder">Цена от</span>
-                                <input value="111000" min="0" type="number" name="adv-filter-price-from" id="adv-filter-price-from">
+                                <input value="111000" min="0" type="number" name="adv-filter-price-from"
+                                       id="adv-filter-price-from">
                             </label>
 
                             <span aria-controls="adv-filter-price-from" class="hint icon cross icon-cross-svgrepo-com">
@@ -131,7 +151,8 @@
                         <div class="wrapper">
                             <label>
                                 <span class="placeholder">до</span>
-                                <input value="134000" min="0" type="number" name="adv-filter-price-to" id="adv-filter-price-to">
+                                <input value="134000" min="0" type="number" name="adv-filter-price-to"
+                                       id="adv-filter-price-to">
                                 <span id="adv-filter-price-to-icon" class="icon icon-currency_rub_icon_173204"></span>
                             </label>
 
@@ -147,7 +168,8 @@
                     </div>
                     <div class="adv-filter-title wrapper">
                         <label>
-                            <input placeholder="Название вакансии" type="text" name="adv-filter-title" id="adv-filter-title">
+                            <input placeholder="Название вакансии" type="text" name="adv-filter-title"
+                                   id="adv-filter-title">
                             <span class="icon icon-search"></span>
                         </label>
 
@@ -187,12 +209,18 @@
                     </div>
 
                     <ul class="select__list">
-                        <li id="adv-sort-by-date">По дате<span class="icon icon-arrow_down_download_icon_123737"></span></li>
-                        <li id="adv-sort-by-date-rev">По дате<span class="icon icon-arrows_up_upload_icon_123735"></span></li>
-                        <li id="adv-sort-by-title">По названию <span class="icon icon-arrow_down_download_icon_123737"></span></li>
-                        <li id="adv-sort-by-title-rev">По названию <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
-                        <li id="adv-sort-by-price">По сумме <span class="icon icon-arrow_down_download_icon_123737"></span></li>
-                        <li id="adv-sort-by-price-rev">По сумме <span class="icon icon-arrows_up_upload_icon_123735"></span></li>
+                        <li id="adv-sort-by-date">По дате<span class="icon icon-arrow_down_download_icon_123737"></span>
+                        </li>
+                        <li id="adv-sort-by-date-rev">По дате<span
+                                class="icon icon-arrows_up_upload_icon_123735"></span></li>
+                        <li id="adv-sort-by-title">По названию <span
+                                class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li id="adv-sort-by-title-rev">По названию <span
+                                class="icon icon-arrows_up_upload_icon_123735"></span></li>
+                        <li id="adv-sort-by-price">По сумме <span
+                                class="icon icon-arrow_down_download_icon_123737"></span></li>
+                        <li id="adv-sort-by-price-rev">По сумме <span
+                                class="icon icon-arrows_up_upload_icon_123735"></span></li>
                     </ul>
 
                     <span aria-controls="adv-sort-field" class="hint icon cross icon-cross-svgrepo-com">
