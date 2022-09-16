@@ -1334,7 +1334,37 @@ span:not([class]):empty {
     line-height: 1.2;
 }
 
-.adv-item:not([data-state="active"]) .adv-item__state {
+.adv-item:not([data-state="active"]) .adv-item__state--active,
+.adv-item:not([data-state="active"]) .adv-item__auto-prolong,
+.adv-item:not([data-state="active"]) .adv-item__get-more-responses,
+.adv-item:not([data-state="active"]) .adv-item__city-list .service-item,
+.adv-item:not([data-state="active"]) .adv-item__rating,
+.adv-item:not([data-state="active"]) .adv-item__links,
+.adv-item:not([data-state="active"]) .adv-item__deactivation {
+    display: none;
+}
+
+.adv-item:not([data-state="active"]) .adv-item__dates {
+    display: none;
+}
+
+.adv-item[data-state="active"] .deactivation {
+    display: none;
+}
+
+.adv-item[data-state="closed"] .adv-item__dates {
+    display: block;
+}
+
+.adv-item[data-state="closed"] .updated {
+    display: none;
+}
+
+.adv-item[data-state="deleted"] .adv-item__dates {
+    display: block;
+}
+
+.adv-item[data-state="deleted"] .updated {
     display: none;
 }
 
@@ -1350,8 +1380,12 @@ span:not([class]):empty {
     color: #000;
 }
 
-.adv-item__state .info .time {
-    margin-right: 7px;
+.adv-item__dates > * + * {
+    margin-left: 7px;
+}
+
+.adv-item__dates .updated a {
+    margin-left: 7px;
 }
 
 .adv-item__checkbox.checkbox {

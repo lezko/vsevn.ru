@@ -3,12 +3,12 @@
 </div>
 
 <div class="adv-item__state">
-    <p>
+    <p class="adv-item__state--active">
         <span class="icon icon-warn-triangle"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
         Активное объявление
     </p>
     <div class="info">
-        <div class="calendar-container">Осталось <span class="expires"><span class="value"></span> дней</span> до депубликации. Изменить дату депубликации
+        <div class="calendar-container adv-item__deactivation">Осталось <span class="expires"><span class="value"></span> дней</span> до депубликации. Изменить дату депубликации
             <fieldset class="calendar-open-btn">
                 <legend>Дата депубликации</legend>
                 <span class="date-value"></span>
@@ -23,7 +23,11 @@
                 <span class="error__text">Ведите корректную дату</span>
             </fieldset>
         </div>
-        <span class="time">Обновлена: 10.05.2022, 9:00</span><a href="">Обновить</a>
+        <div class="adv-item__dates">
+            <span class="activation">Дата публикации: <span class="date-value">12.12.2022</span></span>
+            <span class="deactivation">Дата депубликации: <span class="date-value">12.12.2022</span></span>
+            <span class="updated">Обновлена: <span class="date-value">12.12.2022, 9:00</span><a href="">Обновить</a></span>
+        </div>
     </div>
 </div>
 
