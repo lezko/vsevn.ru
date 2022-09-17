@@ -153,14 +153,9 @@ function initClearFieldBtns(target) {
 // init filter calendar
 function initFilterCalendar(target) {
     target.querySelectorAll('.adv-filter-date.calendar-container').forEach(container => {
-        const placeholderTextFrom = 'От';
-        const placeholderTextTo = 'До';
 
         const dateFromTextElem = container.querySelector('#adv-filter-date-from');
         const dateToTextElem = container.querySelector('#adv-filter-date-to');
-
-        dateFromTextElem.textContent = placeholderTextFrom;
-        dateToTextElem.textContent = placeholderTextTo;
 
         const dateFromInputField = container.querySelector('.date-input-field.date-from');
         const dateToInputField = container.querySelector('.date-input-field.date-to');
@@ -202,7 +197,6 @@ function initFilterCalendar(target) {
                     dateFromTextElem.textContent = formatDateString(dateFrom.toLocaleDateString());
                     dateFromTextElem.setAttribute('data-date', dateFrom.toLocaleDateString());
                 } else {
-                    dateFromTextElem.textContent = placeholderTextFrom;
                     wrapperFrom.setAttribute('data-empty', 'true');
                 }
                 if (dateTo) {
@@ -210,7 +204,6 @@ function initFilterCalendar(target) {
                     dateToTextElem.setAttribute('data-date', dateTo.toLocaleDateString());
 
                 } else {
-                    dateToTextElem.textContent = placeholderTextTo;
                     wrapperTo.setAttribute('data-empty', 'true');
                 }
 
@@ -236,11 +229,10 @@ function initFilterCalendar(target) {
             }));
 
             cover.addEventListener('click', () => {
-                dateFromTextElem.textContent = placeholderTextFrom;
-                dateToTextElem.textContent = placeholderTextTo;
-
                 wrapperFrom.setAttribute('data-empty', 'true');
                 wrapperTo.setAttribute('data-empty', 'true');
+                dateFromTextElem.textContent = '';
+                dateToTextElem.textContent = '';
                 container.classList.remove('calendar-expanded');
                 calendar.close();
             });
@@ -248,20 +240,20 @@ function initFilterCalendar(target) {
             const [cross1, cross2] = container.querySelectorAll('.cross');
             cross1.addEventListener('click', () => {
                 clearDateInputField(dateFromInputField);
-                dateFromTextElem.textContent = placeholderTextFrom;
                 wrapperFrom.setAttribute('data-empty', 'true');
                 dateFromTextElem.removeAttribute('data-date');
                 calendar.first.clear();
+                dateFromTextElem.textContent = '';
                 if (!container.querySelector('.calendar')) {
                     performFiltering();
                 }
             });
             cross2.addEventListener('click', () => {
                 clearDateInputField(dateToInputField);
-                dateToTextElem.textContent = placeholderTextTo;
                 wrapperTo.setAttribute('data-empty', 'true');
                 dateToTextElem.removeAttribute('data-date');
                 calendar.second.clear();
+                dateToTextElem.textContent = '';
                 if (!container.querySelector('.calendar')) {
                     performFiltering();
                 }

@@ -163,7 +163,6 @@ function handl0() {
     cover.classList.remove('hidden');
     cover.classList.add('bg-dark');
     cover.classList.add('on-top');
-    document.querySelector('.region__body.punkt').innerHTML = '';
     cover.addEventListener('click', () => {
         closeRegions();
     });

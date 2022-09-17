@@ -53,8 +53,8 @@ function recreateSubmitBtn() {
 }
 
 const availableDates = [
-    [new Date('8/16/2022'), new Date('8/31/2022')],
-    [new Date('9/1/2022'), new Date('9/15/2022')]
+    [new Date('1/1/2003'), new Date('8/31/2022')],
+    [new Date('10/1/2022'), new Date('12/31/2022')]
 ]
 
 function formatDateString(str) {
@@ -294,7 +294,7 @@ function renderCalendar(selectCallback, limitDays = false) {
     };
 }
 
-function renderDays(date, daysContainer, selectCallback, limitDays = false, daySelected = true) {
+function renderDays(date, daysContainer, selectCallback, limitDays = false, daySelected = false) {
     daysContainer.innerHTML = '';
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     let prevDay = (new Date(date.getFullYear(), date.getMonth(), 1)).getDay() - 1;
