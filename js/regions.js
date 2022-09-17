@@ -54,6 +54,68 @@ for (let i = 2; i < nijegorodRegion.length; i++) {
 }
 
 
+// Формирование списка городов быстрого поиска
+const searchCityList = document.querySelector('.choose__region .choose__quick-search ul');
+const searchCityField = document.querySelector('.choose__region .choose__quick-search input');
+
+const searchCitiesNames = [
+    'Красный яр (Алтайский край)',
+    'Красный яр (Амурская область)',
+    'Красный яр (Архангельская область)',
+    'Красный яр (Астраханская область)',
+    'Красный яр (Башкортостан)',
+    'Красный яр (Нижегородская область)',
+    'Красный яр (Омская область)',
+    'Красный яр (Самарская область)',
+];
+
+const searchCities = [];
+searchCitiesNames.forEach((c, i) => {
+    const newItem = templ3.cloneNode(true);
+    const atribDigit = String(i).padStart(3, '0');
+    newItem.querySelector('.input-region').setAttribute('id', `search-city_${atribDigit}`);
+    newItem.querySelector('.region-multi').setAttribute('for', `search-city_${atribDigit}`);
+    newItem.classList.add('search-city--hidden');
+    newItem.setAttribute('data-name', c);
+
+    searchCities.push(newItem);
+});
+
+searchCityList.classList.add('search-city-list--hidden');
+
+for (const item of searchCities) {
+    searchCityList.appendChild(item);
+}
+
+searchCityField.addEventListener('input', () => performCitySearch(searchCityField.value));
+
+function performCitySearch(input) {
+    input = input.toLowerCase().trim();
+    const foundCities = searchCities.filter(c => input.length && c.getAttribute('data-name').toLowerCase().trim().includes(input));
+    if (foundCities.length) {
+        searchCityList.classList.remove('search-city-list--hidden');
+        for (const city of searchCities) {
+            if (foundCities.includes(city)) {
+                city.querySelector('.region-multi').innerHTML = highlightText(city.getAttribute('data-name'), input);
+                city.classList.remove('search-city--hidden');
+            } else {
+                city.classList.add('search-city--hidden');
+            }
+        }
+    } else {
+        searchCityList.classList.add('search-city-list--hidden');
+    }
+}
+
+function highlightText(text, pattern) {
+    const match = text.match(new RegExp(pattern, 'ig'));
+    console.log(match);
+    for (const str of match) {
+        text = text.replaceAll(str, `<span class="highlight">${str}</span>`);
+    }
+    return text;
+}
+
 const chooseRegion = document.querySelector('.choose__region');
 
 const chooseRegionClose = document.querySelector('.choose__region--close');

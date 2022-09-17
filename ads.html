@@ -272,6 +272,22 @@
     <!--  CHOOSE REGION  -->
     <div class="choose__region up-block">
         <button class="choose__region--close">&#215;</button>
+        <div class="choose__quick-search">
+            <p>Быстрый поиск по городам</p>
+
+            <div class="wrapper">
+                <label>
+                    <input id="search-city" type="text">
+                    <span class="icon icon-search"></span>
+                </label>
+
+                <span aria-controls="search-city" class="hint icon cross icon-cross-svgrepo-com">
+                    <span class="hint__text hint__text--center">Очистить поле?</span>
+                </span>
+            </div>
+
+            <ul></ul>
+        </div>
         <div class="choose__region--wrap">
             <div class="choose__region--region region">
                 <div class="region__title">
@@ -379,6 +395,7 @@
                 </div>
             </div>
         </div>
+
         <!--/choose__region--wrap-->
         <button class="region__apply">Выбрать</button>
     </div>
