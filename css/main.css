@@ -298,13 +298,16 @@ span:not([class]):empty {
 }
 
 .region__title--reset {
+    display: none;
+    cursor: pointer;
     font-size: 19px;
     text-transform: uppercase;
     color: #777;
 }
 
 .region__title--reset.active {
-    color: var(--bg-red);
+    display: inline-block;
+    color: red;
 }
 
 .region__body {
