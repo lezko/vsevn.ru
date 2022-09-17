@@ -88,6 +88,7 @@ for (const item of searchCities) {
 }
 
 searchCityField.addEventListener('input', () => performCitySearch(searchCityField.value));
+document.querySelector('.choose__region .choose__quick-search .cross').addEventListener('click', () => performCitySearch(''));
 
 function performCitySearch(input) {
     input = input.toLowerCase().trim();
