@@ -171,9 +171,6 @@ function initFilterCalendar(target) {
         wrapperFrom.setAttribute('data-empty', 'true');
         wrapperTo.setAttribute('data-empty', 'true');
 
-        const dateFromInputFieldDay = dateFromInputField.querySelector('.day');
-        const dateToInputFieldDay = dateToInputField.querySelector('.day');
-
         const btns = container.querySelectorAll('.calendar-open-btn--double');
         btns.forEach(btn => btn.addEventListener('click', () => {
             if (container.querySelector('.calendar') !== null) {

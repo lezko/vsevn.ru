@@ -20,7 +20,9 @@
     --clr-input-background-default: #f4f4f4;
     --clr-input-filled: #fcf8df;
 
-    --clr-cross: #ffdd00;
+    --clr-dark-yellow: #ffdd00;
+
+    --border-color: #e1e1e1;
 
     --fz-default: 23px;
 }
@@ -172,9 +174,13 @@ span:not([class]):empty {
 /* Utilities                */
 /* ------------------------ */
 
+.bg-dark {
+    background-color: rgba(0, 0, 0, .4);
+}
+
 .on-top {
     position: relative;
-    z-index: 100;
+    z-index: 100 !important;
 }
 
 .lock {
@@ -238,6 +244,362 @@ span:not([class]):empty {
 /* ------------------------ */
 /* Components               */
 /* ------------------------ */
+
+/********************** choose__region *********************/
+.choose__region {
+    width: 90%;
+    max-width: 940px;
+    position: fixed;
+    top: 80px;
+    height: 80vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 2px 12px 3px rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+    z-index: 170;
+}
+
+.up-block {
+    transform: translate(-50%, -120vw);
+}
+
+.choose__region--close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 40px;
+    line-height: 20px;
+}
+
+.choose__region--wrap {
+    display: flex;
+    margin-top: 50px;
+    width: 94%;
+    height: calc(80vh - 160px);
+    margin-left: 3%;
+    justify-content: space-between;
+}
+
+.choose__region .region {
+    flex-basis: 48%;
+}
+
+.region__title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.region__title--name {
+    font-weight: bold;
+    font-size: 19px;
+    padding-top: 3px;
+}
+
+.region__title--reset {
+    font-size: 19px;
+    text-transform: uppercase;
+    color: #777;
+}
+
+.region__title--reset.active {
+    color: var(--bg-red);
+}
+
+.region__body {
+    margin-top: 15px;
+    height: calc(100% - 40px);
+    border: 1px solid var(--border-color);
+    font-size: 19px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/**********Регионы***********************/
+.region__all {
+    position: relative;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.region__body--ul {
+    margin-top: 10px;
+}
+
+.region__all:hover,
+.region__body--item:hover {
+    background-color: var(--clr-dark-yellow);
+}
+
+.region__body--item {
+    position: relative;
+    cursor: pointer;
+}
+
+.region__body--item label {
+    display: inline-block;
+    padding-left: 20px;
+    cursor: pointer;
+    padding-top: 2px;
+}
+
+.input-region {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.region-multi:before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.region-all:before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: 15px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.region__all label {
+    padding-left: 30px;
+}
+
+.region__all label {
+    cursor: pointer;
+}
+
+.region__all:hover:after,
+.region__body--item:hover:after {
+    content: url("../img/common-icons/check-mark-red-20.png");
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 18px;
+    z-index: 1;
+}
+
+.shift:hover:after {
+    left: 37px;
+}
+
+.region__body--item:hover:after {
+    top: -1px;
+}
+
+.input-region:checked+.region-all:after {
+    content: url("../img/common-icons/check-mark-yellow-20.png");
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 18px;
+    z-index: 1;
+}
+
+.input-region:checked+.region-multi:after {
+    content: url("../img/common-icons/check-mark-yellow-20.png");
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: 18px;
+    z-index: 1;
+}
+
+.shift .input-region:checked+.region-multi:after {
+    left: 38px;
+}
+
+
+/*********Пункты*****************/
+
+.punkt__all {
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+    /*color: #aaa;*/
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/*.color-black {
+  color: var(--text-color);
+}*/
+
+.choose__region--close {
+    cursor: pointer;
+}
+
+.punkt__group-bottom {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.punkt__group,
+.punkt__region {
+    position: relative;
+    margin-top: 7px;
+    cursor: pointer;
+}
+
+.punkt-bold {
+    font-weight: bold;
+}
+
+.punkt__body--ul {
+    margin-top: 10px;
+}
+
+.punkt__all,
+.punkt__body--item,
+.punkt-group,
+.punkt-region {
+    width: 100%;
+}
+
+.punkt__all:hover,
+.punkt__body--item:hover,
+.punkt-group:hover,
+.punkt-region:hover {
+    background-color: var(--bg-yellow);
+}
+
+.punkt__body--item label {
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    padding-top: 2px;
+}
+
+.input-punkt,
+.input-punkt-group,
+.input-punkt-region {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.region__body--item {
+    padding-left: 20px;
+}
+
+.region__body--item label:before {
+    margin-left: 20px;
+}
+
+.punkt-all:before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: 15px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.punkt__group--item .punkt-group:before,
+.punkt__region--item .punkt-region:before {
+    left: 15px;
+}
+
+.shift .region-multi:before {
+    left: 15px;
+}
+
+.punkt__all label {
+    padding-left: 30px;
+}
+
+.punkt__all label {
+    cursor: pointer;
+}
+
+.punkt__group--item,
+.punkt__region--item {
+    position: relative;
+    cursor: pointer;
+}
+
+.punkt__group--item label,
+.punkt__region--item label {
+    display: inline-block;
+    padding-left: 40px;
+    cursor: pointer;
+    height: 24px;
+    padding-top: 2px;
+}
+
+.punkt__all:hover:after,
+.punkt__group--item:hover:after,
+.punkt__region--item:hover:after {
+    content: url("../img/common-icons/check-mark-red-20.png");
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 18px;
+    z-index: 1;
+}
+
+.punkt__group--item:hover:after,
+.punkt__region--item:hover:after {
+    top: -1px;
+}
+
+.input-punkt:checked+.punkt-all:after,
+.input-punkt-group:checked+.punkt-group:after,
+.input-punkt-region:checked+.punkt-region:after {
+    content: url("../img/common-icons/check-mark-yellow-20.png");
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 18px;
+    z-index: 1;
+}
+
+.input-region-item:checked+.region-multi:after {
+    content: url("../img/common-icons/check-mark-yellow-20.png");
+    display: block;
+    position: absolute;
+    top: -2px;
+    left: 18px;
+    z-index: 1;
+}
+
+.input-punkt-group:checked+.punkt-group:after,
+.input-punkt-region:checked+.punkt-region:after {
+    top: -1px;
+}
+
+/*******************************************/
+
+.region__apply {
+    margin-top: 20px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #d70404;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.region__apply:hover {
+    background-color: var(--bg-red);
+}
+
+/********************** End choose__region *********************/
 
 /* date input field */
 .date-input-field > input::placeholder {
@@ -1364,7 +1726,7 @@ span:not([class]):empty {
     display: block;
 }
 
-.adv-item[data-state="deleted"] .updated {
+.adv-item[data-state="deleted"].updated {
     display: none;
 }
 
