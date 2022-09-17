@@ -679,6 +679,8 @@ function setupArticle(article) {
     article.el.querySelector('.adv-item__services a').addEventListener('click', async () => {
         showModal(await renderElement('services', article.data._services));
     });
+
+    article.el.querySelector('.adv-item__city-list .service-item').addEventListener('click', handl0);
 }
 
 function updateArticle(article, options = {}) {
