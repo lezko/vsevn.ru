@@ -406,6 +406,7 @@ function getDateInputFieldValue(field) {
 
 function setDateInputFieldValue(field, date) {
     const arr = date.toLocaleDateString().split('/');
+    console.log(date);
 
     field.querySelector('.day').value = prependZero(arr[1], 2);
     field.querySelector('.month').value = prependZero(arr[0], 2);

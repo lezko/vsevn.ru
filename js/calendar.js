@@ -304,6 +304,9 @@ function renderDays(date, daysContainer, selectCallback, limitDays = false, dayS
             selectedDay.classList.add('selected');
             date.setDate(+selectedDay.querySelector('.value').textContent);
 
+            console.log(selectedDay);
+            console.log(date);
+
             selectCallback(date);
         });
         daysContainer.appendChild(day);

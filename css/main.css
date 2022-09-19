@@ -326,6 +326,11 @@ span:not([class]):empty {
     overflow: scroll;
 }
 
+.choose__quick-search ul label {
+    display: flex;
+    align-items: baseline;
+}
+
 .choose__quick-search ul.search-city-list--hidden,
 .choose__quick-search li.search-city--hidden {
     display: none;
