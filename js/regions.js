@@ -211,6 +211,8 @@ function initRegions(data) {
         return acc;
     }, 0);
 
+    let citiesCounter = 0;
+
     for (const [i, region] of data.entries()) {
         const regionObj = {};
 
@@ -268,8 +270,10 @@ function initRegions(data) {
             const cityLabel = city.querySelector('label');
             const cityCheckbox = city.querySelector('input');
 
-            cityCheckbox.setAttribute('id', `region-city-${i}`);
-            cityLabel.setAttribute('for', `region-city-${i}`);
+            cityCheckbox.setAttribute('id', `region-city-${citiesCounter}`);
+            cityLabel.setAttribute('for', `region-city-${citiesCounter}`);
+
+            citiesCounter++;
 
             cityLabel.textContent = cityName;
 
