@@ -822,6 +822,7 @@ span:not([class]):empty {
 }
 
 .hint__text {
+    font-family: 'ZabraProRegular', serif !important;
     position: absolute;
     display: none;
     top: 40px;
@@ -1019,6 +1020,10 @@ span:not([class]):empty {
     justify-content: space-between;
     z-index: 70;
     padding-inline: 5px;
+}
+
+.select[data-empty="false"] {
+    background-color: #fff;
 }
 
 .select[data-empty="false"] .select__body {
@@ -1258,6 +1263,7 @@ span:not([class]):empty {
 
 /* input filters */
 .adv-input-filters {
+    font-size: 19px;
     white-space: nowrap;
     color: var(--clr-gray);
 }
@@ -1446,6 +1452,7 @@ span:not([class]):empty {
 }
 
 .adv-filter-region .hint__text {
+    font-family: 'icomoon', serif;
     top: 65px;
     font-size: 16px;
 }
