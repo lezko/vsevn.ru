@@ -25,33 +25,25 @@ regionCitiesTemplate.innerHTML = `
 const searchCityList = document.querySelector('.choose__region .choose__quick-search ul');
 const searchCityField = document.querySelector('.choose__region .choose__quick-search input');
 
-const searchCitiesNames = [
-    'Красный яр (Алтайский край)',
-    'Красный яр (Амурская область)',
-    'Красный яр (Архангельская область)',
-    'Красный яр (Астраханская область)',
-    'Красный яр (Башкортостан)',
-    'Красный яр (Нижегородская область)',
-    'Красный яр (Омская область)',
-    'Красный яр (Самарская область)',
-];
-
 const searchCities = [];
-searchCitiesNames.forEach((c, i) => {
-    const newItem = liTemplate.cloneNode(true);
-    newItem.querySelector('.input-region').setAttribute('id', `search-city_${i}`);
-    newItem.querySelector('.region-multi').setAttribute('for', `search-city_${i}`);
-    newItem.classList.add('search-city--hidden');
-    newItem.setAttribute('data-name', c);
 
-    searchCities.push(newItem);
-});
+function initSearchCities() {
+    searchCitiesNames.forEach((c, i) => {
+        const newItem = liTemplate.cloneNode(true);
+        newItem.querySelector('.input-region').setAttribute('id', `search-city_${i}`);
+        newItem.querySelector('.region-multi').setAttribute('for', `search-city_${i}`);
+        newItem.classList.add('search-city--hidden');
+        newItem.setAttribute('data-name', c);
+
+        searchCities.push(newItem);
+    });
+
+    for (const item of searchCities) {
+        searchCityList.appendChild(item);
+    }
+}
 
 searchCityList.classList.add('search-city-list--hidden');
-
-for (const item of searchCities) {
-    searchCityList.appendChild(item);
-}
 
 searchCityField.addEventListener('input', () => performCitySearch(searchCityField.value));
 document.querySelector('.choose__region .choose__quick-search .cross').addEventListener('click', () => performCitySearch(''));
@@ -98,7 +90,7 @@ const citiesMainCheckbox = document.querySelector('.punkt__all input');
 const citiesMainLabel = document.querySelector('.punkt__all label');
 
 const regions = [], regionsChecked = [], citiesChecked = [];
-let regionsTotal, citiesTotal;
+let regionsTotal, citiesTotal, searchCitiesNames;
 
 fetch('regions.json').then(data => data.json()).then(initRegions);
 
@@ -210,6 +202,14 @@ function initRegions(data) {
         acc += item.cities.length;
         return acc;
     }, 0);
+    searchCitiesNames = data.reduce((arr, reg) => {
+        arr.push(reg.main_city);
+        for (const city of reg.cities) {
+            arr.push(city);
+        }
+        return arr;
+    }, []);
+    initSearchCities();
 
     let citiesCounter = 0;
 

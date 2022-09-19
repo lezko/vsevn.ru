@@ -277,7 +277,12 @@ span:not([class]):empty {
     display: flex;
     align-items: center;
     flex-grow: 1;
-    padding: 0 5px;
+    padding: 0 10px;
+}
+
+.choose__quick-search > .wrapper > label,
+.choose__quick-search ul {
+    font-size: 21px;
 }
 
 .choose__quick-search .wrapper[data-empty="true"] {
@@ -296,7 +301,7 @@ span:not([class]):empty {
 
 .choose__quick-search .wrapper .cross {
     margin-left: 5px;
-    flex: 0 0 40px;
+    flex: 0 0 35px;
 }
 
 .choose__quick-search .wrapper[data-empty="true"] .cross {
@@ -317,6 +322,8 @@ span:not([class]):empty {
     border: 1px solid var(--clr-gray);
     border-radius: 5px;
     padding: 10px 0;
+    max-height: 200px;
+    overflow: scroll;
 }
 
 .choose__quick-search ul.search-city-list--hidden,
@@ -398,10 +405,6 @@ span:not([class]):empty {
     font-weight: bold;
     cursor: pointer;
     border-bottom: 1px solid var(--border-color);
-}
-
-.region__body--ul {
-    margin-top: 10px;
 }
 
 .region__all:hover,
@@ -522,7 +525,6 @@ span:not([class]):empty {
 .punkt__group,
 .punkt__region {
     position: relative;
-    margin-top: 7px;
     cursor: pointer;
 }
 
