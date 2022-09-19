@@ -406,11 +406,11 @@ function getDateInputFieldValue(field) {
 
 function setDateInputFieldValue(field, date) {
     const arr = date.toLocaleDateString().split('/');
-    console.log(date);
+    console.log(arr);
 
-    field.querySelector('.day').value = prependZero(arr[1], 2);
-    field.querySelector('.month').value = prependZero(arr[0], 2);
-    field.querySelector('.year').value = prependZero(arr[2], 4);
+    field.querySelector('.day').value = String(date.getDate()).padStart(2, '0');
+    field.querySelector('.month').value = String((+date.getMonth() + 1)).padStart(2, '0');
+    field.querySelector('.year').value = String(date.getFullYear()).padStart(4, '0');
 }
 
 function checkDateInputFieldEmpty(field) {
