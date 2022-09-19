@@ -50,7 +50,7 @@ document.querySelector('.choose__region .choose__quick-search .cross').addEventL
 
 function performCitySearch(input) {
     input = input.toLowerCase().trim();
-    const foundCities = searchCities.filter(c => input.length && c.getAttribute('data-name').toLowerCase().trim().includes(input));
+    const foundCities = searchCities.filter(c => input.length && c.getAttribute('data-name').toLowerCase().trim().startsWith(input));
     if (foundCities.length) {
         searchCityList.classList.remove('search-city-list--hidden');
         for (const city of searchCities) {
@@ -67,10 +67,8 @@ function performCitySearch(input) {
 }
 
 function highlightText(text, pattern) {
-    const match = text.match(new RegExp(pattern, 'ig'));
-    for (const str of match) {
-        text = text.replaceAll(str, `<span class="highlight">${str}</span>`);
-    }
+    const match = text.match(new RegExp(pattern, 'ig'))[0];
+    text = text.replace(match, `<span class="highlight">${match}</span>`);
     return text;
 }
 

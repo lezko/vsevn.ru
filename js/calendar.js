@@ -149,29 +149,6 @@ function showDoubleCalendar(container, selectCallback1, selectCallback2, submitC
     }
 }
 
-function closeCalendar(calendar, calendarContainer, field, getDate) {
-    if (field.value === '') {
-        calendarContainer.parentNode.classList.add('error');
-        return false;
-    }
-    let dateStr;
-    if (getDate) {
-        dateStr = getDateFromCalendar(calendar)?.toLocaleDateString();
-    } else {
-        dateStr = field.getAttribute('data-date');
-    }
-
-    if (dateStr) {
-        field.value = formatDateString(dateStr);
-        field.setAttribute('data-date', dateStr);
-    } else {
-        field.value = '';
-    }
-    field.classList.remove('on-top');
-    calendarContainer.remove();
-    cover.classList.add('hidden');
-}
-
 function getDateFromCalendar(calendar) {
 
     const yearSelect = calendar.querySelector('.calendar__year select');
