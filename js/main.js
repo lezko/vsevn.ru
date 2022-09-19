@@ -420,6 +420,22 @@ function checkDateInputFieldEmpty(field) {
     return day === '' && month === '' && year === '';
 }
 
+// filter region popup
+function initFilterRegions(target) {
+    target.querySelector('.adv-filter-region .text').addEventListener('click', e => {
+        showChooseRegionPopup((regions, cities) => {
+            let resultText;
+            if (regions.length + cities.length === 0) {
+                resultText = 'Регион / Населенный пункт';
+            } else {
+                resultText = `${regions.length} Регионов, ${cities.length} Населенный пунктов`;
+            }
+
+            e.target.textContent = resultText;
+        });
+    });
+}
+
 // show modal
 const modal = find('.modal');
 const modalContent = modal.querySelector('.modal__content');
@@ -672,7 +688,7 @@ function setupArticle(article) {
         showModal(await renderElement('services', article.data._services));
     });
 
-    article.el.querySelector('.adv-item__city-list .service-item').addEventListener('click', handl0);
+    article.el.querySelector('.adv-item__city-list .service-item').addEventListener('click', () => showChooseRegionPopup(() => {}));
 }
 
 function updateArticle(article, options = {}) {
@@ -739,7 +755,16 @@ function initArticleCalendar(article) {
             container.setAttribute('data-state', 'focused');
         }, (date, err) => {
             if (err) {
-                container.setAttribute('data-state', 'error');
+                try {
+                    const date = getDateInputFieldValue(dateInputField);
+                    dateTextElem.textContent = formatDateString(date.toLocaleDateString());
+                    article.data._date.deactivation = date;
+                    initArticleDates(article);
+                    container.removeAttribute('data-state');
+                    calendar.close();
+                } catch (e) {
+                    container.setAttribute('data-state', 'error');
+                }
                 return;
             }
             dateTextElem.textContent = formatDateString(date.toLocaleDateString());
@@ -1195,6 +1220,7 @@ initLinkPreventReload(document.body);
 initClearFieldBtns(document.body);
 initFilterCalendar(document.body);
 initDateInputFields(document.body);
+initFilterRegions(document.body);
 initInputValidation();
 initSorts();
 
