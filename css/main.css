@@ -349,6 +349,15 @@ span:not([class]):empty {
     flex-basis: 48%;
 }
 
+.choose__region label {
+    padding-bottom: .2em;
+}
+
+.choose__region input:checked + label:before {
+    background-color: #ffec96;
+    border-color: var(--clr-gray);
+}
+
 .region__title {
     display: flex;
     justify-content: space-between;
@@ -428,12 +437,14 @@ span:not([class]):empty {
     border: 1px solid var(--border-color);
     border-radius: 5px;
     margin-right: 5px;
+    position: relative;
+    top: 2px;
 }
 
 .region-all:before {
     content: '';
     position: absolute;
-    top: 9px;
+    top: 12px;
     left: 15px;
     width: 18px;
     height: 18px;
@@ -462,9 +473,6 @@ span:not([class]):empty {
 .hide-block {
     display: none;
 }
-/*.shift:hover:after {*/
-/*    left: 37px;*/
-/*}*/
 
 .region__body--item:hover:after {
     top: -1px;
@@ -562,7 +570,7 @@ span:not([class]):empty {
 .punkt-all:before {
     content: '';
     position: absolute;
-    top: 9px;
+    top: 12px;
     left: 15px;
     width: 18px;
     height: 18px;
@@ -591,6 +599,10 @@ span:not([class]):empty {
     align-items: center;
     padding-left: 15px;
     cursor: pointer;
+}
+
+.punkt__region--ul {
+    margin-top: 3px;
 }
 
 .punkt__all:hover:after,
@@ -1410,7 +1422,6 @@ span:not([class]):empty {
 
 /* adv-filter-region */
 .adv-filter-region {
-    overflow: hidden;
     width: 18%;
     display: flex;
     align-items: stretch;
@@ -1423,10 +1434,16 @@ span:not([class]):empty {
 .adv-filter-region .text {
     padding-bottom: .2em;
     position: relative;
+    max-width: 100%;
 }
 
-.adv-filter-region span:not(.text) {
-    font-size: 13px;
+.adv-filter-region .hint__text {
+    top: 65px;
+    font-size: 16px;
+}
+
+.adv-filter-region .ovf-fade:after {
+    background: linear-gradient(90deg, transparent 60%, var(--clr-input-background-default));
 }
 
 /* adv-filter-title */

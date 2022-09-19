@@ -422,16 +422,33 @@ function checkDateInputFieldEmpty(field) {
 
 // filter region popup
 function initFilterRegions(target) {
-    target.querySelector('.adv-filter-region .text').addEventListener('click', e => {
+    const textElem = target.querySelector('.adv-filter-region .text');
+
+    if (textElem.scrollWidth > textElem.clientWidth) {
+        textElem.classList.add('ovf-fade');
+        textElem.parentNode.classList.add('hint');
+    }
+
+    textElem.addEventListener('click', () => {
+
+
         showChooseRegionPopup((regions, cities) => {
             let resultText;
             if (regions.length + cities.length === 0) {
                 resultText = 'Регион / Населенный пункт';
             } else {
-                resultText = `${regions.length} Регионов, ${cities.length} Населенный пунктов`;
+                resultText = `Регионов: ${regions.length}, Населенных пунктов: ${cities.length}`;
             }
 
-            e.target.textContent = resultText;
+            textElem.textContent = resultText;
+
+            if (textElem.scrollWidth > textElem.clientWidth) {
+                textElem.classList.add('ovf-fade');
+                textElem.parentNode.classList.add('hint');
+                textElem.nextElementSibling.textContent = resultText;
+            } else {
+                textElem.parentNode.classList.remove('hint');
+            }
         });
     });
 }
