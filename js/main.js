@@ -193,6 +193,10 @@ function initFilterCalendar(target) {
                 wrapperTo.setAttribute('data-empty', false);
 
             }, (dateFrom, dateTo, err) => {
+                if (err) {
+                    console.log(err);
+                }
+
                 if (dateFrom) {
                     dateFromTextElem.textContent = formatDateString(dateFrom.toLocaleDateString());
                     dateFromTextElem.setAttribute('data-date', dateFrom.toLocaleDateString());

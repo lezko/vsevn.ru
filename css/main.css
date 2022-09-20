@@ -1452,7 +1452,6 @@ span:not([class]):empty {
 }
 
 .adv-filter-region .hint__text {
-    font-family: 'icomoon', serif;
     top: 65px;
     font-size: 16px;
 }
