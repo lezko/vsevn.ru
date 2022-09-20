@@ -1265,6 +1265,7 @@ span:not([class]):empty {
 .adv-input-filters {
     font-size: 19px;
     white-space: nowrap;
+    line-height: 1.808;
     color: var(--clr-gray);
 }
 

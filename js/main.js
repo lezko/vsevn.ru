@@ -197,17 +197,15 @@ function initFilterCalendar(target) {
                     console.log(err);
                 }
 
-                if (dateFrom) {
-                    dateFromTextElem.textContent = formatDateString(dateFrom.toLocaleDateString());
-                    dateFromTextElem.setAttribute('data-date', dateFrom.toLocaleDateString());
-                } else {
+                try {
+                    dateFromTextElem.textContent = formatDateString(getDateInputFieldValue(dateFromInputField).toLocaleDateString());
+                } catch (e) {
                     wrapperFrom.setAttribute('data-empty', 'true');
                 }
-                if (dateTo) {
-                    dateToTextElem.textContent = formatDateString(dateTo.toLocaleDateString());
-                    dateToTextElem.setAttribute('data-date', dateTo.toLocaleDateString());
 
-                } else {
+                try {
+                    dateToTextElem.textContent = formatDateString(getDateInputFieldValue(dateToInputField).toLocaleDateString());
+                } catch (e) {
                     wrapperTo.setAttribute('data-empty', 'true');
                 }
 
