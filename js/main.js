@@ -201,12 +201,14 @@ function initFilterCalendar(target) {
                     dateFromTextElem.textContent = formatDateString(getDateInputFieldValue(dateFromInputField).toLocaleDateString());
                 } catch (e) {
                     wrapperFrom.setAttribute('data-empty', 'true');
+                    dateFromTextElem.textContent = '';
                 }
 
                 try {
                     dateToTextElem.textContent = formatDateString(getDateInputFieldValue(dateToInputField).toLocaleDateString());
                 } catch (e) {
                     wrapperTo.setAttribute('data-empty', 'true');
+                    dateToTextElem.textContent = '';
                 }
 
                 performFiltering();
