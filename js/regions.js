@@ -200,13 +200,14 @@ function initRegions(data) {
         acc += item.cities.length;
         return acc;
     }, 0);
-    searchCitiesNames = data.reduce((arr, reg) => {
-        arr.push(reg.main_city);
+    const searchCitiesNamesObj = data.reduce((obj, reg) => {
+        obj.mainCities.push(reg.main_city);
         for (const city of reg.cities) {
-            arr.push(city);
+            obj.cities.push(city);
         }
-        return arr;
-    }, []);
+        return obj;
+    }, { mainCities: [], cities: [] });
+    searchCitiesNames = [...searchCitiesNamesObj.mainCities, ...searchCitiesNamesObj.cities];
     initSearchCities();
 
     let citiesCounter = 0;

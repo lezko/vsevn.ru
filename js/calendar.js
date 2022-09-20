@@ -57,8 +57,7 @@ const availableDates = [
     [new Date('10/1/2022'), new Date('12/31/2022')]
 ]
 
-function formatDateString(str) {
-    const date = new Date(str);
+function formatDate(date) {
     return `${date.getDate()} ${monthsGenitive[date.getMonth()]} ${date.getFullYear()}`;
 }
 
@@ -292,9 +291,6 @@ function renderDays(date, daysContainer, selectCallback, limitDays = false, dayS
             selectedDay = day;
             selectedDay.classList.add('selected');
             date.setDate(+selectedDay.querySelector('.value').textContent);
-
-            console.log(selectedDay);
-            console.log(date);
 
             selectCallback(date);
         });

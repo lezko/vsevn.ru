@@ -198,14 +198,14 @@ function initFilterCalendar(target) {
                 }
 
                 try {
-                    dateFromTextElem.textContent = formatDateString(getDateInputFieldValue(dateFromInputField).toLocaleDateString());
+                    dateFromTextElem.textContent = formatDate(getDateInputFieldValue(dateFromInputField));
                 } catch (e) {
                     wrapperFrom.setAttribute('data-empty', 'true');
                     dateFromTextElem.textContent = '';
                 }
 
                 try {
-                    dateToTextElem.textContent = formatDateString(getDateInputFieldValue(dateToInputField).toLocaleDateString());
+                    dateToTextElem.textContent = formatDate(getDateInputFieldValue(dateToInputField));
                 } catch (e) {
                     wrapperTo.setAttribute('data-empty', 'true');
                     dateToTextElem.textContent = '';
@@ -353,7 +353,7 @@ function initDateInputFields(target) {
         });
         dayField.addEventListener('focusout', () => {
             if (dayField.value.length === 1) {
-                dayField.value = prependZero(dayField.value, 2);
+                dayField.value = String(dayField.value).padStart(2, '0');
             }
         });
 
@@ -368,7 +368,7 @@ function initDateInputFields(target) {
         });
         monthField.addEventListener('focusout', () => {
             if (monthField.value.length === 1) {
-                monthField.value = prependZero(monthField.value, 2);
+                monthField.value = String(monthField.value).padStart(2, '0');
             }
         });
 
@@ -379,17 +379,10 @@ function initDateInputFields(target) {
         });
         yearField.addEventListener('focusout', () => {
             if (0 < yearField.value.length && yearField.value.length < 4) {
-                yearField.value = prependZero(yearField.value, 4);
+                yearField.value = String(yearField.value).padStart(4, '0');
             }
         });
     });
-}
-
-function prependZero(str, targetLength) {
-    while (str.length < targetLength) {
-        str = '0' + str;
-    }
-    return str;
 }
 
 function clearDateInputField(field) {
@@ -409,9 +402,6 @@ function getDateInputFieldValue(field) {
 }
 
 function setDateInputFieldValue(field, date) {
-    const arr = date.toLocaleDateString().split('/');
-    console.log(arr);
-
     field.querySelector('.day').value = String(date.getDate()).padStart(2, '0');
     field.querySelector('.month').value = String((+date.getMonth() + 1)).padStart(2, '0');
     field.querySelector('.year').value = String(date.getFullYear()).padStart(4, '0');
@@ -720,6 +710,9 @@ function updateArticle(article, options = {}) {
 
 async function performFiltering() {
     filteredArticles = filterArticles(articles);
+    for (let i = 0; i < filteredArticles.length; i++) {
+        filteredArticles[i].id = i;
+    }
     await printArticles(filteredArticles).then(updateActionBar);
 }
 
@@ -779,7 +772,7 @@ function initArticleCalendar(article) {
             if (err) {
                 try {
                     const date = getDateInputFieldValue(dateInputField);
-                    dateTextElem.textContent = formatDateString(date.toLocaleDateString());
+                    dateTextElem.textContent = formatDate(date);
                     article.data._date.deactivation = date;
                     initArticleDates(article);
                     container.removeAttribute('data-state');
@@ -789,7 +782,7 @@ function initArticleCalendar(article) {
                 }
                 return;
             }
-            dateTextElem.textContent = formatDateString(date.toLocaleDateString());
+            dateTextElem.textContent = formatDate(date);
             article.data._date.deactivation = date;
             initArticleDates(article);
             container.removeAttribute('data-state');
@@ -799,7 +792,7 @@ function initArticleCalendar(article) {
         cover.addEventListener('click', () => {
             try {
                 const date = getDateInputFieldValue(dateInputField);
-                dateTextElem.textContent = formatDateString(date.toLocaleDateString());
+                dateTextElem.textContent = formatDate(date);
                 article.data._date.deactivation = date;
                 initArticleDates(article);
                 container.removeAttribute('data-state');
@@ -833,7 +826,7 @@ function initArticleCalendar(article) {
 function initArticleDates(article) {
     const deactivationValueElem = article.el.querySelector('.adv-item__state .calendar-container .date-value');
     deactivationValueElem.setAttribute('data-date', article.data._date.deactivation);
-    deactivationValueElem.textContent = formatDateString(article.data._date.deactivation);
+    deactivationValueElem.textContent = formatDate(new Date(article.data._date.deactivation));
 
     article.el.querySelector('.expires .value').textContent = getDayDifference(new Date(article.data._date.activation), new Date(article.data._date.deactivation));
 }
@@ -1205,6 +1198,9 @@ function performSorting(compareFunction) {
 }
 
 const sorts = {
+    'default': function (a1, a2) {
+        return a1.id - a2.id;
+    },
     'date': function (a1, a2) {
         if (a1.data._state === 'draft') {
             return new Date(a1.data._date.created) - new Date(a2.data._date.created);
@@ -1232,7 +1228,7 @@ function initSorts() {
         performSorting(sorts[sortType]);
     }));
     find('.action-sort .cross').addEventListener('click', () => {
-        printArticles(filteredArticles);
+        performSorting(sorts['default']);
     });
 }
 
