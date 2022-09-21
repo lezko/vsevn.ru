@@ -266,10 +266,6 @@ function initFilterCalendar(target) {
     });
 }
 
-function updateFieldState(field, container) {
-    container.setAttribute('data-empty', field.value ? 'false' : 'true');
-}
-
 // expanding list with links
 function initExpandingLists(target) {
     target.querySelectorAll('.adv-item__links').forEach(list => {
@@ -298,6 +294,11 @@ function toggleExpandingList(list, expanded = null) {
         expanded = !(list.getAttribute('aria-expanded') === 'true');
     }
 
+    if (expanded) {
+        list.classList.remove('show-on-adv-item-hover');
+    } else {
+        list.classList.add('show-on-adv-item-hover');
+    }
     list.setAttribute('aria-expanded', expanded);
     const links = list.querySelectorAll('li:not(.service-item)');
     for (let i = 1; i < links.length; i++) {
@@ -319,15 +320,15 @@ function getScrollValue() {
 }
 
 // copy link to clipboard
-function initCopyLinkBtns(target) {
-    target.querySelectorAll('.copy-link-modal').forEach(m => {
-        m.querySelector('.copy-link-modal__btn').addEventListener('click', () => {
-            const url = m.querySelector('.copy-link-modal__url').textContent;
-            navigator.clipboard.writeText(url).then(() => {
-            }, err => console.error);
-        });
-    });
-}
+// function initCopyLinkBtns(target) {
+//     target.querySelectorAll('.copy-link-modal').forEach(m => {
+//         m.querySelector('.copy-link-modal__btn').addEventListener('click', () => {
+//             const url = m.querySelector('.copy-link-modal__url').textContent;
+//             navigator.clipboard.writeText(url).then(() => {
+//             }, err => console.error);
+//         });
+//     });
+// }
 
 // date input fields
 function initDateInputFields(target) {

@@ -1278,6 +1278,10 @@ span:not([class]):empty {
     flex-wrap: wrap;
 }
 
+.adv-input-filters > .flex > * {
+    height: 50.4px;
+}
+
 .adv-input-filters .container {
     background-color: var(--clr-input-background-default);
 }
@@ -1487,8 +1491,7 @@ span:not([class]):empty {
 
 .action-sort,
 .action-btn {
-    min-height: 50.4px;
-
+    height: 50.4px;
 }
 
 /* adv-item */
@@ -1743,7 +1746,8 @@ span:not([class]):empty {
     'checkbox img left-block   .            rating             city-list services'
     'checkbox img left-block   .            rating             city-list .'
     '.        .   auto-prolong auto-prolong get-more-responses city-list .'
-    '.        .   auto-prolong auto-prolong links              city-list .';
+    '.        .   auto-prolong auto-prolong links              city-list .'
+    '.        .   .            .            links              city-list .';
 }
 
 
