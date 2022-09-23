@@ -12,6 +12,13 @@ function findAll(selector) {
     return document.querySelectorAll(selector);
 }
 
+function formatDateDots(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear());
+    return `${day}.${month}.${year}`;
+}
+
 // set onclick = 'return false' to all links with empty href attribute
 // to prevent them from reloading the page
 function initLinkPreventReload(target) {
@@ -537,23 +544,23 @@ async function renderElement(elem, payload = null) {
                 <a href="">Показать</a>
             `;
         case 'services':
-            const skipIdx = '1' in payload ? 0 : 1;
+            const skipIdx = '1' in payload.services ? 0 : 1;
             return `
                 <h4 class="services-header">Услуги продвижения</h4>
-                ${Object.keys(services).map((s, i) => i !== skipIdx ? `
+                ${Object.keys(services).map((s, i) => i !== skipIdx && (payload.state === 'active' || services[s].free || i in payload.services) ? `
                         <article class="service">
                             <div class="service__img">${servicesLogos[s]}</div>
                             <div class="service__info">
                                 <h4 class="service__title">${services[s].title}</h4>
-                                ${!services[s].free ? (i in payload ? `
+                                ${!services[s].free ? (i in payload.services ? `
                                         <p>
                                             <span>Период:</span>
-                                            <span class="from">${payload[s].dateFrom}</span>
+                                            <span class="from">${payload.services[s].dateFrom}</span>
                                             <span class="dash">-</span>
-                                            <span class="to">${payload[s].dateTo}</span>
+                                            <span class="to">${payload.services[s].dateTo}</span>
                                         </p>
                                         <p>
-                                            Услуга АКТИВНА до ${payload[s].dateTo}
+                                            Услуга АКТИВНА до ${payload.services[s].dateTo}
                                         </p>
                                     ` : `
                                         <p>
@@ -698,7 +705,7 @@ function setupArticle(article) {
     });
 
     article.el.querySelector('.adv-item__services a').addEventListener('click', async () => {
-        showModal(await renderElement('services', article.data._services));
+        showModal(await renderElement('services', { services: article.data._services, state: article.data._state }));
     });
 
     article.el.querySelector('.adv-item__city-list .service-item').addEventListener('click', () => showChooseRegionPopup(() => {}));
@@ -830,6 +837,14 @@ function initArticleDates(article) {
     deactivationValueElem.textContent = formatDate(new Date(article.data._date.deactivation));
 
     article.el.querySelector('.expires .value').textContent = getDayDifference(new Date(article.data._date.activation), new Date(article.data._date.deactivation));
+
+    const updateDateBtn = article.el.querySelector('.adv-item__dates .update-time-btn');
+    updateDateBtn.addEventListener('click', () => {
+        const date = new Date();
+        article.el.querySelector('.adv-item__dates .updated .date-value').textContent = formatDateDots(date);
+        article.el.querySelector('.adv-item__dates .updated .time-value').textContent = `${date.getHours()}:${date.getMinutes()}`;
+        updateDateBtn.classList.add('hidden');
+    });
 }
 
 function initArticleStateBackground(article) {
