@@ -44,12 +44,10 @@ function initSearchCities() {
         label.addEventListener('click', () => {
             const checked = !checkbox.checked;
             const name = label.textContent.trim();
-            if (checked) {
-                if (!searchCitiesChecked.includes(name)) {
-                    searchCitiesChecked.push(name);
-                } else if (searchCitiesChecked.includes(name)) {
-                    searchCitiesChecked.splice(searchCitiesChecked.indexOf(name), 1);
-                }
+            if (checked && !searchCitiesChecked.includes(name)) {
+                searchCitiesChecked.push(name);
+            } else if (!checked && searchCitiesChecked.includes(name)) {
+                searchCitiesChecked.splice(searchCitiesChecked.indexOf(name), 1);
             }
         });
 
@@ -61,20 +59,37 @@ function initSearchCities() {
     }
 
     searchCitySubmitBtn.addEventListener('click', () => {
-        for (const cityName of searchCitiesChecked) {
-            for (const region of regions) {
-                let city = null;
-                if (region.mainCity.label.textContent.trim() === name) {
-                    region.switch(true, true);
-                    region.switchMainCity(true, true);
-                } else {
-                    city = region.cities.list.find(c => c.label.textContent.trim() === cityName);
-                }
-                if (city) {
-                    region.switch(true, true);
-                    city.switch(true, true);
+        for (const region of regions) {
+            let found = false;
+            for (const cityName of searchCitiesChecked) {
+                if (region.mainCity.label.textContent.trim() === cityName) {
+                    if (!region.checkbox.checked) {
+                        region.switch(true, true);
+                    }
+                    if (!region.mainCity.checkbox.checked) {
+                        region.switchMainCity(true, true);
+                    }
+                    searchCitiesChecked.splice(searchCitiesChecked.indexOf(cityName), 1);
+                    found = true;
                     break;
                 }
+
+                let city = region.cities.list.find(c => c.label.textContent.trim() === cityName);
+                if (city) {
+                    if (!region.checkbox.checked) {
+                        region.switch(true, true);
+                    }
+                    if (!city.checkbox.checked) {
+                        city.switch(true, true);
+                    }
+                    searchCitiesChecked.splice(searchCitiesChecked.indexOf(cityName), 1);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found && region.checkbox.checked) {
+                region.switch(false, true);
             }
         }
 
@@ -242,10 +257,6 @@ function setupRegionCities(controller, cityList) {
 
         city.label.addEventListener('click', () => {
             city.switch();
-            // switchCity(city, !city.checkbox.checked);
-            // updateController();
-            // updateClearBtns();
-            // updateCitiesMainCheckbox();
         });
     }
 
