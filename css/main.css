@@ -313,12 +313,16 @@ span:not([class]):empty {
     flex-grow: 1;
 }
 
+.choose__quick-search .cities-container {
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+
+}
+
 .choose__quick-search ul {
     color: var(--clr-dark-gray);
-    width: 100%;
     background-color: #fff;
-    z-index: 5;
-    position: absolute;
     border: 1px solid var(--clr-gray);
     border-radius: 5px;
     padding: 10px 0;
@@ -331,7 +335,25 @@ span:not([class]):empty {
     align-items: baseline;
 }
 
-.choose__quick-search ul.search-city-list--hidden,
+.choose__quick-search .submit {
+    border-radius: 5px;
+    font-size: 23px;
+    color: #fff;
+    display: inline-block;
+    width: 100%;
+    padding: 15px 0;
+    background-color: #d70404;;
+    text-align: center;
+    transition: .3s;
+}
+
+@media (hover: hover) {
+    .choose__quick-search .submit:hover {
+        background-color: red;
+    }
+}
+
+.choose__quick-search .cities-container.search-city-container--hidden,
 .choose__quick-search li.search-city--hidden {
     display: none;
 }

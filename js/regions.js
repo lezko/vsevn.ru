@@ -22,28 +22,69 @@ regionCitiesTemplate.innerHTML = `
 
 
 // Формирование списка городов быстрого поиска
-const searchCityList = document.querySelector('.choose__region .choose__quick-search ul');
+const searchCitiesContainer = document.querySelector('.choose__region .choose__quick-search .cities-container');
+const searchCitiesList = searchCitiesContainer.querySelector('ul');
 const searchCityField = document.querySelector('.choose__region .choose__quick-search input');
+const searchCitySubmitBtn = document.querySelector('.choose__region .submit');
 
-const searchCities = [];
+let searchCities = [], searchCitiesChecked = [];
 
 function initSearchCities() {
     searchCitiesNames.forEach((c, i) => {
         const newItem = liTemplate.cloneNode(true);
-        newItem.querySelector('.input-region').setAttribute('id', `search-city_${i}`);
-        newItem.querySelector('.region-multi').setAttribute('for', `search-city_${i}`);
+        const label = newItem.querySelector('.region-multi');
+        const checkbox = newItem.querySelector('.input-region');
+
+        checkbox.setAttribute('id', `search-city_${i}`);
+        label.setAttribute('for', `search-city_${i}`);
+
         newItem.classList.add('search-city--hidden');
         newItem.setAttribute('data-name', c);
+
+        label.addEventListener('click', () => {
+            const checked = !checkbox.checked;
+            const name = label.textContent.trim();
+            if (checked) {
+                if (!searchCitiesChecked.includes(name)) {
+                    searchCitiesChecked.push(name);
+                } else if (searchCitiesChecked.includes(name)) {
+                    searchCitiesChecked.splice(searchCitiesChecked.indexOf(name), 1);
+                }
+            }
+        });
 
         searchCities.push(newItem);
     });
 
     for (const item of searchCities) {
-        searchCityList.appendChild(item);
+        searchCitiesList.appendChild(item);
     }
+
+    searchCitySubmitBtn.addEventListener('click', () => {
+        for (const cityName of searchCitiesChecked) {
+            for (const region of regions) {
+                let city = null;
+                if (region.mainCity.label.textContent.trim() === name) {
+                    region.switch(true, true);
+                    region.switchMainCity(true, true);
+                } else {
+                    city = region.cities.list.find(c => c.label.textContent.trim() === cityName);
+                }
+                if (city) {
+                    region.switch(true, true);
+                    city.switch(true, true);
+                    break;
+                }
+            }
+        }
+
+        searchCitiesContainer.classList.add('search-city-container--hidden');
+        searchCityField.value = '';
+        searchCityField.parentNode.parentNode.setAttribute('data-empty', 'true');
+    });
 }
 
-searchCityList.classList.add('search-city-list--hidden');
+searchCitiesContainer.classList.add('search-city-container--hidden');
 
 searchCityField.addEventListener('input', () => performCitySearch(searchCityField.value));
 document.querySelector('.choose__region .choose__quick-search .cross').addEventListener('click', () => performCitySearch(''));
@@ -52,17 +93,30 @@ function performCitySearch(input) {
     input = input.toLowerCase().trim();
     const foundCities = searchCities.filter(c => input.length && c.getAttribute('data-name').toLowerCase().trim().startsWith(input));
     if (foundCities.length) {
-        searchCityList.classList.remove('search-city-list--hidden');
+        searchCitiesContainer.classList.remove('search-city-container--hidden');
         for (const city of searchCities) {
             if (foundCities.includes(city)) {
-                city.querySelector('.region-multi').innerHTML = highlightText(city.getAttribute('data-name'), input);
+                const name = city.getAttribute('data-name').trim();
+                city.querySelector('.region-multi').innerHTML = highlightText(name, input);
                 city.classList.remove('search-city--hidden');
+
+                if (citiesChecked.find(c => c.label.textContent.trim() === name)) {
+                    city.querySelector('input').checked = true;
+                    if (!searchCitiesChecked.includes(name)) {
+                        searchCitiesChecked.push(name);
+                    }
+                } else {
+                    city.querySelector('input').checked = false;
+                    if (searchCitiesChecked.includes(name)) {
+                        searchCitiesChecked.splice(searchCitiesChecked.indexOf(name), 1);
+                    }
+                }
             } else {
                 city.classList.add('search-city--hidden');
             }
         }
     } else {
-        searchCityList.classList.add('search-city-list--hidden');
+        searchCitiesContainer.classList.add('search-city-container--hidden');
     }
 }
 
@@ -88,7 +142,7 @@ const citiesMainCheckbox = document.querySelector('.punkt__all input');
 const citiesMainLabel = document.querySelector('.punkt__all label');
 
 const regions = [], regionsChecked = [], citiesChecked = [];
-let regionsTotal, citiesTotal, searchCitiesNames;
+let regionsTotal, citiesTotal, searchCitiesNames = [];
 
 fetch('regions.json').then(data => data.json()).then(initRegions);
 
@@ -158,7 +212,7 @@ function setupRegionCities(controller, cityList) {
             checkedCount++;
         } else if (!checked && citiesChecked.includes(city)) {
             citiesChecked.splice(citiesChecked.indexOf(city), 1);
-            checkedCount--
+            checkedCount--;
         }
     }
 
@@ -179,11 +233,19 @@ function setupRegionCities(controller, cityList) {
     });
 
     for (const city of cityList) {
-        city.label.addEventListener('click', () => {
-            switchCity(city, !city.checkbox.checked);
+        city.switch = function (updateCheckbox = false) {
+            switchCity(city, !city.checkbox.checked, updateCheckbox);
             updateController();
             updateClearBtns();
             updateCitiesMainCheckbox();
+        }
+
+        city.label.addEventListener('click', () => {
+            city.switch();
+            // switchCity(city, !city.checkbox.checked);
+            // updateController();
+            // updateClearBtns();
+            // updateCitiesMainCheckbox();
         });
     }
 
@@ -207,7 +269,12 @@ function initRegions(data) {
         }
         return obj;
     }, { mainCities: [], cities: [] });
-    searchCitiesNames = [...searchCitiesNamesObj.mainCities, ...searchCitiesNamesObj.cities];
+    for (const city of searchCitiesNamesObj.mainCities) {
+        searchCitiesNames.push(city);
+    }
+    for (const city of searchCitiesNamesObj.cities) {
+        searchCitiesNames.push(city);
+    }
     initSearchCities();
 
     let citiesCounter = 0;
