@@ -93,6 +93,7 @@ function initSearchCities() {
             }
         }
 
+        updateCitiesMainItem();
         searchCitiesContainer.classList.add('search-city-container--hidden');
         searchCityField.value = '';
         searchCityField.parentNode.parentNode.setAttribute('data-empty', 'true');
