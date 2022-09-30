@@ -26,6 +26,7 @@ const searchCitiesContainer = document.querySelector('.choose__region .choose__q
 const searchCitiesList = searchCitiesContainer.querySelector('ul');
 const searchCityField = document.querySelector('.choose__region .choose__quick-search input');
 const searchCitySubmitBtn = document.querySelector('.choose__region .submit');
+const searchCityCover = document.querySelector('.choose__region--cover');
 
 let searchCities = [], searchCitiesChecked = [];
 
@@ -43,7 +44,7 @@ function initSearchCities() {
 
         label.addEventListener('click', () => {
             const checked = !checkbox.checked;
-            const name = label.textContent.trim();
+            const name = c.slice(0, c.indexOf('(')).trim();
             if (checked && !searchCitiesChecked.includes(name)) {
                 searchCitiesChecked.push(name);
             } else if (!checked && searchCitiesChecked.includes(name)) {
@@ -94,6 +95,7 @@ function initSearchCities() {
         }
 
         updateCitiesMainItem();
+        searchCityCover.classList.add('hidden');
         searchCitiesContainer.classList.add('search-city-container--hidden');
         searchCityField.value = '';
         searchCityField.parentNode.parentNode.setAttribute('data-empty', 'true');
@@ -109,6 +111,7 @@ function performCitySearch(input) {
     input = input.toLowerCase().trim();
     const foundCities = searchCities.filter(c => input.length && c.getAttribute('data-name').toLowerCase().trim().startsWith(input));
     if (foundCities.length) {
+        searchCityCover.classList.remove('hidden');
         searchCitiesContainer.classList.remove('search-city-container--hidden');
         for (const city of searchCities) {
             if (foundCities.includes(city)) {
@@ -132,6 +135,7 @@ function performCitySearch(input) {
             }
         }
     } else {
+        searchCityCover.classList.add('hidden');
         searchCitiesContainer.classList.add('search-city-container--hidden');
     }
 }
@@ -275,9 +279,9 @@ function initRegions(data) {
         return acc;
     }, 0);
     const searchCitiesNamesObj = data.reduce((obj, reg) => {
-        obj.mainCities.push(reg.main_city);
+        obj.mainCities.push(`${reg.main_city} (${reg.name})`);
         for (const city of reg.cities) {
-            obj.cities.push(city);
+            obj.cities.push(`${city} (${reg.name})`);
         }
         return obj;
     }, { mainCities: [], cities: [] });
