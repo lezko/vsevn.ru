@@ -842,7 +842,7 @@ function initArticleDates(article) {
     updateDateBtn.addEventListener('click', () => {
         const date = new Date();
         article.el.querySelector('.adv-item__dates .updated .date-value').textContent = formatDateDots(date);
-        article.el.querySelector('.adv-item__dates .updated .time-value').textContent = `${date.getHours()}:${date.getMinutes()}`;
+        article.el.querySelector('.adv-item__dates .updated .time-value').textContent = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
         updateDateBtn.classList.add('hidden');
     });
 }
