@@ -1037,6 +1037,8 @@ function updateMainCheckbox() {
     switchCheckbox(mainCheckbox, checkedArticlesCount === filteredArticles.length && checkedArticlesCount > 0);
 }
 
+// submit deactivation modal text content
+const deactivationMessage = 'Обратите внимание, что при снятии вакансии тариф израсходуется. Не распространяется на тарифы "Подписка"';
 // action bar
 const actionBtnsContainer = find('.actions .actions__container');
 let checkSensitiveBtns;
@@ -1064,9 +1066,13 @@ const actionBtns = {
             updateArticle(a, {_state: 'closed'});
         },
         beforeAction() {
-            return showConfirmModal('title', 'content', [
-                {text: 'submit deletion', className: 'action-btn--red', type: 'submit'},
-                {text: 'cancel action', type: 'cancel'},
+            const title = `Снять с публикации вакансию(и): ${articles.filter(a => a.checked).reduce((arr, a) => {
+                arr.push(`«${a.data.title}»`);
+                return arr;
+            }, []).join(', ')} ?`
+            return showConfirmModal(title, deactivationMessage, [
+                {text: 'Все равно снять', className: 'action-btn--red', type: 'submit'},
+                {text: 'Отменить', type: 'cancel'},
             ]);
         },
     }, emptyTrash: {
@@ -1149,7 +1155,9 @@ function addActionBtn({text, action, beforeAction = null}) {
     btn.addEventListener('click', e => {
         e.preventDefault();
         if (beforeAction && typeof beforeAction === 'function') {
-            beforeAction().then(() => performAction(action));
+            beforeAction()
+                .then(() => performAction(action))
+                .catch(() => {});
             return;
         }
         performAction(action);
