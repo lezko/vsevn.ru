@@ -459,25 +459,100 @@ function initFilterRegions(target) {
 // show modal
 const modal = find('.modal');
 const modalContent = modal.querySelector('.modal__content');
+const modalBody = modal.querySelector('.modal__body');
+const modalHeader = modal.querySelector('.modal__header');
+const modalFooter = modal.querySelector('.modal__footer');
 
-function showModal(el) {
-    modalContent.innerHTML = '';
-    modalContent.innerHTML = el;
+function clearModal() {
+    modalHeader.innerHTML = '';
+    modalBody.innerHTML = '';
+    modalFooter.innerHTML = '';
+
+    modalContent.classList.remove('confirm');
+}
+
+function showModal(html) {
+    modalBody.innerHTML = html;
+
     const closeBtn = document.createElement('span');
     closeBtn.classList.add('icon-cross-svgrepo-com', 'modal__close-btn');
-    modalContent.appendChild(closeBtn);
+    modalBody.appendChild(closeBtn);
+
     document.body.classList.add('lock');
 
     modal.classList.add('modal--visible');
     closeBtn.addEventListener('click', () => {
         modal.classList.remove('modal--visible');
         document.body.classList.remove('lock');
+        clearModal();
     });
     modal.addEventListener('click', e => {
         if (e.target === modal) {
             modal.classList.remove('modal--visible');
             document.body.classList.remove('lock');
+            clearModal();
         }
+    });
+}
+
+function showConfirmModal(title, content, buttons) {
+    modalContent.classList.add('confirm');
+
+    modalBody.innerHTML = content;
+
+    const h4 = document.createElement('h4');
+    h4.innerHTML = title;
+    modalHeader.appendChild(h4);
+
+    const closeBtn = document.createElement('span');
+    closeBtn.classList.add('icon-cross-svgrepo-com', 'modal__close-btn', 'modal__close-btn--inner');
+    modalHeader.appendChild(closeBtn);
+
+    document.body.classList.add('lock');
+
+    return new Promise((resolve, reject) => {
+        if (buttons) {
+            for (const button of buttons) {
+                const $btn = document.createElement('a');
+                $btn.setAttribute('href', '');
+                $btn.textContent = button.text;
+                $btn.classList.add('action-btn');
+                if (button.className) {
+                    $btn.classList.add(button.className);
+                }
+                modalFooter.appendChild($btn);
+
+                $btn.addEventListener('click', e => {
+                    e.preventDefault();
+
+                    if (button.type === 'submit') {
+                        resolve();
+                    } else if (button.type === 'cancel') {
+                        reject();
+                    }
+
+                    modal.classList.remove('modal--visible');
+                    document.body.classList.remove('lock');
+                    clearModal();
+                });
+            }
+        }
+
+        modal.classList.add('modal--visible');
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('modal--visible');
+            document.body.classList.remove('lock');
+            clearModal();
+            reject();
+        });
+        modal.addEventListener('click', e => {
+            if (e.target === modal) {
+                modal.classList.remove('modal--visible');
+                document.body.classList.remove('lock');
+                clearModal();
+                reject();
+            }
+        });
     });
 }
 
@@ -987,7 +1062,13 @@ const actionBtns = {
         text: 'Снять с публикации', action: function (a) {
             setArticleCheckState(a, false, false);
             updateArticle(a, {_state: 'closed'});
-        }
+        },
+        beforeAction() {
+            return showConfirmModal('title', 'content', [
+                {text: 'submit deletion', className: 'action-btn--red', type: 'submit'},
+                {text: 'cancel action', type: 'cancel'},
+            ]);
+        },
     }, emptyTrash: {
         text: 'Очистить корзину', action: function (a) {
             articles = articles.filter(article => a !== article);
@@ -1060,13 +1141,17 @@ function initActionBar(state) {
     });
 }
 
-function addActionBtn({text, action}) {
+function addActionBtn({text, action, beforeAction = null}) {
     const btn = document.createElement('a');
     btn.setAttribute('href', '');
     btn.textContent = text;
     btn.classList.add('action-btn', 'disabled');
     btn.addEventListener('click', e => {
         e.preventDefault();
+        if (beforeAction && typeof beforeAction === 'function') {
+            beforeAction().then(() => performAction(action));
+            return;
+        }
         performAction(action);
     });
     actionBtnsContainer.appendChild(btn);
