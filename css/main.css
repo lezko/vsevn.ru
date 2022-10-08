@@ -1307,6 +1307,11 @@ span:not([class]):empty {
     font-size: 21px;
 
 }
+
+.actions .checkbox {
+    flex: 0 0 50.4px;
+}
+
 .adv-filter-state a,
 .adv-filter-type a,
 .adv-filter-period a {
