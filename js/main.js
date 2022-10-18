@@ -179,14 +179,26 @@ function initFilterCalendar(target) {
                 return;
             }
 
-            wrapperFrom.setAttribute('data-empty', 'true');
-            wrapperTo.setAttribute('data-empty', 'true');
+            // wrapperFrom.setAttribute('data-empty', 'true');
+            // wrapperTo.setAttribute('data-empty', 'true');
 
-            clearDateInputField(dateFromInputField);
-            clearDateInputField(dateToInputField);
+            const strDateFrom = dateFromTextElem.getAttribute('data-date');
+            const strDateTo = dateToTextElem.getAttribute('data-date');
+            if (strDateFrom) {
+                setDateInputFieldValue(dateFromInputField, new Date(strDateFrom.trim()));
+                wrapperFrom.setAttribute('data-empty', 'false');
+            } else {
+                clearDateInputField(dateFromInputField);
+            }
+            if (strDateTo) {
+                setDateInputFieldValue(dateToInputField, new Date(strDateTo.trim()));
+                wrapperTo.setAttribute('data-empty', 'false');
+            } else {
+                clearDateInputField(dateToInputField);
+            }
 
-            dateFromTextElem.removeAttribute('data-date');
-            dateToTextElem.removeAttribute('data-date');
+            // dateFromTextElem.removeAttribute('data-date');
+            // dateToTextElem.removeAttribute('data-date');
 
             container.classList.add('calendar-expanded');
 
@@ -201,7 +213,7 @@ function initFilterCalendar(target) {
 
             }, (dateFrom, dateTo, err) => {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                 }
 
                 try {
@@ -240,12 +252,33 @@ function initFilterCalendar(target) {
             }));
 
             cover.addEventListener('click', () => {
-                wrapperFrom.setAttribute('data-empty', 'true');
-                wrapperTo.setAttribute('data-empty', 'true');
-                dateFromTextElem.textContent = '';
-                dateToTextElem.textContent = '';
+                // wrapperFrom.setAttribute('data-empty', 'true');
+                // wrapperTo.setAttribute('data-empty', 'true');
+
+                // dateFromTextElem.removeAttribute('data-date');
+                // dateToTextElem.removeAttribute('data-date');
+
+                // dateFromTextElem.textContent = '';
+                // dateToTextElem.textContent = '';
+
+                try {
+                    dateFromTextElem.textContent = formatDate(getDateInputFieldValue(dateFromInputField));
+                } catch (e) {
+                    wrapperFrom.setAttribute('data-empty', 'true');
+                    dateFromTextElem.textContent = '';
+                }
+
+                try {
+                    dateToTextElem.textContent = formatDate(getDateInputFieldValue(dateToInputField));
+                } catch (e) {
+                    wrapperTo.setAttribute('data-empty', 'true');
+                    dateToTextElem.textContent = '';
+                }
+
                 container.classList.remove('calendar-expanded');
                 calendar.close();
+
+                performFiltering();
             });
 
             const [cross1, cross2] = container.querySelectorAll('.cross');
@@ -845,7 +878,8 @@ function initArticleCalendar(article) {
 
         const errorHintText = container.querySelector('.hint__text');
 
-        clearDateInputField(dateInputField);
+        // clearDateInputField(dateInputField);
+        setDateInputFieldValue(dateInputField, new Date(dateTextElem.getAttribute('data-date').trim()));
         dateInputFieldDay.focus();
 
         const calendar = showSingleCalendar(container, date => {

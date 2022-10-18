@@ -755,6 +755,7 @@ span:not([class]):empty {
 
 .calendar-container[data-state="error"] .error__text {
     display: inline-block;
+    white-space: nowrap;
 }
 
 /* cover */
@@ -1933,6 +1934,14 @@ span:not([class]):empty {
 
 .adv-item__state .info {
     margin-bottom: 20px;
+
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    grid-column-gap: 20px;
+}
+
+.adv-item__state .info .calendar-container {
+    display: inline-block;
 }
 
 .adv-item__state .info .expires {
