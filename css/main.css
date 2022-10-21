@@ -181,6 +181,12 @@ span:not([class]):empty {
     padding: 0 30px;
 }
 
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+}
+
 .flex {
     display: flex;
 }
@@ -2044,24 +2050,6 @@ span:not([class]):empty {
     margin-right: 1em;
 }
 
-@media (max-width: 1330px) {
-    .adv-item {
-        grid-template-rows: auto repeat(5, 28px) auto 1fr;
-        grid-template-areas:
-        '.        .   state        state              state              state     state'
-        'checkbox img left-block   stats              stats              city-list services'
-        'checkbox img left-block   rating             rating             city-list services'
-        'checkbox img left-block   rating             rating             city-list .'
-        '.        .   auto-prolong get-more-responses get-more-responses city-list .'
-        '.        .   auto-prolong links              links              city-list .'
-        '.        .   auto-prolong links              links              .         .'
-        '.        .   .            links              links              .         .';
-    }
-    .adv-item__auto-prolong {
-        flex-wrap: wrap;
-    }
-}
-
 .adv-item__rating {
     position: relative;
     grid-area: rating;
@@ -2151,6 +2139,93 @@ span:not([class]):empty {
     padding: 10px 0;
 }
 
+/* adaptive */
+@media (max-width: 1330px) {
+    .adv-item {
+        grid-template-rows: auto repeat(5, 28px) auto 1fr;
+        grid-template-areas:
+        '.        .   state        state              state              state     state'
+        'checkbox img left-block   stats              stats              city-list services'
+        'checkbox img left-block   rating             rating             city-list services'
+        'checkbox img left-block   rating             rating             city-list .'
+        '.        .   auto-prolong get-more-responses get-more-responses city-list .'
+        '.        .   auto-prolong links              links              city-list .'
+        '.        .   auto-prolong links              links              .         .'
+        '.        .   .            links              links              .         .';
+    }
+    .adv-item__auto-prolong {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    /* tmp */
+    .actions,
+    .ads__field-names {
+        display: none;
+    }
+
+    .adv-item {
+        grid-template-columns: 40px 80px 1fr;
+        column-gap: 15px;
+        grid-template-rows: none;
+        grid-template-areas:
+        'checkbox img left-block'
+        '.        .   state'
+        '.        .   auto-prolong'
+        '.        .   stats'
+        '.        .   rating'
+        '.        .   get-more-responses'
+        '.        .   services'
+        '.        .   links'
+        '.        .   city-list';
+    }
+
+    .adv-item > * + *:not(.adv-item__img):not(.adv-item__checkbox):not(.adv-item__left-block) {
+        margin-top: 15px;
+    }
+
+    .adv-item__title span.text {
+        white-space: unset;
+    }
+
+    .adv-item__state .info {
+        display: block;
+        margin: 0;
+    }
+
+    .adv-item__state .calendar-container {
+        margin-block: 10px;
+    }
+
+    .adv-item__dates > * + * {
+        margin: 0;
+    }
+
+    .adv-item__auto-prolong {
+        flex-wrap: wrap;
+    }
+
+    .adv-item__stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+
+        max-width: 300px;
+    }
+
+    .adv-item__stats > * {
+        text-align: left;
+    }
+
+    .adv-item__stats > .flex {
+        justify-content: unset;
+    }
+
+    .adv-item__city-list {
+        margin-bottom: 25px;
+    }
+}
 
 
 /* service */
