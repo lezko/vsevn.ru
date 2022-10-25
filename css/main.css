@@ -1595,6 +1595,10 @@ span:not([class]):empty {
     color: var(--clr-dark-gray);
 }
 
+.adv-item *.mobile-show {
+    display: none;
+}
+
 .adv-item a {
     /*display: inline-block;*/
     text-decoration: none;
@@ -1721,15 +1725,24 @@ span:not([class]):empty {
     position: relative;
 }
 
-.adv-item__stats > *:hover {
-    color: var(--clr-blue);
+.adv-item__stats .text-mobile {
+    margin-right: 15px;
+    display: none;
 }
 
-.adv-item__stats > *:hover .icon {
-    color: #50b0e7
+.adv-item__stats .text-mobile:after {
+    content: ':';
 }
 
 @media (hover: hover) {
+    .adv-item__stats > *:not(.no-color):hover {
+        color: var(--clr-blue);
+    }
+
+    .adv-item__stats > *:hover .icon {
+        color: #50b0e7
+    }
+
     .adv-item__stats .views:hover,
     .adv-item__stats .favourites:hover,
     .adv-item__stats .dialogs:hover {
@@ -1743,9 +1756,8 @@ span:not([class]):empty {
 
 .adv-item__links > li > .icon {
     position: absolute;
-    top: 50%;
+    top: 8px;
     left: -25px;
-    transform: translateY(-50%);
 }
 
 @media (hover: hover) {
@@ -1763,7 +1775,8 @@ span:not([class]):empty {
     content: 'г. ';
 }
 
-.adv-item__city-list .service-item a {
+.adv-item__city-list .service-item a,
+.adv-item__city-list a.cities-show-btn {
     color: orange;
 }
 
@@ -2027,7 +2040,7 @@ span:not([class]):empty {
     top: calc(100% + 0px);
 }
 
-.adv-item__city-list span.icon {
+.adv-item__city-list .icon {
     display: inline-block;
     flex: 0 0 0;
     overflow: hidden;
@@ -2181,6 +2194,10 @@ span:not([class]):empty {
         '.        .   city-list';
     }
 
+    .adv-item .mobile-show {
+        display: initial;
+    }
+
     .adv-item > * + *:not(.adv-item__img):not(.adv-item__checkbox):not(.adv-item__left-block) {
         margin-top: 15px;
     }
@@ -2207,23 +2224,42 @@ span:not([class]):empty {
     }
 
     .adv-item__stats {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-
-        max-width: 300px;
+        display: block;
     }
 
     .adv-item__stats > * {
         text-align: left;
     }
 
+    .adv-item__stats > * + * {
+        margin-top: 5px;
+    }
+
     .adv-item__stats > .flex {
         justify-content: unset;
     }
 
+    .adv-item__stats > *:not(.no-color) {
+        color: var(--clr-blue);
+    }
+
+    .adv-item__stats > * .icon {
+        color: #50b0e7
+    }
+
+    .adv-item__stats .views,
+    .adv-item__stats .favourites,
+    .adv-item__stats .dialogs {
+        color: var(--clr-blue);
+    }
+
     .adv-item__city-list {
         margin-bottom: 25px;
+    }
+
+    .adv-item__city-list .icon {
+        flex: 0 0 auto;
+        margin-right: 7px;
     }
 }
 

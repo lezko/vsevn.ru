@@ -179,9 +179,6 @@ function initFilterCalendar(target) {
                 return;
             }
 
-            // wrapperFrom.setAttribute('data-empty', 'true');
-            // wrapperTo.setAttribute('data-empty', 'true');
-
             const strDateFrom = dateFromTextElem.getAttribute('data-date');
             const strDateTo = dateToTextElem.getAttribute('data-date');
             if (strDateFrom) {
@@ -196,9 +193,6 @@ function initFilterCalendar(target) {
             } else {
                 clearDateInputField(dateToInputField);
             }
-
-            // dateFromTextElem.removeAttribute('data-date');
-            // dateToTextElem.removeAttribute('data-date');
 
             container.classList.add('calendar-expanded');
 
@@ -252,15 +246,6 @@ function initFilterCalendar(target) {
             }));
 
             cover.addEventListener('click', () => {
-                // wrapperFrom.setAttribute('data-empty', 'true');
-                // wrapperTo.setAttribute('data-empty', 'true');
-
-                // dateFromTextElem.removeAttribute('data-date');
-                // dateToTextElem.removeAttribute('data-date');
-
-                // dateFromTextElem.textContent = '';
-                // dateToTextElem.textContent = '';
-
                 try {
                     dateFromTextElem.textContent = formatDate(getDateInputFieldValue(dateFromInputField));
                 } catch (e) {
@@ -627,9 +612,10 @@ async function renderElement(elem, payload = null) {
             `;
         case 'cityList':
             return `
-                <li class="service-item"><a href="">Добавить</a></li>
-                ${payload.map(c => `
-                    <li>
+                <li class="service-item mobile-show"><a href="">Добавить</a></li>
+                <p class="mobile-show">Регион / Населенный пункт: </p>
+                ${payload.map((c, i) => `
+                    <li ${i > 0 ? 'class="hidden"' : ''}>
                         <span class="hint__text">${c}</span>
                         <div>
                             <span class="icon icon-cross hint">
@@ -639,6 +625,12 @@ async function renderElement(elem, payload = null) {
                         </div>
                     </li>
                 `).join('')}
+                ${
+                    payload.length > 1 
+                        ?
+                        `<a href="" class="cities-show-btn mobile-show">Ещё ${payload.length - 1}:</a>`
+                        : ''    
+                }
             `;
         case 'newMessages':
             return `${+payload ? payload : ''}`;
@@ -800,6 +792,7 @@ function setupArticle(article) {
     initArticleCalendar(article);
     initCopyLinkModals(article);
     initDeleteCityBtns(article);
+    initShowCitiesBtn(article);
     initArticleDates(article);
     initArticleStateBackground(article);
     initProlongCheckbox(article);
@@ -967,6 +960,16 @@ function initDeleteCityBtns(article) {
             updateArticle(article, {cityList: article.data.cityList.filter(c => c !== city)});
             performFiltering();
         });
+    });
+}
+
+function initShowCitiesBtn(article) {
+    article.el.querySelector('.adv-item__city-list a.cities-show-btn')?.addEventListener('click', () => {
+        showModal(`
+            <ul>
+                ${article.data.cityList.map(c => `<li>${c}</li>`).join('')}
+            </ul>
+        `);
     });
 }
 
