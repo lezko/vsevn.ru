@@ -1,0 +1,29 @@
+.popup {
+    position: absolute;
+    font-family: 'ZabraProRegular', serif !important;
+    color: var(--clr-brown);
+    font-size: 20px;
+    z-index: 60;
+    background-color: var(--clr-hint-background);
+    padding: 10px;
+    border: 2px solid var(--clr-hint-border);
+}
+
+.popup__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.popup__header > * + * {
+    margin-left: 15px;
+}
+
+.popup__cross {
+
+    cursor: pointer;
+    font-size: 14px;
+}

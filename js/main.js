@@ -235,14 +235,16 @@ function initFilterCalendar(target) {
                 try {
                     const date = getDateInputFieldValue(dateFromInputField);
                     calendar.first.setDate(date);
-                } catch (e) {}
+                } catch (e) {
+                }
             }));
             dateToInputField.querySelectorAll('input').forEach(inp => inp.addEventListener('input', () => {
                 wrapperTo.setAttribute('data-empty', checkDateInputFieldEmpty(dateToInputField));
                 try {
                     const date = getDateInputFieldValue(dateToInputField);
                     calendar.second.setDate(date);
-                } catch (e) {}
+                } catch (e) {
+                }
             }));
 
             cover.addEventListener('click', () => {
@@ -589,7 +591,6 @@ const selectors = {
     img: '.adv-item__img',
     title: '.adv-item__title',
     price: '.adv-item__price > span:first-child',
-    cityList: '.adv-item__city-list',
     rating: '.adv-item__rating',
     links: '.adv-item__links',
     views: '.adv-item__stats .views',
@@ -610,28 +611,22 @@ async function renderElement(elem, payload = null) {
                 <span class="hint__text">${payload}</span>
                 <span class="text">${payload}</span>
             `;
-        case 'cityList':
+        case 'city':
             return `
-                <li class="service-item mobile-show"><a href="">Добавить</a></li>
-                <p class="mobile-show">Регион / Населенный пункт: </p>
-                ${payload.map((c, i) => `
-                    <li ${i > 0 ? 'class="hidden"' : ''}>
-                        <span class="hint__text">${c}</span>
-                        <div>
-                            <span class="icon icon-cross hint">
-                                <span class="hint__text hint__text--center">Удалить данный населенный пункт</span>
-                            </span>
-                            <span class="text">${c}</span>
-                        </div>
-                    </li>
-                `).join('')}
-                ${
-                    payload.length > 1 
-                        ?
-                        `<a href="" class="cities-show-btn mobile-show">Ещё ${payload.length - 1}:</a>`
-                        : ''    
-                }
+                <span class="hint__text">${payload}</span>
+                <div>
+                    <span class="icon icon-cross hint">
+                        <span class="hint__text hint__text--center">Удалить данный населенный пункт</span>
+                    </span>
+                    <span class="text">${payload}</span>
+                </div>
             `;
+        case 'cityList':
+            let res = '';
+            for (const city of payload) {
+                res += `<li>${ await renderElement('city', city) }</li>`;
+            }
+            return res;
         case 'newMessages':
             return `${+payload ? payload : ''}`;
         case 'growth':
@@ -738,7 +733,7 @@ async function fetchData() {
             price: obj.price,
             _autoProlong: obj.auto_prolong,
             rating: obj.rating,
-            cityList: obj.city_list,
+            _cityList: obj.city_list,
             links: obj.links.map(l => ({
                 text: l.text, url: l.url, free: l.free
             })),
@@ -773,25 +768,30 @@ async function printArticles(articles) {
         let setupNeeded = false;
         if (a.el === null) {
             a.el = await renderArticle(a.data);
+            a.citiesPopup = new Popup({
+                title: 'Регионы / Населенные пункты',
+                container: a.el.querySelector('.adv-item__cities-popup-container'),
+            });
             setupNeeded = true;
         }
 
         appendArticle(a.el);
 
         if (setupNeeded) {
-            setupArticle(a);
+            await setupArticle(a);
         }
     }
 }
 
-function setupArticle(article) {
+async function setupArticle(article) {
     initLinkPreventReload(article.el);
     initExpandingLists(article.el);
     initFadeEffects(article.el);
     initDateInputFields(article.el);
     initArticleCalendar(article);
     initCopyLinkModals(article);
-    initDeleteCityBtns(article);
+    // initDeleteCityBtns(article);
+    await initCityList(article);
     initShowCitiesBtn(article);
     initArticleDates(article);
     initArticleStateBackground(article);
@@ -809,11 +809,16 @@ function setupArticle(article) {
         showModal(await renderElement('services', { services: article.data._services, state: article.data._state }));
     });
 
-    article.el.querySelector('.adv-item__city-list .service-item').addEventListener('click', () => showChooseRegionPopup(() => {}));
+    article.el.querySelector('.adv-item__cities-btn').addEventListener('click', () => {
+        if (article.data._cityList.length > 3) {
+            article.citiesPopup.open();
+        }
+    });
+    // article.el.querySelector('.adv-item__city-list .service-item').addEventListener('click', () => showChooseRegionPopup(() => {}));
 }
 
 function updateArticle(article, options = {}) {
-    article.data = {...article.data, ...options};
+    article.data = { ...article.data, ...options };
     article.el = null;
 }
 
@@ -953,11 +958,48 @@ function initArticleStateBackground(article) {
     article.el.setAttribute('data-state', article.data._state);
 }
 
-function initDeleteCityBtns(article) {
-    article.el.querySelectorAll('.adv-item__city-list > li:not(.service-item)').forEach(li => {
+async function initCityList(article) {
+    const citiesContainer = article.el.querySelector('.adv-item__city-list');
+    citiesContainer.innerHTML = '';
+
+    const cities = article.data._cityList;
+    const btn = article.el.querySelector('.adv-item__cities-btn');
+
+    let i = 0;
+    for (const city of cities) {
+        if (i > 2) {
+            break;
+        }
+        const li = document.createElement('li');
+        li.innerHTML = await renderElement('city', city);
+        li.querySelector('.icon').addEventListener('click', async () => {
+            article.data._cityList = article.data._cityList.filter(c => c !== city);
+            await initCityList(article);
+        });
+        citiesContainer.appendChild(li);
+        i++;
+    }
+
+    if (cities.length < 4) {
+        btn.textContent = 'Добавить';
+        article.citiesPopup.close();
+        return;
+    }
+    btn.textContent = `Еще ${cities.length - 3}`;
+    const list = document.createElement('ul');
+    list.classList.add('city-list');
+    list.innerHTML = await renderElement('cityList', cities);
+    article.citiesPopup.setContent(list);
+    initDeleteCityBtns(article, list);
+}
+
+function initDeleteCityBtns(article, list) {
+    list.querySelectorAll('li').forEach(li => {
         const city = li.querySelector('span.text').textContent;
-        li.querySelector('span.icon').addEventListener('click', () => {
-            updateArticle(article, {cityList: article.data.cityList.filter(c => c !== city)});
+        li.querySelector('.icon').addEventListener('click', async () => {
+            // updateArticle(article, { _cityList: article.data._cityList.filter(c => c !== city) });
+            article.data._cityList = article.data._cityList.filter(c => c !== city);
+            await initCityList(article);
             performFiltering();
         });
     });
@@ -980,6 +1022,16 @@ function initCopyLinkModals(article) {
 
         const url = li.querySelector('.copy-link-modal__url');
         const btn = li.querySelector('.copy-link-modal__btn');
+
+        if (window.innerWidth <= 768) {
+
+            li.querySelector('a').addEventListener('click', () => {
+                navigator.clipboard.writeText(url.textContent).then(() => {
+                    showHint(li, clickedText);
+                }, console.error);
+            });
+            return;
+        }
 
         btn.addEventListener('click', () => {
             navigator.clipboard.writeText(url.textContent).then(() => {
@@ -1090,26 +1142,26 @@ const actionBtns = {
     delete: {
         text: 'Удалить', action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, {_state: 'deleted'});
+            updateArticle(a, { _state: 'deleted' });
         }
     }, activate: {
         text: 'Активировать', action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, {_state: 'active'});
+            updateArticle(a, { _state: 'active' });
         }
     }, unpublish: {
         text: 'Снять с публикации', action: function (a) {
             setArticleCheckState(a, false, false);
-            updateArticle(a, {_state: 'closed'});
+            updateArticle(a, { _state: 'closed' });
         },
         beforeAction() {
             const title = `Снять с публикации вакансию(и): ${articles.filter(a => a.checked).reduce((arr, a) => {
                 arr.push(`«${a.data.title}»`);
                 return arr;
-            }, []).join(', ')} ?`
+            }, []).join(', ')} ?`;
             return showConfirmModal(title, deactivationMessage, [
-                {text: 'Все равно снять', className: 'action-btn--red', type: 'submit'},
-                {text: 'Отменить', type: 'cancel'},
+                { text: 'Все равно снять', className: 'action-btn--red', type: 'submit' },
+                { text: 'Отменить', type: 'cancel' },
             ]);
         },
     }, emptyTrash: {
@@ -1184,7 +1236,7 @@ function initActionBar(state) {
     });
 }
 
-function addActionBtn({text, action, beforeAction = null}) {
+function addActionBtn({ text, action, beforeAction = null }) {
     const btn = document.createElement('a');
     btn.setAttribute('href', '');
     btn.textContent = text;
@@ -1194,7 +1246,8 @@ function addActionBtn({text, action, beforeAction = null}) {
         if (beforeAction && typeof beforeAction === 'function') {
             beforeAction()
                 .then(() => performAction(action))
-                .catch(() => {});
+                .catch(() => {
+                });
             return;
         }
         performAction(action);

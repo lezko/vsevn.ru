@@ -223,12 +223,14 @@ span:not([class]):empty {
     border-radius: 1px;
 }
 
-.show-on-adv-item-hover {
-    opacity: 0;
-}
 
-.adv-item:hover .show-on-adv-item-hover {
-    opacity: 1;
+@media (hover: hover) and (min-width: 768px) {
+    .show-on-adv-item-hover {
+        opacity: 0;
+    }
+    .adv-item:hover .show-on-adv-item-hover {
+        opacity: 1;
+    }
 }
 
 .ptr:hover {
@@ -1279,7 +1281,7 @@ span:not([class]):empty {
 }
 
 .breadcrumb a {
-    color: #665800;
+    color: rgba(102, 88, 0, 0.7);
     text-decoration: none;
     font-size: 23px;
 }
@@ -1289,7 +1291,7 @@ span:not([class]):empty {
 }
 
 .breadcrumb li:not(:last-child):after {
-    color: #665800;
+    color: rgba(102, 88, 0, 0.7);
     margin: 0 7px;
     font-size: 23px;
     display: inline-block;
@@ -1760,27 +1762,27 @@ span:not([class]):empty {
     left: -25px;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (min-width: 768px) {
     .adv-item__links > li:hover .copy-link-modal {
         display: block;
     }
 }
 
-.adv-item__city-list > li span.text {
+.adv-item__cities > li span.text {
     white-space: pre;
 }
 
-.adv-item__city-list > li span.text:before {
+.adv-item__cities > li span.text:before {
     display: inline-block;
     content: 'г. ';
 }
 
-.adv-item__city-list .service-item a,
-.adv-item__city-list a.cities-show-btn {
+.adv-item__cities .service-item a,
+.adv-item__cities a.cities-show-btn {
     color: orange;
 }
 
-.adv-item__city-list .service-item a:hover {
+.adv-item__cities .service-item a:hover {
     color: #d28900;
 }
 
@@ -1916,7 +1918,7 @@ span:not([class]):empty {
 .adv-item:not([data-state="active"]) .adv-item__state--active,
 .adv-item:not([data-state="active"]) .adv-item__auto-prolong,
 .adv-item:not([data-state="active"]) .adv-item__get-more-responses,
-.adv-item:not([data-state="active"]) .adv-item__city-list .service-item,
+.adv-item:not([data-state="active"]) .adv-item__cities .service-item,
 .adv-item:not([data-state="active"]) .adv-item__rating,
 .adv-item:not([data-state="active"]) .adv-item__links,
 .adv-item:not([data-state="active"]) .adv-item__deactivation {
@@ -2017,30 +2019,25 @@ span:not([class]):empty {
     flex-wrap: wrap;
 }
 
-.adv-item__city-list {
+.cities {
     position: relative;
     align-self: start;
     grid-area: city-list;
 }
 
-.adv-item__city-list > li > div {
+.city-list > li > div {
     display: flex;
     align-items: center;
     white-space: nowrap;
     position: relative;
 }
 
-.adv-item__city-list > li:hover span.icon {
+.city-list > li:hover span.icon {
     flex: 0 0 15px;
     margin-right: 7px;
 }
 
-.adv-item__city-list .service-item {
-    position: absolute;
-    top: calc(100% + 0px);
-}
-
-.adv-item__city-list .icon {
+.cities .icon {
     display: inline-block;
     flex: 0 0 0;
     overflow: hidden;
@@ -2253,11 +2250,11 @@ span:not([class]):empty {
         color: var(--clr-blue);
     }
 
-    .adv-item__city-list {
+    .adv-item__cities {
         margin-bottom: 25px;
     }
 
-    .adv-item__city-list .icon {
+    .adv-item__cities .icon {
         flex: 0 0 auto;
         margin-right: 7px;
     }
