@@ -12,7 +12,7 @@ function Popup(options = {}) {
     this.mainElement = new DOMParser().parseFromString(popupTemplate, 'text/html').body.firstChild;
     this.container.appendChild(this.mainElement);
 
-    this.cover = document.createElement('div');
+    this.cover = cover;
     this.cover.classList.add('cover', 'hidden');
     this.cover.addEventListener('click', () => {
         this.close();

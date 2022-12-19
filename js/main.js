@@ -877,31 +877,37 @@ function initArticleCalendar(article) {
         const errorHintText = container.querySelector('.hint__text');
 
         // clearDateInputField(dateInputField);
-        setDateInputFieldValue(dateInputField, new Date(dateTextElem.getAttribute('data-date').trim()));
+        let selectedDate = new Date(dateTextElem.getAttribute('data-date').trim());
+        setDateInputFieldValue(dateInputField, selectedDate);
         dateInputFieldDay.focus();
 
-        const calendar = showSingleCalendar(container, date => {
-            setDateInputFieldValue(dateInputField, date);
-            container.setAttribute('data-state', 'focused');
-        }, (date, err) => {
-            if (err) {
-                try {
-                    const date = getDateInputFieldValue(dateInputField);
-                    dateTextElem.textContent = formatDate(date);
-                    article.data._date.deactivation = date;
-                    initArticleDates(article);
-                    container.removeAttribute('data-state');
-                    calendar.close();
-                } catch (e) {
-                    container.setAttribute('data-state', 'error');
+        const calendar = new Calendar({
+            container,
+            selectedDate,
+            selectCallback(date) {
+                setDateInputFieldValue(dateInputField, date);
+                container.setAttribute('data-state', 'focused');
+            },
+            submitCallback(date, err) {
+                if (err) {
+                    try {
+                        const date = getDateInputFieldValue(dateInputField);
+                        dateTextElem.textContent = formatDate(date);
+                        article.data._date.deactivation = date;
+                        initArticleDates(article);
+                        container.removeAttribute('data-state');
+                        calendar.close();
+                    } catch (e) {
+                        container.setAttribute('data-state', 'error');
+                    }
+                    return;
                 }
-                return;
+                dateTextElem.textContent = formatDate(date);
+                article.data._date.deactivation = date;
+                initArticleDates(article);
+                container.removeAttribute('data-state');
+                calendar.close();
             }
-            dateTextElem.textContent = formatDate(date);
-            article.data._date.deactivation = date;
-            initArticleDates(article);
-            container.removeAttribute('data-state');
-            calendar.close();
         });
 
         cover.addEventListener('click', () => {
