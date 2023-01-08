@@ -1,7 +1,3 @@
-:root {
-    --size-unit: 50px;
-}
-
 .calendar-container {
     position: relative;
 }
@@ -80,10 +76,10 @@
 .calendar__days > * {
     /*width: var(--size-unit);*/
     /*height: var(--size-unit);*/
-    aspect-ratio: 1;
+    /*aspect-ratio: 1;*/
     display: grid;
     place-content: center;
-    /*padding-block: 5px;*/
+    padding-block: 6px;
 }
 
 .calendar__days > * {
